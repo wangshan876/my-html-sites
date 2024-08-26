@@ -64,16 +64,29 @@ button:hover {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
-
+.row{
+    display: flex;
+    flex-direction: column;
+}
 .item {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
 }
+.item[id]{
+    flex-direction: column;
+    padding: 30px;
+    background-color: azure;
 
+}
 .subItem {
     display: flex;
+    flex-direction: row;
     align-items: center;
     margin-bottom: 5px;
 }
+
 
 .subItem label {
     width: 120px;

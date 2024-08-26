@@ -51,24 +51,33 @@ function displayData(storeName) {
     const databaseSelect = indexdbObject.querySelector('select[name="database"]');
     const dbName = databaseSelect.value;
     if (dbName && storeName && indexedDBData[dbName] && indexedDBData[dbName][storeName]) {
-        const data = indexedDBData[dbName][storeName]
-        const keys = Object.keys(data);
+        const datas = indexedDBData[dbName][storeName]
         dataDisplay.innerHTML = ''
-        keys.forEach(key => {
-            if(data[key] instanceof Array){
-                dataDisplay.innerHTML += `<div class="item"><label for="${key}">${key}:</label> <textarea id='${key}' >${data[key].join(', ')}</textarea></div>`;
-            } else if(typeof data[key] === 'object'){
-                let _html = `<div class="item" id="${key}">`;
-                const _keys = Object.keys(data[key]);
-                for(const _key of _keys){
-                    _html += `<div class="subItem"><label for="${_key}">${_key}:</label> <input id='${_key}' value='${data[key][_key]}'></input></div>`;
+        datas&&datas.forEach((data,i) => {
+            const rowdiv = document.createElement('div');
+            rowdiv.className = 'row';
+            rowdiv.setAttribute('data-id', i);
+            const keys = Object.keys(data);
+            keys.forEach(key => {
+                if(data[key] instanceof Array){
+                    rowdiv.innerHTML += `<div class="item"><label for="${key}">${key}:</label> <textarea id='${key}' >${data[key].join(', ')}</textarea></div>`;
+                } else if(typeof data[key] === 'object'){
+                    console.log(key,data,data[key])
+                    let _html = `<div class="item">${key}：</div><div class="item" id="${key}">`;
+                    const _keys = Object.keys(data[key]);
+                    for(const _key of _keys){
+                        _html += `<div class="subItem"><label for="${_key}">${_key}:</label> <input id='${_key}' value='${data[key][_key]}'></input></div>`;
+                    }
+                    _html += '</div>';
+                    rowdiv.innerHTML += _html
+                } else {
+                    rowdiv.innerHTML += `<div  class="item"><label for="${key}">${key}:</label> <input id='${key}' value='${data[key]}'></input></div>`;
                 }
-                _html += '</div>';
-                dataDisplay.innerHTML += _html
-            } else {
-                dataDisplay.innerHTML += `<div  class="item"><label for="${key}">${key}:</label> <input id='${key}' value='${data[key]}'></input></div>`;
-            }
+            })
+            dataDisplay.appendChild(rowdiv);
         })
+
+
         
         
     } else {
