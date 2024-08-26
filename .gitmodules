@@ -1,0 +1,9 @@
+[submodule "write-smart"]
+	path = write-smart
+	url = https://github.com/wangshan876/write-smart.git
+[submodule "simple-indexdb-data-manager"]
+	path = simple-indexdb-data-manager
+	url = https://github.com/wangshan876/simple-indexdb-data-manager.git
+[submodule "type-to-learn"]
+	path = type-to-learn
+	url = https://github.com/wangshan876/type-to-learn.git
