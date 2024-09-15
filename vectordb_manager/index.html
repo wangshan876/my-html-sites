@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>两列布局示例</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body >
+    <div id="meta-template" class="myapp-popup-menu">
+        <h2 style="text-align: center;margin-top: 20px;">元数据模板列表</h2>
+        <div class="new-meta-group item row metadata">
+            <input type="text" placeholder="key"/>
+            <input type="text" placeholder="value"/>
+            <button type="button" name="new" id="add-meta-template-btn">添加</button>
+        </div>
+        <ul class="flow" id="meta-template-select" name="meta-template-select" multiple>
+            <button type="button" name="del" style="display: none;">删除</button>
+        </ul>
+
+
+    </div>
+    <div class="container">
+        <div class="left-column">
+            <div style="height: 100vh;display: flex;flex-direction: column;">
+                <div style="display: flex;justify-content: space-between;padding: 10px 0;border-bottom: 2px solid;">
+                    <span id="filename">请上传文件</span>
+                    <button type="button"  id="split-to-postgre">存储到PostgreSQL</button>
+                </div>
+                <div style="margin-top: 20px;">
+                    <label for="regex-list">拆分规则：</label>
+                    <select name="regex-list" id="regex-list"></select>
+                    <input type="text" id="custom-regex" placeholder="自定义正则表达式" style="display: none;" />
+                </div>
+                <div>
+                    <label for="fileInput">选择文件：</label>
+                    <input type="file" id="fileInput">
+                </div>
+
+                <ul id="output"></ul>
+            </div>
+        </div>
+        <div class="right-column">
+            <div class="header">
+                <div class="status">
+                    <span id="chroma-v" class="version">chroma version：wait...</span>
+                    <span id="ollama-v" class="version">ollama version：wait...</span>
+
+                </div>
+                <span class="mission-panel">
+                    
+                    <div class="progress-container" id="mission-progress" style="display: none;">
+                        <div class="progress-bar" id="progressBar" style="width: 70%;"></div> <!-- 这里可以通过 JavaScript 动态设置宽度 -->
+                        <span class="progress-text" id="progressBarText">0%</span> <!-- 显示进度百分比 -->
+                    </div>
+                    <div class="row postgre-has-data" style="display: none;">
+                        <input type="checkbox" name="usePostgre" id="usePostgre"/>
+                        <label style="text-wrap: wrap;padding: 0;font-size: 9px;" for="usePostgre">数据已在PostgreSQL，是否使用？</label>
+                    </div>
+                    <button id="storeBtn" class="small">存储到chroma</button>
+                </span>
+            </div>
+
+            <div class="form">
+                <div class="metadata-group">
+                    <div class="item row metadata">
+                        <label>元数据信息</label>
+                        <div style="display: flex;">
+                            <input name="0" type="text" placeholder="fileName" ></input>
+                            <input name="0" type="text" placeholder="请选择文件" ></input>
+                        </div>
+                        <button type="button" name="new" style="margin-left: 10px;">+</button>
+                        <button type="button" id="metaTemplateBtn" style="margin-left: 5px;">元数据模板</button>
+                    </div>
+                    
+                </div>
+                <div class="item row">
+                    <div class="row" style="flex-grow: 2;">
+                        <label class="label" for="chroma-regex-list">拆分规则：</label>
+                        <select name="chroma-regex-list" id="chroma-regex-list"></select>
+                    </div>
+                    <div class="row new-regex-group">
+                        <input type="text" id="custom-chroma-regex" placeholder="自定义正则表达式" />
+                    </div>
+                </div>
+                <div class="item row">
+                    <div class="label" for="ollamaModelSelect">设定任务模型：</div>
+                    <select id="ollamaModelSelect">
+                        <option value="">Select a Model</option>
+                    </select>
+                </div>
+                <div class="item row">
+                    <div class="row" style="flex-grow: 2;">
+                        <div class="label" for="collectionSelect">设定任务集合：</div>
+                        <select id="collectionSelect">
+                            <option id="newCollection" value="newCollection">新建集合</option>
+                        </select>
+                        <button style="margin-left: 5px;" class="small" type="button"
+                            id="emptyCollectionBtn">清空</button>
+                            <button style="margin-left: 5px;" name="del" class="small" type="button"
+                                id="delCollectionBtn">删除</button>
+
+                    </div>
+                    <div class="row newCollectionGroup">
+                        <input type="text" id="newCollectionInput" placeholder="输入新集合名称">
+                        <button class="small" type="button" id="newCollectionBtn">新建集合</button>
+                    </div>
+                </div>
+
+                <div class="item" id="collectionDetails">
+                    <div id="data-count" style="text-align: center;padding: 5px;"></div>
+                    <table id="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Document</th>
+                                <th>Metadata</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table rows will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="app.js" type="module"></script>
+
+</body>
+
+<script src="/components/alert.js"></script>
+</html>

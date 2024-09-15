@@ -1,0 +1,3 @@
+proxim
+	approximate
+	proximity

@@ -1,0 +1,6 @@
+sign
+	assign
+	consign
+	designate
+	resign
+	signify

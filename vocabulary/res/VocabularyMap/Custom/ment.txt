@@ -1,0 +1,14 @@
+ment
+	augment
+	comment
+	complement
+	compliment
+	employment
+	entertainment
+	garment
+	implement
+	ornament
+	parliament
+	sentiment
+	torment
+	tournament

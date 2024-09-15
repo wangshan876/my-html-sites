@@ -1,0 +1,10 @@
+vest
+	vestment
+	vesture
+	divest
+		divestment
+		divestiture
+	invest
+		investment
+		reinvest
+		disinvest

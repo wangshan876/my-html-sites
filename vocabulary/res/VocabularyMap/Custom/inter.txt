@@ -1,0 +1,5 @@
+inter
+	interact
+	interrogate
+	intersection
+	intervene

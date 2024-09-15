@@ -1,0 +1,13 @@
+type
+	subtype
+	typist
+	typic
+	typical
+		typically
+		atypical
+	prototype
+		prototypical
+	archetype
+		archetypal
+	typology
+		typological

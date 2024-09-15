@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        var s={},p=location.search.substring(1).split('&');
+        for(var i=0;i<p.length;i++){
+            var t=p[i].split('=',2); 
+            if(t.length!= 2) continue;
+            s[t[0]]=decodeURIComponent(t[1]); 
+        }
+        var r=s.redirect_uri||"",u="";
+        if(r.match(/(http|https):\/\/.+/)){
+            var b=r.split('#')[0],h=r.split('#')[1]; 
+            for(var k in s){
+                var v=s[k];
+                if(v!=undefined&&k!="redirect_uri"){ 
+                    var n=k+"="+v;
+                    if(b.index0f('?')!=-1){
+                        var o=new RegExp(k+'=[-%. !~*\'\(\)\\w]*','g'); 
+                        if(o.test(b)){
+                            b=b.replace(o,n);
+                        }else{
+                            b+="&"+n;
+                        }
+                    } else {
+                        b+="?"+n;
+                    }
+                }
+            }
+
+        }
+
+        u = b+(h?("#"+h):"");
+        if(u.match(/(http|https):\/\/.+/)){ 
+            location.href=u;
+        }    
+
+        /*
+假设中转URL为: https://codebays.com/oauth.html，应用最终回调URL为：https://codebays.com/oauth2/callback
+第3方开放平台授权回调域名固定为http://codebays.com即可。
+构建OAuth2用户授权URL时，参数redirect_uri的值填入：
+https://codebays.com/oauth.html?redirect_uri=urlencode(https://codebays.com/oauth2/callback)
+https://statics-dg5.pages.dev/oauth/oauth.html?redirect_uri=urlencode(https://codebays.com/oauth2/callback
+        */
+ </script>
+</body>
+</html>

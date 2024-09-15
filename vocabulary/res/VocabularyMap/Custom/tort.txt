@@ -1,0 +1,4 @@
+tort
+	distort
+	extort
+	retort

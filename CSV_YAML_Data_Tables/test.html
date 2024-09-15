@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分页数据表</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div style="display: flex; flex-direction: row;">
+        <div id="file-parse"></div>
+        <button id="parseButton">Parse File</button>
+    </div>
+    <div class="container">
+        <table id="dataTable">
+            <thead>
+                <!-- 表头将在这里动态生成 -->
+            </thead>
+            <tbody>
+                <!-- 数据将在这里动态生成 -->
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button id="prevPage">Previous</button>
+            <span id="pageInfo"></span>
+            <button id="nextPage">Next</button>
+        </div>
+    </div>
+    <script type="module">
+        import { createParser, parseFile } from "./CSV_YAML_Parser.mjs";
+        import { createTableManager } from "./data_table.mjs";
+
+        createParser();
+        const tableManager = createTableManager([], 10);
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("parseButton").addEventListener("click", async () => {
+                try {
+                    const fileTypeSelect = document.querySelector("#fileType");
+                    const fileType = fileTypeSelect.value;
+                    let data = await parseFile("data.json");
+                    if (fileType === "yaml") {
+                        data = Object.entries(data).map(([key, value]) => ({
+                            _id: key,
+                            ...value
+                        }));
+                    }
+                    tableManager.setData(data);
+                    tableManager.renderTable();
+                } catch (error) {
+                    console.error("Error parsing file:", error);
+                    // 可以在这里显示错误消息给用户
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

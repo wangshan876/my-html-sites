@@ -1,0 +1,10 @@
+ure
+	feature
+	gesture
+	manufacture
+	measure
+	procedure
+	puncture
+	rupture
+	statute
+	venture

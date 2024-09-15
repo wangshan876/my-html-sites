@@ -1,0 +1,116 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* 使元素的宽高包括内边距和边框 */
+}
+
+html {
+    line-height: 1.15;
+    /* 提高可读性 */
+    -webkit-text-size-adjust: 100%;
+    /* 防止 iOS 上的文本缩放 */
+}
+
+body {
+    font-family: sans-serif;
+    /* 设置默认字体 */
+    font-size: 16px;
+    /* 设置默认字体大小 */
+    line-height: 1.5;
+    /* 设置行高 */
+    color: #333;
+    /* 设置默认文本颜色 */
+    background-color: #fff;
+    /* 设置默认背景颜色 */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    /* 继承字体大小 */
+    font-weight: bold;
+    /* 设置标题为粗体 */
+}
+
+p {
+    margin-bottom: 1em;
+    /* 设置段落底部间距 */
+}
+
+ul,
+ol {
+    list-style: none;
+    /* 清除列表样式 */
+}
+
+a {
+    text-decoration: none;
+    /* 清除链接下划线 */
+    color: inherit;
+    /* 继承文本颜色 */
+}
+
+img {
+    max-width: 100%;
+    /* 使图像响应式 */
+    height: auto;
+    /* 保持图像比例 */
+}
+
+table {
+    border-collapse: collapse;
+    /* 合并表格边框 */
+    width: 100%;
+    /* 表格宽度100% */
+}
+
+button {
+    border: none;
+    /* 清除按钮边框 */
+    background: none;
+    /* 清除按钮背景 */
+    font: inherit;
+    /* 继承字体样式 */
+    cursor: pointer;
+    /* 鼠标指针 */
+}
+
+input,
+textarea {
+    font: inherit;
+    /* 继承字体样式 */
+    line-height: normal;
+    /* 设置行高 */
+}
+
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+    width: 3px;
+    height: 30px;
+    /* 滚动条的宽度 */
+
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 0, 0, 1), rgba(255, 255, 255, 0));
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(151, 151, 151, 0.5);
+    /* 滚动条的颜色 */
+    border-radius: 4px;
+    /* 圆角 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    /* 悬停时的颜色 */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    /* 滚动条轨道的背景色 */
+}

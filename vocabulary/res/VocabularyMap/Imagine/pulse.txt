@@ -1,0 +1,10 @@
+pulse
+	expulse
+	pulsate
+		pulsation
+	impulse
+		impulsion
+		impulsive
+	repulse
+		repulsion
+		repulsive

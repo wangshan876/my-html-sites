@@ -1,0 +1,4 @@
+ty
+	casualty
+	penalty
+	property

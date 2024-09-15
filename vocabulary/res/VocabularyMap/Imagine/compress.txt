@@ -1,0 +1,9 @@
+compress
+	compressed
+	compressible
+		incompressible
+	compressive
+	compression
+	compressor
+	decompress
+		decompression

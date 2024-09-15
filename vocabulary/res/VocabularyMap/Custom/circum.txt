@@ -1,0 +1,3 @@
+circum
+	circumference
+	circumstance

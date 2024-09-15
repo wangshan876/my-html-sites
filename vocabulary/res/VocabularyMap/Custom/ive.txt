@@ -1,0 +1,11 @@
+ive
+	aggressive
+	attractive
+	destructive
+	impressive
+	inclusive
+	objective
+	passive
+	perspective
+	positive
+	productive

@@ -1,0 +1,3 @@
+nomy
+	astronomy
+	autonomy

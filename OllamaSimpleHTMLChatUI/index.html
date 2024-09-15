@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./chatui,.css">
+    <!-- <script src='libs/sql-wasm.js'></script> -->
+    <script src="//cdn.jsdelivr.net/npm/pouchdb@8.0.1/dist/pouchdb.min.js"></script>
+
+</head>
+
+<body>
+    <div class="app">
+
+        <!-- <div class="sidebar">side</div> -->
+        <div class="chatbox">
+
+            <div class="chat-window">
+            </div>
+
+            <div class="input-field">
+                <textarea type="text" placeholder="Type Type Type ..."></textarea>
+
+                <div class="funbar">
+                    <div class="button read">
+                        <input type="checkbox" id="auto-read">
+                        <label for="auto-read">Auto Read</label>
+                    </div>
+                    <select class="button" id="voice-select"></select>
+                    <div id="chat-options"></div>
+                    <!-- <select class="button model" id="model-select"><option value="">Models</option></select> -->
+                    <!-- <div class="status">Status</div> -->
+                    <!-- <div id="executer" class="button ">command test</div> -->
+                    <!-- <div class="button voice-send">Voice Send</div> -->
+                    <div class="button send">Send</div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <dialog>test</dialog>
+        <script type="module">
+            import {init} from "./ui.mjs"
+            let chatModule;
+            document.addEventListener("ChatDone", function (e) {
+                console.log("生成完毕:", e.detail);
+            });
+            window.onload = function (e) {
+                init()
+            }
+
+            import {setSubjects,getSubjects} from "./src/store.mjs"
+            setSubjects('test',["test"])
+        </script>
+
+</body>
+
+<link rel="stylesheet" href="./libs/highlightjs/default.min.css">
+<script src="./libs/highlightjs/highlight.min.js"></script>
+<!-- <script src="./src/sqlite.js"></script> -->
+</html>

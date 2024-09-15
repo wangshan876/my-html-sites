@@ -1,0 +1,3 @@
+uate
+	evacuate
+	evaluate

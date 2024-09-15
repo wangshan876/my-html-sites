@@ -1,0 +1,5 @@
+mod
+	accommodate
+	commodity
+	modest
+	modify

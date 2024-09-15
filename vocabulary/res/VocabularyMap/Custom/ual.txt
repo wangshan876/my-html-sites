@@ -1,0 +1,10 @@
+ual
+	annual
+	casual
+	gradual
+	individual
+	intellectual
+	manual
+	mutual
+	perpetual
+	punctual

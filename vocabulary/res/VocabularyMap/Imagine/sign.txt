@@ -1,0 +1,13 @@
+sign
+	signer
+	signatory
+	signal
+		signalize
+		signally
+	signature
+	significant
+		significantly
+		nonsignificant
+		significance
+		insignificant
+	signify

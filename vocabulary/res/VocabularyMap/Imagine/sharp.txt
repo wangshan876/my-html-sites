@@ -1,0 +1,4 @@
+sharp
+	sharpie
+	sharply
+	sharpen

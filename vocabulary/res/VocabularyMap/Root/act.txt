@@ -1,0 +1,26 @@
+-act- = -ag-，驱使，做
+	act
+		actor
+			actress
+		active
+			actively
+			activity
+				inactivity
+			activate
+				activator
+				activation
+				activated
+					inactivated
+				inactivate
+					inactivation
+			activist
+			activism
+			inactive
+		action
+			inaction
+	agent
+		subagent
+		agency
+			coagency
+		agential
+		coagent

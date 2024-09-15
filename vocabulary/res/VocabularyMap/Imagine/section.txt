@@ -1,0 +1,6 @@
+section
+	sectional
+	subsection
+	resection
+	sector
+		sectorial

@@ -1,0 +1,12 @@
+ant
+	antagonism
+	arrogant
+	attendant
+	elegant
+	exorbitant
+	indignant
+	militant
+	redundant
+	resonant
+	stagnant
+	vigilant

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select, input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        #output li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            list-style: none;
+        }
+
+        #output li:hover {
+            background-color: #e9e9e9;
+        }
+
+        #custom-regex {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="height: 100vh;display: flex;flex-direction: column;">
+        <div>
+            <label for="regex-list">拆分规则：</label>
+            <select name="regex-list" id="regex-list"></select>
+            <input type="text" id="custom-regex" placeholder="自定义正则表达式" style="display: none;"/>
+        </div>
+        <div>
+            <label for="fileInput">选择文件：</label>
+            <input type="file" id="fileInput">
+        </div>
+        <ul id="output"></ul>
+    </div>
+
+    <script type="module">
+        import FileProcessor from '/components/splitTextFile/fileProcessor.mjs';
+        const regexListSelect = document.querySelector('#regex-list');
+        const fileInput = document.querySelector('#fileInput');
+        const output = document.querySelector('#output');
+        const fileInputElementId = 'fileInput'
+        const customRegex = document.querySelector('#custom-regex')
+        const regexes = [
+            ["byChapter","第\\s*(([一二三四五六七八九十百千]+)|(\\d{1,4}))章\\s+(.+?)\\s"],
+            ["custom"]
+        ]
+        let fileProcessor;
+
+        regexes.forEach(regex => {
+            if(regex.length == 2){
+                const option = document.createElement('option');
+                option.value = regex[1];
+                option.id = option.textContent = regex[0];
+                regexListSelect.appendChild(option);
+            } else if(regex.length == 1 && regex[0] == "custom"){
+                const option = document.createElement('option');
+                option.textContent = "自定义";
+                option.id =  regex[0];
+                option.value =  regex[0];
+                regexListSelect.appendChild(option)
+
+            }
+        })
+        regexListSelect.addEventListener('change',(e)=>{
+            if(regexListSelect.value == "custom"){
+                customRegex.style.display = 'block';
+            }else{
+                customRegex.style.display = 'none';
+            }
+        })
+
+        function getRegex(){
+            if(regexListSelect.value == "custom"){
+                return new RegExp(customRegex.value,"g")
+            }else{
+                return new RegExp(regexListSelect.value,"g")
+            }
+        }
+
+        const displayChapters = (chapters) => {
+            output.innerHTML = '';
+            for (let i = 0; i < chapters.length; i++) {
+                if (chapters[i]) {
+                    const chapterDiv = document.createElement('li');
+                    // chapterDiv.innerHTML = `<h2>${chapters[i].title}</h2><p>${chapters[i].content}</p>`;
+                    chapterDiv.textContent = chapters[i].title;
+                    chapterDiv.setAttribute('data-index', i);
+                    output.appendChild(chapterDiv);
+                }
+            } 
+            output.addEventListener('click', (e) => {
+                const _target = e.target;
+                if (fileProcessor && _target.tagName === 'LI') {
+                    const index = parseInt(_target.getAttribute('data-index'));
+                }
+            });
+        }
+        
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInputElementId = 'fileInput'
+            const splitRegex = getRegex();      
+            fileProcessor = new FileProcessor(fileInputElementId,getRegex(), displayChapters);
+        });
+    </script>
+</body>
+
+</html>

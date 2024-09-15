@@ -47,7 +47,7 @@ function toast(text, duration = 3000, isconsole = false) {
     document.body.appendChild(toastNode)
     setTimeout(() => {
         toastNode.remove();
-    }, 3000);
+    }, duration);
 }
 
 

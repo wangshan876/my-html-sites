@@ -1,0 +1,8 @@
+id
+	fluid
+	invalid
+	languid
+	morbid
+	placid
+	splendid
+	vivid

@@ -1,0 +1,4 @@
+tribute
+	attribute
+	contribute
+	distribute

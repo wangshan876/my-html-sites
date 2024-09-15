@@ -1,0 +1,8 @@
+argue
+	arguable
+		arguably
+		inarguable
+	argument
+		counterargument
+		argumentation
+		argumentative

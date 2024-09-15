@@ -1,0 +1,173 @@
+/* 输入框和选择框的样式 */
+input,
+select,
+textarea {
+    font-size: smaller;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: #ffffff;
+    outline: none;
+    resize: none;
+    transition: border-color 0.3s, box-shadow 0.3s; /* 添加过渡效果 */
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-width:0px;
+    border-color: #888; /* 聚焦时边框颜色变化 */
+    box-shadow: 0 0 1px rgba(136, 136, 136, 0.5); /* 聚焦时阴影效果 */
+}
+
+/* 自定义选择框样式 */
+select {
+    appearance: none; /* 去掉默认样式 */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M7 10l5 5 5-5H7z"/></svg>'); /* 自定义下拉箭头 */
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* 下拉箭头位置 */
+    background-size: 12px; /* 下拉箭头大小 */
+}
+
+/* 按钮样式 */
+button {
+    display: inline-block;
+    padding: 10px 20px; /* 增加内边距 */
+    font-size: 14px; /* 增加字体大小 */
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgb(12, 81, 12);
+    border: none;
+    border-radius: 4px; /* 圆角 */
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; /* 添加过渡效果 */
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(2, 155, 2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px); /* 悬停时上移 */
+}
+
+button:active {
+    transform: translateY(0); /* 点击时恢复位置 */
+}
+
+/* 禁用按钮样式 */
+button:disabled {
+    background-color: #555; /* 禁用按钮的背景色 */
+    cursor: not-allowed; /* 禁用状态的光标 */
+}
+
+/* 复选框和单选框样式 */
+input[type="checkbox"],
+input[type="radio"] {
+    display: none; /* 隐藏默认样式 */
+}
+
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+    position: relative;
+    padding-left: 25px; /* 为标签留出空间 */
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label:before,
+input[type="radio"] + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px; /* 自定义复选框和单选框大小 */
+    height: 16px;
+    border: 2px solid #555; /* 边框颜色 */
+    border-radius: 3px; /* 圆角 */
+    background-color: #333; /* 背景色 */
+    transition: background-color 0.3s, border-color 0.3s; /* 添加过渡效果 */
+}
+
+input[type="checkbox"]:checked + label:before {
+    background-color: #2ecc71; /* 选中时背景色 */
+    border-color: #2ecc71; /* 选中时边框颜色 */
+}
+
+input[type="radio"]:checked + label:before {
+    background-color: #2ecc71; /* 选中时背景色 */
+    border-color: #2ecc71; /* 选中时边框颜色 */
+    border-radius: 50%; /* 圆形 */
+}
+
+/* 提示信息样式 */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* 提示框位置 */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1; /* 悬停时显示提示框 */
+}
+
+
+.row {
+    display: flex; /* 使用 Flexbox 布局 */
+    align-items: center; /* 垂直居中对齐 */
+
+}
+
+
+.row label {
+    margin-right: 5px; /* 标签与选择框之间的间距 */
+    font-weight: bold; /* 标签加粗 */
+    color: #ffffff; /* 标签颜色 */
+    
+}
+
+.row select {
+    min-width: 100px; /* 设置最小宽度 */
+    width: auto; /* 根据内容自动调整宽度 */
+    padding: 10px; /* 内边距 */
+    border: 1px solid #555; /* 边框颜色 */
+    border-radius: 4px; /* 圆角 */
+    background-color: #333; /* 背景色 */
+    color: #ffffff; /* 字体颜色 */
+    outline: none; /* 去掉默认轮廓 */
+    transition: border-color 0.3s; /* 边框颜色过渡效果 */
+}
+
+.row select:focus {
+    border-color: #888; /* 聚焦时边框颜色变化 */
+}
+.row + .row {
+    margin-top: 5px;
+}
+.wrap{
+    padding: 5px;
+}
+.settings{
+    font-size: 10px;
+    font-weight: 400;
+}

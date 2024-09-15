@@ -1,0 +1,5 @@
+iate
+	associate
+	initiate
+	mediate
+	substantiate

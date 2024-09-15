@@ -1,0 +1,18 @@
+ent
+	antecedent
+	apparent
+	component
+	confident
+	constituent
+	efficient
+	eloquent
+	eminent
+	fervent
+	imminent
+	inherent
+	innocent
+	intermittent
+	permanent
+	pertinent
+	translucent
+	transparent

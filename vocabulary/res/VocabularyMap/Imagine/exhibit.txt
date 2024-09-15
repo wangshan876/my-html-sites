@@ -1,0 +1,5 @@
+exhibit
+	exhibitor
+	exhibition
+		exhibitionist
+		exhibitionism

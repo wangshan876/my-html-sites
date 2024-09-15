@@ -1,0 +1,4 @@
+restrict
+	restrictive
+	restriction
+	restricted

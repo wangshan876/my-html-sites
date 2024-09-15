@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BookmarksHome</title>
+<link rel="icon" href="moz-extension://2cf4ba7c-4cf5-46f5-bfa7-7573f9e34fdd/icons/favicon.png" type="image/png">
+<script src="BookmarksHome_files/jquery-3.js"></script>
+<script src="BookmarksHome_files/jquery-ui.js"></script>
+<script src="BookmarksHome_files/contents.js"></script>
+<style type="text/css" id="whole_style">/*
+ * default style
+ */
+body {
+  background: #8ac;
+  margin: 0px;
+  padding: 0px;
+  font-size:medium;
+}
+/* main container */
+table {
+  margin: 5px 12px;
+  background: #f8f8f8;
+  border-spacing: 8px 2px;
+}
+td {
+  vertical-align: top;
+}
+/* for bookmarks folder(div) */
+.folder {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border: 1px solid navy;
+  margin-bottom: 6px;
+  padding: 0px;
+  width: 100%;
+}
+/* folder title */
+.folder h2 {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin:0px;
+  padding: 2px;
+  font-size: medium;
+  background: #09c;
+  color: white;
+  text-align: center;
+}
+/* item list block */
+ul {
+  margin: 6px;
+  padding: 0;
+  padding-left: 18px;
+  list-style-type: square;
+  line-height: 125%;
+}
+/* each bookmark items */
+li {
+  margin-bottom: 5px;
+}
+li:hover {
+  background: #ffc;
+}
+li.defnode {  /* favicon off */
+  margin-left: 3px;
+}
+li.favnode {  /* favicon on */
+  list-style-type: none;
+  text-indent:-16px;
+}
+li a {
+  text-decoration: none;
+}
+li a:hover {
+  text-decoration: underline;
+}
+img.favicon {
+  border:0pt none;
+  margin-right:3px;
+  max-height:16px;
+  max-width:16px;
+  vertical-align:middle;
+}
+
+/*** for top search bar ***/
+/* ("!important" may be necessary in some cases.) */
+#search-bar {
+}
+/* input box */
+#search-box {
+}
+/* clear button(img) */
+#search-clr {
+}
+/* options button(img) */
+#gear-icon {
+}
+
+</style>
+<style type="text/css">
+#prop_dialog {
+  padding: 1em;
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  background: #ddd;
+  border-radius: 8px;
+  box-shadow: 3px 3px 5px 0 #888;
+  display: none;
+}
+#prop_title, #prop_url {
+  width: 30em;
+}
+#top_bar {
+  position: sticky;
+  top: 0;
+  height: 5px;
+  background: #e8e8e8;
+  border: dotted 1px #bbb;
+}
+#top_bar:hover {
+  background: #aee;
+}
+#search-bar {
+  position: sticky;
+  padding: 3px;
+  top: 0;
+  background: #e8e8e8;
+  border-bottom: dotted 1px #bbb;
+  text-align: center;
+  display:none;
+}
+#search-box {
+  min-width: 10em;
+  width: 25%;
+  height: 1em;
+  vertical-align: middle;
+}
+#search-clr {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0 0 0 3px;
+  vertical-align: middle;
+  border-radius: 8px;
+  background: #d0d2e7;
+}
+#search-clr:hover {
+  background: #9ea4b9;
+}
+#gear-icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+#loader {
+  /*margin: 50px auto;*/
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(to right, #aabcd5 10%, rgba(170,188,213, 0) 42%);
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  animation: load1 1.4s infinite linear;
+  transform: translateZ(0);
+}
+#loader:before {
+  width: 50%;
+  height: 50%;
+  background: #aabcd5;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+#loader:after {
+  width: 75%;
+  height: 75%;
+  background: #8ac;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@keyframes load1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
+<style id="partial_style" type="text/css"></style>
+<style>#loader::after {background:rgb(56, 56, 56);}</style></head>
+<body>
+<div id="search-bar">
+<input id="search-box" type="text"><img id="search-clr" src="BookmarksHome_files/delete.svg">
+<span style="position:absolute; right:10px"><img id="gear-icon" src="BookmarksHome_files/gear.svg"></span>
+</div>
+<div id="top_bar"></div>
+<table border="0"><tbody><tr id="container">
+<td class="column ui-sortable" id="c_0" width="33%"><div id="f_jNMRv_Nksa24" class="folder"><h2 class="ui-sortable-handle">常用 &gt; github精选项目</h2><ul id="folder_jNMRv_Nksa24" class="ui-sortable"><li id="a_WRl80igU9hOr" class="favnode ui-sortable-handle"><a href="https://github.com/microsoft/ML-For-Beginners" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">GitHub - microsoft/ML-For-Beginners: 12 weeks, 26 lessons, 52 quizzes, classic Machine Learning for all</a></li><li id="a_-DE_90N8nQhV" class="favnode ui-sortable-handle"><a href="https://github.com/MichaelCade/90DaysOfDevOps" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">GitHub
+ - MichaelCade/90DaysOfDevOps: This repository is my documenting 
+repository for learning the world of DevOps. I started this journey on 
+the 1st January 2022 and I plan to run to March 31st for a complete 
+90-day romp on spending an hour a day including weekends to get a 
+foundational knowledge across a lot of different areas that make up 
+DevOps.</a></li><li id="a_LHPhdcvagp2A" class="favnode ui-sortable-handle"><a href="https://www.githubs.cn/awesome" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_005.png">GitHub精选 - GitHub中文社区</a></li><li id="a_vAjP_NqXKUBz" class="favnode ui-sortable-handle"><a href="https://github.com/zadam/trilium" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">GitHub - zadam/trilium: Build your personal knowledge base with Trilium Notes</a></li><li id="a_gWrxjgrrZvd0" class="favnode ui-sortable-handle"><a href="https://github.com/donnemartin/system-design-primer/blob/master/README-zh-Hans.md" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">system-design-primer/README-zh-Hans.md at master · donnemartin/system-design-primer · GitHub</a></li><li id="a_auY8neBBwILq" class="favnode ui-sortable-handle"><a href="https://github.com/getify/You-Dont-Know-JS" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">GitHub - getify/You-Dont-Know-JS: A book series on JavaScript. @YDKJS on twitter.</a></li><li id="a_fKldkCewzUI8" class="favnode ui-sortable-handle"><a href="https://github.com/codecrafters-io/build-your-own-x" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">GitHub - codecrafters-io/build-your-own-x: 🤓 Build your own (insert technology here)</a></li><li id="a_3Q6emsr2dKbu" class="favnode ui-sortable-handle"><a href="https://github.com/GorvGoyl/Clone-Wars" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">GitHub
+ - GorvGoyl/Clone-Wars: 100+ open-source clones of popular sites like 
+Airbnb, Amazon, Instagram, Netflix, Tiktok, Spotify, Whatsapp, Youtube 
+etc. See source code, demo links, tech stack, github stars.</a></li><li id="a_tNRpHsxwfUsZ" class="favnode ui-sortable-handle"><a href="https://github.com/Z4nzu/hackingtool" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">GitHub - Z4nzu/hackingtool: ALL IN ONE Hacking Tool For Hackers</a></li><li id="a_nP8SNdDIc7B3" class="favnode ui-sortable-handle"><a href="https://github.com/lapce/lapce" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">GitHub - lapce/lapce: Lightning-fast and Powerful Code Editor written in Rust</a></li><li id="a_4r2dIxbXO5Bc" class="favnode ui-sortable-handle"><a href="https://github.com/spacedriveapp/spacedrive" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">spacedrive: a virtual distributed filesystem written in Rust.</a></li><li id="a_eyA5Xu13M7KV" class="favnode ui-sortable-handle"><a href="https://github.com/programthink/sites#-24" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">【编程随想】收藏的各色网站</a></li><li id="a_4bOTr4JnHinF" class="favnode ui-sortable-handle"><a href="https://gitclone.com/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_020.png">GitHub缓存加速网站</a></li></ul></div></td><td class="column ui-sortable" id="c_1" width="33%"><div id="f_aPFfNajbW3Ya" class="folder"><h2 class="ui-sortable-handle">常用 &gt; 我的页面们</h2><ul id="folder_aPFfNajbW3Ya" class="ui-sortable"><li id="a_XU69ycLQ629X" class="favnode ui-sortable-handle"><a href="https://ryanlq.github.io/things/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_014.png">Things</a></li><li id="a_SRLSQm6zxA9a" class="favnode ui-sortable-handle"><a href="https://github.com/ryanlq/things" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">Things-github</a></li><li id="a_RvYLILzpr-bc" class="favnode ui-sortable-handle"><a href="https://ryanlq.github.io/homepage1/BookmarksHome.html" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_014.png">我的首页</a></li><li id="a_WeGudpPmOF-D" class="favnode ui-sortable-handle"><a href="https://gridea.dev/theme-structure/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_022.png">📚 主题目录结构与页面变量 | Gridea</a></li></ul></div><div id="f_Gqw6KuKnc-tR" class="folder"><h2 class="ui-sortable-handle">常用 &gt; 系统工具</h2><ul id="folder_Gqw6KuKnc-tR" class="ui-sortable"><li id="a_msseAIqahORt" class="favnode ui-sortable-handle"><a href="https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/tag/v5.3" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">卸载工具</a></li><li id="a_WArTP6opc_S7" class="favnode ui-sortable-handle"><a href="https://www.free-ebooks.net/best-books/mystery/current" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_019.png">Best Mystery Books &amp; eBooks </a></li><li id="a_qERH0U9ULSWp" class="favnode ui-sortable-handle"><a href="https://www.pdawiki.com/forum/thread-36741-1-1.html" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_016.png">让ANKI实现任意词典音频批量导入</a></li><li id="a_9xI7CvFhdOq9" class="favnode ui-sortable-handle"><a href="https://ebook-hunter.org/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_008.png">free ebooks download</a></li><li id="a_T5iUq3H6EBZ3" class="favnode ui-sortable-handle"><a href="https://aleph.chezhe.dev/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_015.png">Aleph</a></li><li id="a_XcfXu7mkHt-8" class="favnode ui-sortable-handle"><a href="https://xplorer.space/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_018.png">Hello from Xplorer | Xplorer</a></li><li id="a_lmb3G3sfiwit" class="favnode ui-sortable-handle"><a href="https://zsmatrix62.github.io/echoo-app/?tk=base64-serde&amp;tab=2" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_024.png">Echoo.app - free tools for devs</a></li><li id="a_MYGlUeFzaX4E" class="favnode ui-sortable-handle"><a href="https://html.duckduckgo.com/html/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_009.png">DuckDuckGo</a></li><li id="a_TlBOJJhfQkMb" class="favnode ui-sortable-handle"><a href="https://github.com/ninja33/mdx-server" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">mdx-server</a></li><li id="a_vS_zacCdnl0s" class="favnode ui-sortable-handle"><a href="https://github.com/jhspetersson/fselect" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">GitHub - jhspetersson/fselect: Find files with SQL-like queries</a></li><li id="a_iOoTNFINjDru" class="favnode ui-sortable-handle"><a href="https://github.com/naaive/orange/blob/release/README_cn.md" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">orange/README_cn.md at release · naaive/orange · GitHub</a></li></ul></div><div id="f_owLNzWfioTMY" class="folder"><h2 class="ui-sortable-handle">常用 &gt; 辅助工具</h2><ul id="folder_owLNzWfioTMY" class="ui-sortable"><li id="a_9s4TacSGwKkT" class="favnode ui-sortable-handle"><a href="https://gridea.dev/#started" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_022.png">一个静态博客写作客户端</a></li><li id="a_TJfgwTbZ1fNw" class="favnode ui-sortable-handle"><a href="https://github.com/nilaoda/N_m3u8DL-CLI" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">m3u8DL-CLI</a></li><li id="a__1-j2shqODL3" class="favnode ui-sortable-handle"><a href="https://github.com/TonnyL/Awesome_APIs/blob/master/README-zh.md" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_004.png">wesome_APIs</a></li><li id="a_Jg3uvH0tt9U2" class="favnode ui-sortable-handle"><a href="https://www.deepl.com/translator" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_028.png">DeepL翻译</a></li></ul></div><div id="f_uKN6Ca0nW_R1" class="folder"><h2 class="ui-sortable-handle">常用 &gt; firefox设置</h2><ul id="folder_uKN6Ca0nW_R1" class="ui-sortable"><li id="a_Sg72JvH54Ion" class="favnode ui-sortable-handle"><a href="https://support.mozilla.org/zh-CN/kb/about-config-editor-firefox" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_011.png">Firefox 的配置编辑器 </a></li><li id="a_jWH_zPCvDdKS" class="favnode ui-sortable-handle"><a href="https://www.jianshu.com/p/6e6937a9574c" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_003.png">常用的火狐Firefox about:config设置</a></li><li id="a_Iw7kgcj_PItZ" class="favnode ui-sortable-handle"><a href="https://blog.csdn.net/cf0415/article/details/18624261" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons.png">firefox的about:config说明及配置</a></li></ul></div></td><td class="column ui-sortable" id="c_2" width="33%"><div id="f_j1N6MYzgdjWJ" class="folder"><h2 class="ui-sortable-handle">常用 &gt; 新闻资讯</h2><ul id="folder_j1N6MYzgdjWJ" class="ui-sortable"><li id="a_opR4c17cdxKg" class="favnode ui-sortable-handle"><a href="https://getpodcast.xyz/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_026.png">播客 RSS Feed</a></li><li id="a_GQ4PZDtCy8PB" class="favnode ui-sortable-handle"><a href="https://www.ettoday.net/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_017.png">ETtoday新聞雲 | Today is my day</a></li><li id="a_44MZT-IXwTX1" class="favnode ui-sortable-handle"><a href="https://www.chinanewsx.com/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_027.png">ChinaNewsX: 汇聚来自海外媒体的中文新闻</a></li><li id="a_-yG_OKPSzBD4" class="favnode ui-sortable-handle"><a href="https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_010.png">维基百科，自由的百科全书</a></li><li id="a_xDcCJ7T9JBqX" class="favnode ui-sortable-handle"><a href="https://v2ex.com/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_023.png">V2EX</a></li><li id="a_QZpbnMgTkdst" class="favnode ui-sortable-handle"><a href="http://language.chinadaily.com.cn/thelatest/page_1.html" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_012.png">中国日报网英语点津-LanguageTips</a></li><li id="a_WFMXPYTFA8UD" class="favnode ui-sortable-handle"><a href="https://zh.wikipedia.org/wiki/2019%E5%86%A0%E7%8B%80%E7%97%85%E6%AF%92%E7%97%85%E4%B8%AD%E5%9C%8B%E5%A4%A7%E9%99%B8%E7%96%AB%E5%8D%80%E5%B0%81%E9%8E%96%E6%8E%AA%E6%96%BD#%E6%AD%A6%E6%B1%89%E5%B8%82%E7%96%AB%E5%8C%BA%E5%B0%81%E9%94%81%E9%9A%94%E7%A6%BB%E6%8E%AA%E6%96%BD" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_010.png">2019冠状病毒病中国大陆疫区封锁措施 - 维基百科，自由的百科全书</a></li><li id="a_V6hpnJl3EFy1" class="favnode ui-sortable-handle"><a href="https://chinadigitaltimes.net/chinese/404-articles-archive" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_006.png">中国数字时代404文库 - 中国数字时代</a></li><li id="a_WfeQLYUWXHgd" class="favnode ui-sortable-handle"><a href="https://freeweibo.com/weibo/%E6%B4%AA%E7%81%8F" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_025.png">新浪微博上的“洪灏” | 自由微博</a></li><li id="a_P3ZE3-xcwP5J" class="favnode ui-sortable-handle"><a href="https://www.cnbeta.com/" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_021.png">cnBeta.COM - 中文业界资讯站</a></li></ul></div><div id="f_JBqyQgApM1zB" class="folder"><h2 class="ui-sortable-handle">常用 &gt; 学习</h2><ul id="folder_JBqyQgApM1zB" class="ui-sortable"><li id="a_hyPOHih0e_pH" class="favnode ui-sortable-handle"><a href="https://docs.ethers.io/v5/concepts/events/#events" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_029.png">etherjs Events</a></li><li id="a_jUr9eQL-uu85" class="favnode ui-sortable-handle"><a href="https://searx.neocities.org/nojs.html" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_013.png">Searx </a></li><li id="a_e1QvqEaeA4EU" class="favnode ui-sortable-handle"><a href="https://www.xxenglish.com/root-senior" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_007.png">高级词根大全_词根字典_学习英语网</a></li><li id="a_h2rn9qpn5mEX" class="favnode ui-sortable-handle"><a href="https://www.xxenglish.com/root-middle" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_007.png">中级词根大全_词根词缀词典_学习英语网</a></li><li id="a_wBoTa-NeVGYB" class="favnode ui-sortable-handle"><a href="https://www.youtube.com/watch?v=8rhueOcTu8k&amp;t=1588s" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons_002.png">Code an Instagram Clone with Blockchain </a></li></ul></div><div id="f_gspt-Pqx3Qm9" class="folder"><h2 class="ui-sortable-handle">常用 &gt; github相关</h2><ul id="folder_gspt-Pqx3Qm9" class="ui-sortable"><li id="a_9mnNoV-4Rhsy" class="favnode ui-sortable-handle"><a href="https://blog.csdn.net/xiao_yi_xiao/article/details/121047692" target="_blank"><img class="favicon" src="BookmarksHome_files/favicons.png">Windows下设置 ssh key,配置GitHub ssh key</a></li></ul></div></td></tr></tbody></table>
+<div><div id="loader" class="active" style="animation-play-state: paused; display: none;"></div></div>
+<div id="prop_dialog">
+<div><div style="width:3em;text-align:right;float:left;padding:2px">Title:</div><input id="prop_title" type="text"></div>
+<div style="clear:left; margin-top: 4px">
+  <div style="width:3em;text-align:right;float:left;padding:2px">url:</div><input id="prop_url" type="text">
+</div>
+<div style="margin-top:10px" align="right"><button id="prop_modify">Modify</button>  <button id="prop_cancel">Cancel</button></div>
+</div>
+
+
+</body></html>

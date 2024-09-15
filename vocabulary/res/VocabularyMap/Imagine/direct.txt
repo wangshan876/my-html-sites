@@ -1,0 +1,20 @@
+direct
+	directed
+	directly
+	directness
+	misdirect
+	direction
+		directional
+			multidirectional
+			bidirectional
+			unidirectional
+	directory
+		subdirectory
+	director
+		directorship
+	directive
+		directivity
+		nondirective
+	redirect
+	indirect
+		indirection

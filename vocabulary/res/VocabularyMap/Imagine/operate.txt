@@ -1,0 +1,14 @@
+operate
+	operable
+		inoperable
+	operation
+		operational
+	operator
+	cooperate
+		cooperative
+		cooperation
+	operant
+	operative
+		postoperative
+		preoperative
+		inoperative

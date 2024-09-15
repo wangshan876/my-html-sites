@@ -1,0 +1,3 @@
+fort
+	forte
+	fortify

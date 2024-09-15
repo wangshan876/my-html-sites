@@ -1,0 +1,5 @@
+mit
+	commit
+	emit
+	omit
+	submit

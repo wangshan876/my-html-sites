@@ -1,0 +1,5 @@
+ize
+	specialize
+	sterilize
+	synchronize
+	visualize

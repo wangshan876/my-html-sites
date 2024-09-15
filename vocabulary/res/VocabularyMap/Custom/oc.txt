@@ -1,0 +1,4 @@
+oc
+	occasion
+	occupy
+	occur

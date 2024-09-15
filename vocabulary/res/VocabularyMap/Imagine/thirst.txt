@@ -1,0 +1,4 @@
+thirst
+	athirst
+	thirsty
+		thirstily

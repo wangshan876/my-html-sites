@@ -1,0 +1,7 @@
+sequence
+	sequency
+	sequent
+		subsequent
+			subsequence
+			subsequently
+	sequential

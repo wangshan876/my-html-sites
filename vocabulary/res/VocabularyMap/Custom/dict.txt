@@ -1,0 +1,5 @@
+dict
+	addict
+	contradict
+	dictate
+	verdict

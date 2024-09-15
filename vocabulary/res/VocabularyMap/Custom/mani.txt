@@ -1,0 +1,3 @@
+mani
+	manifest
+	manipulate

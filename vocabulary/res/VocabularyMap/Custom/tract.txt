@@ -1,0 +1,6 @@
+tract
+	abstract
+	contract
+	extract
+	protract
+	subtract

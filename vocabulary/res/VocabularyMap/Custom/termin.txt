@@ -1,0 +1,4 @@
+termin
+	exterminate
+	terminal
+	terminate

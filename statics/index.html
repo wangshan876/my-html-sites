@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
+    <link rel="canonical" href="https://ryan.github.io/homepage1/" />
+    <!-- <link rel="canonical" href="http://127.0.0.1:7000/" /> -->
+    <link rel="shortcut icon" href="./favicon.ico">
+    <script src="./js/styles.js"></script>
+    <script src="./js/dexie.js"></script>
+    <script src="./js/notedatas.js"></script>
+    <!--script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="e9do5o44abz1mhc"></script-->
+    
+    <link rel="stylesheet" href="./styles/index.css">
+    <title>Death Mask Notes</title>
+</head>
+<body>
+    <script src="./js/ponyfill.min.js"></script>
+    <!-- includes blob.stream() polyfill -->
+    <script src="./js/Blob.js"></script>
+    <script src="./js/StreamSaver.js"></script>
+    <div id="tips">已复制</div>
+    
+    <div id="frame_wrapper" >
+        <iframe id="external_dict" src="" frameborder="0" width="800" height="100%"  ></iframe>
+        <div id="frame_closer" class="close">X</div>
+    </div>
+    <div id="host"  > </div>
+    <div class="base_cover hide" id="popup_cover" > 
+        <div id="popup"  > </div>
+    </div>
+    <script>
+        // register ServiceWorker, remember to use absolute path!
+        if (navigator.serviceWorker) {
+          navigator.serviceWorker.register('/homepage1/sw.js?v=3', {scope: '/homepage1/'})
+        }
+        window.onload = function() {
+            document.addEventListener('touchstart',function (event) {
+                    if(event.touches.length>1){
+                        event.preventDefault();
+                    }
+                });
+
+                var lastTouchEnd=0;
+
+                document.addEventListener('touchend',function (event) {
+                    var now=(new Date()).getTime();
+                    if(now-lastTouchEnd<=300){
+                        event.preventDefault();
+                    }
+                    lastTouchEnd=now;
+
+                },false);
+
+                document.addEventListener('gesturestart', function (event) {
+                    event.preventDefault();
+                });
+        }
+        // --- Application code here ---
+        
+        window.POPUP_COVER = document.querySelector('#popup_cover')
+        window.POPUP = document.querySelector('#popup')
+
+        </script>
+        
+    <script src="./js/init.js"></script>
+    <script src="./js/db.js"></script>
+    <script src="./js/ielts_words.js"></script>
+    <script src="./js/iframe.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>

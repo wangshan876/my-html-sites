@@ -1,0 +1,5 @@
+recur
+	recurrent
+	recursive
+	recursion
+	recurrence

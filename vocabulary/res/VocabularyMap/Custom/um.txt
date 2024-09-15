@@ -1,0 +1,4 @@
+um
+	album
+	minimum
+	optimum

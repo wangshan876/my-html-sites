@@ -1,0 +1,10 @@
+civil
+	civilly
+	uncivil
+	civic
+	civilize
+		civilized
+			uncivilized
+		civilization
+	civility
+		incivility

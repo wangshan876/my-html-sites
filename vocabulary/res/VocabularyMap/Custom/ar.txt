@@ -1,0 +1,5 @@
+ar
+	arrogant
+	calendar
+	cellar
+	vulgar

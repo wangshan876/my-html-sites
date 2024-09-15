@@ -1,0 +1,208 @@
+:root{
+    --content-bg:#073148;
+    --sider-bg:#482607;
+    --sider-menu:#616161;
+    --sider-menu-select:#6C0000;
+    --sider-menu-hover:#7E4B4B;
+}
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar:hover {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: #d1c1fd;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #1A0948;
+    border-radius: 1px;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    background-color: var( --content-bg);
+    overflow: hidden;
+
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    display: flex;
+}
+li{
+    list-style: none;
+    padding: 5px;
+}
+li[file]{
+    padding-left: 10px;
+    cursor: pointer;
+}
+li[file].selected{
+    background-color: var(--sider-menu-select);
+}
+
+#sider{
+    height: 100%;
+    background-color: var(--sider-bg);
+    display: grid;
+    grid-template:
+        "menus" 60px
+        "content" 1fr
+        / 180px;
+}
+
+
+#sider .float-root-btn:hover, #sider .float-query-btn:hover{
+    background-color: var(--sider-menu-select);
+    color: #FFDDAC;
+    font-weight: bold;
+}
+#sider .float-root-btn, #sider .float-query-btn{
+    cursor: pointer;
+    z-index: 999;
+    height: 0rem;
+    width: 0rem;
+    justify-self: center;
+    align-items: center;
+    color: #000;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+#sider .float-query-btn{
+    grid-area: floatquery;
+}
+#sider .float-root-btn{
+    grid-area: floatroot;
+}
+
+#sider .menus{
+    grid-area: menus;
+
+    display: flex;
+
+}
+.menus button{
+    border: 0px;
+    box-sizing: content-box;
+    flex: 1;
+    cursor: pointer;
+    background-color:var(--sider-menu);
+}
+.menus button:hover{
+    background-color: var(--sider-menu-hover);
+    color: #fff;
+}
+.menus button.selected{
+    background-color:  var(--sider-menu-select);;
+    color: #FFDDAC;
+    font-weight: bold;
+}
+#sider .content{
+    grid-area: content;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    background-color: var(--sider-bg);
+    color: #FFDDAC;
+}
+.content ul{
+    display: none;
+    flex:1;
+    padding: 10px 0;
+}
+#sider[data-type="Root"] ul.Root{
+    display: block;
+}
+#sider[data-type="Imagine"] ul.Imagine{
+    display: block;
+}
+#sider[data-type="Custom"] ul.Custom{
+    display: block;
+}
+
+#jsmind_container{
+    flex:1;
+    background: var(--content-bg);
+}
+jmexpander{
+    background: #cbffa6;
+    color: #000;
+    font-weight: bold;
+}
+jmnode{
+    cursor: pointer;
+}
+
+#dict_panel{
+    width: 400px;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #ccc7c736;
+    position: fixed;
+    z-index: 999;
+    /* left: calc(100% - 200px); */
+    display: none;
+}
+#dict_panel.open{
+    min-height: 60%;
+    display:block
+}
+#dict_panel .close{
+    display: none;
+}
+@media screen and (max-width: 965px) {
+    #sider .float-root-btn, #sider .float-query-btn{
+        background-color: var(--sider-menu);
+        height: 3rem !important;
+        width: 3rem !important;
+    }
+    #sider{
+        z-index: 999;
+        height: 3rem;
+        width: 6rem;
+        position: absolute;
+        overflow: hidden;
+        background-color: var(--sider-menu);
+        grid-template:
+            "floatroot floatquery" 3rem
+            /3rem 3rem;
+    }
+    #sider.open{
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 180px;
+        border-radius: 0;
+        grid-template:
+            "menus" 60px
+            "content" 1fr
+            / 180px;
+    }
+    #dict_panel.open{
+        width: 100%;
+        height: 100% ;
+    }
+    #dict_panel .close{
+        display: block;
+        position: absolute;
+        padding: 16px 30px;
+        color: #000;
+        top: 10px;
+        right: 10px;
+        background-color: #fff;
+        font-weight: bolder;
+        font-size: 1rem;
+        border-width: 0;
+        border-radius: 50%;
+        box-shadow: rgb(0 0 0 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 15%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(0 0 0 / 9%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
+    }
+}
+

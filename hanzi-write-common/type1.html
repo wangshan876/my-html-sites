@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="./js/Speaker.js"></script>
+    <title>打字练习</title>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #63be67;
+        }
+        #output{
+            
+            height: 35%;
+            width: 600px;
+        }
+        #console{
+            width: 100%;
+            height: 100%;
+            margin-bottom: 20px;
+            background-color: blanchedalmond;
+            border: 1px solid #eee;
+            padding: 20px;
+            box-sizing: border-box;
+            white-space: pre-wrap;
+            
+        }
+        #question{
+            background: #77a3b0;
+            display: flex;
+            justify-content: space-between;
+            font-size:28px;
+            padding: 10px;
+        }
+        #question .pinyin{
+
+            font-size:20px;
+            color: #6e0101;
+        }
+        #question img{
+            height: 40px;
+            width: 40px;
+            background-color: #faffe6;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        #question img:hover{
+            background-color: #fff;
+        }
+        .keyboard{
+            display: grid;
+            grid-template-rows: 100px 100px 100px;
+            grid-template-columns: 200px 200px 200px;
+            height: 300px;
+            width: 600px;
+        }
+        .box {
+            background: #444;
+            border: 1px solid #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #AAA;
+            cursor: pointer;
+            position: relative;
+        }
+        *{
+            moz-user-select: -moz-none;
+            -moz-user-select: none;
+            -o-user-select:none;
+            -khtml-user-select:none;
+            -webkit-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+        }
+        .pressed {
+            background-color: #f0f0f0;
+            color: #000;
+        }
+        .error{
+            background-color: #6e0101;
+        }
+        .type_char{
+            display: none;
+            font-size:32px;
+            font-weight: bolder;
+        }
+        .pressed .chars{
+            display: none;
+        }
+        .pressed .type_char{
+            display: inline-block;
+            
+            
+        }
+        .box .cover{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f8ff00;
+        }
+    </style>
+</head>
+<body>
+    <div id="output">
+        <div id="question">
+            <div>
+                <div class="pinyin"></div>
+                <div class="sentence"></div>
+            </div>
+            <img class="speaker" src="./imgs/speak.jpg" alt="朗读" srcset="">
+        </div>
+        <div id="console" data-cur="0"></div>
+    </div>
+    <div class="keyboard">
+        <div class="box" id="key0"><span>符号</span></div>
+        <div class="box" id="key1">
+            <span class="chars">abc</span>
+            <span class="type_char"></span>
+            <span class="cover"></span>
+        </div>
+        <div class="box" id="key2">
+            <span class="chars">def</span>
+            <span class="type_char"></span>
+            <span class="cover"></span>
+        </div>
+        <div class="box" id="key3">
+            <span class="chars">ghi</span>
+            <span class="type_char"></span>
+            <span class="cover"></span>
+        </div>
+        <div class="box" id="key4">
+            <span class="chars">jkl</span>
+            <span class="type_char"></span>
+            <span class="cover"></span>
+        </div>
+        <div class="box" id="key5">
+            <span class="chars">mno</span>
+            <span class="type_char"></span>
+            <span class="cover"></span>
+        </div>
+        <div class="box" id="key6">
+            <span class="chars">pqrs</span>
+            <span class="type_char"></span>
+            <span class="cover"></span>
+        </div>
+        <div class="box" id="key7">
+            <span class="chars">tuv</span>
+            <span class="type_char"></span>
+            <span class="cover"></span>
+        </div>
+        <div class="box" id="key8">
+            <span class="chars">wxyz</span>
+            <span class="type_char"></span>
+            <span class="cover"></span>
+        </div>
+    </div>
+    <div>
+        
+        <audio src="./audios/a.mp3" id="pinyin_a"></audio>
+        <audio src="./audios/b.mp3" id="pinyin_b"></audio>
+        <audio src="./audios/c.mp3" id="pinyin_c"></audio>
+        <audio src="./audios/d.mp3" id="pinyin_d"></audio>
+        <audio src="./audios/e.mp3" id="pinyin_e"></audio>
+        <audio src="./audios/f.mp3" id="pinyin_f"></audio>
+        <audio src="./audios/g.mp3" id="pinyin_g"></audio>
+        <audio src="./audios/h.mp3" id="pinyin_h"></audio>
+        <audio src="./audios/i.mp3" id="pinyin_i"></audio>
+        <audio src="./audios/j.mp3" id="pinyin_j"></audio>
+        <audio src="./audios/k.mp3" id="pinyin_k"></audio>
+        <audio src="./audios/l.mp3" id="pinyin_l"></audio>
+        <audio src="./audios/m.mp3" id="pinyin_m"></audio>
+        <audio src="./audios/n.mp3" id="pinyin_n"></audio>
+        <audio src="./audios/o.mp3" id="pinyin_o"></audio>
+        <audio src="./audios/p.mp3" id="pinyin_p"></audio>
+        <audio src="./audios/q.mp3" id="pinyin_q"></audio>
+        <audio src="./audios/r.mp3" id="pinyin_r"></audio>
+        <audio src="./audios/s.mp3" id="pinyin_s"></audio>
+        <audio src="./audios/t.mp3" id="pinyin_t"></audio>
+        <audio src="./audios/u.mp3" id="pinyin_u"></audio>
+        <audio src="./audios/v.mp3" id="pinyin_v"></audio>
+        <audio src="./audios/w.mp3" id="pinyin_w"></audio>
+        <audio src="./audios/x.mp3" id="pinyin_x"></audio>
+        <audio src="./audios/y.mp3" id="pinyin_y"></audio>
+        <audio src="./audios/z.mp3" id="pinyin_z"></audio>
+        <audio src="./audios/zh.mp3" id="pinyin_zh"></audio>
+        <audio src="./audios/ch.mp3" id="pinyin_ch"></audio>
+        <audio src="./audios/sh.mp3" id="pinyin_sh"></audio>
+        <audio src="./audios/ai.mp3" id="pinyin_ai"></audio>
+        <audio src="./audios/ei.mp3" id="pinyin_ei"></audio>
+        <audio src="./audios/ui.mp3" id="pinyin_ui"></audio>
+        <audio src="./audios/ao.mp3" id="pinyin_ao"></audio>
+        <audio src="./audios/ou.mp3" id="pinyin_ou"></audio>
+        <audio src="./audios/iu.mp3" id="pinyin_iu"></audio>
+        <audio src="./audios/ie.mp3" id="pinyin_ie"></audio>
+        <audio src="./audios/ve.mp3" id="pinyin_ve"></audio>
+        <audio src="./audios/er.mp3" id="pinyin_er"></audio>
+        <audio src="./audios/an.mp3" id="pinyin_an"></audio>
+        <audio src="./audios/en.mp3" id="pinyin_en"></audio>
+        <audio src="./audios/in.mp3" id="pinyin_in"></audio>
+        <audio src="./audios/un.mp3" id="pinyin_un"></audio>
+        <audio src="./audios/vn.mp3" id="pinyin_vn"></audio>
+        <audio src="./audios/ang.mp3" id="pinyin_ang"></audio>
+        <audio src="./audios/eng.mp3" id="pinyin_eng"></audio>
+        <audio src="./audios/ing.mp3" id="pinyin_ing"></audio>
+        <audio src="./audios/ong.mp3" id="pinyin_ong"></audio>
+        <audio src="./audios/tip/error.mp3" id="error_audio"></audio>
+        <audio src="./audios/tip/correct.mp3" id="correct_audio"></audio>
+    </div>
+
+    <script src="./js/common_sentences.js"></script>
+    <script src="libs/tiny-pinyin.js"></script>
+    <script>
+        let speak = Speaker()
+        let TYPE_QUEUE,pointer1,pointer2 ,pointer3,g_word,g_unit,g_char;
+        function generate_pinyin(text){
+            if (!Pinyin.isSupported() || !text) {
+                return false
+            }
+            return Pinyin.convertToPinyin(text," ",true)
+        }
+
+        function split_sentence(text){
+            
+        }
+        //
+        
+        const boxes = document.querySelectorAll('.box'),
+         n_console = document.querySelector("#console"),
+         n_question = document.querySelector("#question"),
+         n_sentence = n_question.querySelector('.sentence'),
+         n_pinyin = n_question.querySelector('.pinyin'),
+         keymap = {
+            "a":1,"b":1,"c":1,
+            "d":2,"e":2,"f":2,
+            "g":3,"h":3,"i":3,
+            "j":4,"k":4,"l":4,
+            "m":5,"n":5,"o":5,
+            "p":6,"q":6,"r":6,"s":6,
+            "t":7,"u":7,"v":7,
+            "w":8,"x":8,"y":8,"z":8
+        }
+        n_console.records = ''
+        let pressed_time_handler,error_time_handler;
+
+        let sentence_id ;
+        n_question.setAttribute("length",common_sentences.length)
+        function next_sentence(){
+            if(!sentence_id) sentence_id = 0;
+            if(sentence_id == common_sentences.length) sentence_id = 0
+            n_question.setAttribute("current",sentence_id)
+            const text = get_sentence(sentence_id)
+            n_sentence.innerText = text
+            n_pinyin.innerText = generate_pinyin(text)
+            sentence_id +=1
+        }
+        next_sentence()
+        
+        n_question.querySelector('.speaker').addEventListener("click",e=>{
+            speak(n_sentence.innerText,false)
+        })
+
+        boxes.forEach(box=>{
+            if(box.id !== "key0"){
+                box.addEventListener("click",(e)=>type_handle(e))
+            }
+        })
+        function get_pinyin_queue() { 
+            const contents = n_pinyin.innerText.replace(/[！，。？!,.?]/g,'').replace(/ $/g,'').split(' ')
+            let _queue = []
+            contents.forEach(word=>{
+                const first = word.match(/^(zh|ch|sh|[bpmfdtnlgkhjqxrzcsyw])/g)
+                const last = word.match(/(ang|eng|ing|ong|ai|ei|ui|ao|ou|iu|ie|ve|er|an|en|in|un|vn|[ɑoeiuv])$/g)
+                let mid = ''
+                if(word.length >(first&&first.length + last.length)){
+                    mid = word.replace(first,'').replace(last,'')
+                }
+                let _seq = []
+                if (first) _seq.push(first[0])
+                if (mid) _seq.push(mid)
+                _seq.push(last[0])
+                _queue.push(_seq)
+            })
+
+            return _queue
+        }
+
+        TYPE_QUEUE = get_pinyin_queue();
+        pointer1 = TYPE_QUEUE.entries();
+        function flush_output(){
+            n_console.innerText = ''
+                next_sentence()
+                TYPE_QUEUE = pointer1 = pointer2  = pointer3 = g_word = g_unit = g_char = undefined;
+                TYPE_QUEUE = get_pinyin_queue();
+                pointer1 = TYPE_QUEUE.entries();
+                next_word()
+        }
+        function next_word(){ //
+            g_word = pointer1.next() // value: ["q","ing"]
+            if(g_word.done) {
+                setTimeout(()=>flush_output(),2000)
+            }
+            else{
+                pointer2 = g_word.value[1].entries()
+                next_unit()
+            }
+        }
+
+        
+        function next_unit(){ //
+            g_unit = pointer2.next() //  value,q->ing
+            if(g_unit.done) {
+                n_console.innerText += " "+common_sentences[sentence_id-1][g_word.value[0]] +"    "
+                next_word()
+            }
+            else{
+                pointer3 = g_unit.value[1].split('').entries()
+                next_char()
+            }
+        }
+        function next_char(cb=null){ //
+            g_char = pointer3.next() //  value,q,i-n-g
+            
+            if(g_char.done) {
+                cb && cb()
+                
+                next_unit()
+            } else {
+                if((g_unit.value.length-1) == g_char.value[0]) document.querySelector('#correct_audio').play()
+                    
+            }
+
+        }
+
+
+        next_word()
+        function type_handle(e,box){
+            if (g_word.done) return ;
+            clearTimeout(pressed_time_handler)
+            clearTimeout(error_time_handler)
+
+            const target = e.target.classList.contains('box')?e.target:e.target.parentElement;
+            if(target.id == "key"+keymap[g_char.value[1]]){
+                n_console.records +=  g_char.value[1]
+                target.querySelector('.type_char').innerText = g_char.value[1]
+                target.classList.add('pressed')
+                pressed_time_handler = setTimeout(()=>{
+                    target.classList.remove('pressed')
+                    target.querySelector('.type_char').innerText = ""
+                },150)
+            
+                n_console.innerText += g_char.value[1]
+                next_char(()=>{
+                    n_console.innerText += ' -'
+                    document.querySelector("audio#pinyin_"+g_unit.value[1]).play()
+                })
+
+
+            }  else {
+                const _errnode = document.querySelector('.error')
+                _errnode && _errnode.classList.remove("error")
+                target.classList.add('error')
+                document.querySelector("audio#error_audio").play()
+                error_time_handler = setTimeout(()=>target.classList.remove('error'),550)
+
+            }
+        }
+
+
+
+            
+        
+    </script>
+</body>
+</html>

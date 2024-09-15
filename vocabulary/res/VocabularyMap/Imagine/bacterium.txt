@@ -1,0 +1,5 @@
+bacterium
+	bactericide
+		bactericidal
+	bacteriology
+	bacteria

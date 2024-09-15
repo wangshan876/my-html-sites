@@ -1,0 +1,6 @@
+symbol
+	symbolise
+	symbolize
+	symbology
+	symbolic
+	symbolism

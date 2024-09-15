@@ -1,0 +1,10 @@
+ic
+	barricade
+	cosmic
+	epidemic
+	mimic
+	rhetoric
+	ridiculous
+	static
+	synthetic
+	toxic

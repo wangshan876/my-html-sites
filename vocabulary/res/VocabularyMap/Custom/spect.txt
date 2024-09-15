@@ -1,0 +1,7 @@
+spect
+	perspective
+	prospect
+	prospectus
+	retrospect
+	spectator
+	suspect

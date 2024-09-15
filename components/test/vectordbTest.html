@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChromaDB 管理 UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #121212;
+            /* 背景色 */
+            color: #ffffff;
+            /* 文本颜色 */
+        }
+
+        header {
+            background-color: #1f1f1f;
+            /* 深色背景 */
+            color: #ffffff;
+            /* 白色文本 */
+            padding: 15px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            /* 使用 Flexbox 布局 */
+            flex: 1;
+        }
+
+        nav {
+            width: 200px;
+            background-color: #1e1e1e;
+            /* 深色背景 */
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            flex-shrink: 0;
+        }
+
+        nav a {
+            display: block;
+            padding: 10px;
+            color: #ffffff;
+            /* 白色文本 */
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #333333;
+            /* 悬停时的背景色 */
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            display: none;
+            /* 默认隐藏所有卡片 */
+            overflow-y: auto;
+        }
+
+        .active {
+            display: block;
+            /* 显示当前活动的卡片 */
+        }
+
+        .card {
+            background-color: #2a2a2a;
+            /* 卡片背景色 */
+            border: 1px solid #444444;
+            /* 边框颜色 */
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50 !important;
+            /* 按钮背景色 */
+            color: white;
+            /* 按钮文本颜色 */
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            /* 悬停时的按钮背景色 */
+        }
+
+        textarea {
+            width: 80%;
+            height: 200px;
+        }
+
+        button,
+        select,
+        input,
+        textarea {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input,
+        textarea,
+        select {
+            background: #afadaa;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <span>ChromaDB 管理界面</span>
+    </header>
+
+    <div class="container">
+        <nav>
+            <h3>导航</h3>
+            <a href="#" onclick="showCard('collections')">集合管理</a>
+            <a href="#" onclick="showCard('databases')">数据库管理</a>
+            <a href="#" onclick="showCard('tenants')">租户管理</a>
+            <a href="#" onclick="showCard('root')">根接口</a>
+            <a href="#" onclick="showCard('reset')">重置接口</a>
+            <a href="#" onclick="showCard('version')">版本接口</a>
+            <a href="#" onclick="showCard('heartbeat')">心跳接口</a>
+            <a href="#" onclick="showCard('pre-flight-checks')">预检查接口</a>
+
+        </nav>
+        <div style="flex: 1;">
+
+            <div class="content " id="root">
+                <div class="card">
+                    <h2>根接口</h2>
+                    <button class="button">获取根</button>
+                    <p>响应: <span id="root-response"></span></p>
+                </div>
+            </div>
+
+            <div class="content" id="reset">
+                <div class="card">
+                    <h2>重置接口</h2>
+                    <button class="button">重置</button>
+                    <p>响应: <span id="reset-response"></span></p>
+                </div>
+            </div>
+
+            <div class="content" id="version">
+                <div class="card">
+                    <h2>版本接口</h2>
+                    <button class="button">获取版本信息</button>
+                    <p>响应: <span id="version-response"></span></p>
+                </div>
+            </div>
+
+            <div class="content" id="heartbeat">
+                <div class="card">
+                    <h2>心跳接口</h2>
+                    <button class="button">心跳检测</button>
+                    <p>响应: <span id="heartbeat-response"></span></p>
+                </div>
+            </div>
+
+            <div class="content" id="pre-flight-checks">
+                <div class="card">
+                    <h2>预检查接口</h2>
+                    <button class="button">执行预检查</button>
+                    <p>响应: <span id="pre-flight-checks-response"></span></p>
+                </div>
+            </div>
+
+            <div class="content" id="databases">
+                <div class="card">
+                    <h2>创建数据库</h2>
+                    <input type="text" id="databaseName" placeholder="Database Name">
+                    <button id="createDatabaseBtn">Create</button>
+                    <p>响应: <span id="createDatabaseResponse" class="response"></span></p>
+                </div>
+                <div class="card">
+                    <h2>数据库列表</h2>
+                    <button id="listDatabasesBtn">List</button>
+                    <p>响应: <span id="listDatabasesResponse" class="response"></span></p>
+                </div>
+            </div>
+
+            <div class="content" id="tenants">
+                <div class="card">
+                    <h2>租户管理</h2>
+                    <input type="text" id="tenantName" placeholder="Tenant Name">
+                    <button id="createTenantBtn">Create</button>
+                    <p>响应: <span id="createTenantResponse" class="response"></span></p>
+                </div>
+            </div>
+
+            <div class="content active" id="collections">
+                <div class="card">
+                    <h2>创建集合</h2>
+                    <input type="text" id="collectionName" placeholder="Collection Name">
+                    <button id="collectionNameBtn">Create</button>
+                </div>
+                <div class="card">
+                    <h2>集合列表</h2>
+                    <select id="collectionSelect">
+                        <option value="">Select a Collection</option>
+                    </select>
+                    <button id="collectionListBtn">List</button>
+                </div>
+                <div class="card">
+                    <h2>集合详情</h2>
+                    <button id="collectionDetailsBtn">Get Details</button>
+                    <p>响应: <span id="collectionDetails" class="response"></span></p>
+
+
+                </div>
+                <div class="card">
+                    <h2>添加文本向量到集合</h2>
+                    <p> <textarea id="textInput" placeholder="Enter text here..."></textarea></p>
+                    <button id="parseResponseBtn">Parse</button>
+                    <p>响应: <span id="parseResponse" class="response"></span></p>
+                </div>
+                <div class="card">
+                    <h2>查询集合</h2>
+                    <p><textarea id="queryText" placeholder="Enter text to query..."></textarea></p>
+                    <button id="queryResponseBtn">Query</button>
+                    <p>响应: <span id="queryResponse" class="response"></span></p>
+                </div>
+                <div class="card">
+                    <h2>删除集合</h2>
+                    <input type="text" id="deleteCollectionName" placeholder="Collection Name">
+                    <button id="deleteResponseBtn">Delete</button>
+                    <p>响应: <span id="deleteResponse" class="response"></span></p>
+                </div>
+                <div class="card">
+                    <h2>更新集合</h2>
+                    <input type="text" id="updateCollectionName" placeholder="New Collection Name">
+                    <button id="updateCollectionBtn">Update</button>
+                    <p>响应: <span id="updateCollectionResponse" class="response"></span></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function showCard(cardId) {
+            // 隐藏所有卡片
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            // 显示选中的卡片
+            document.getElementById(cardId).classList.add('active');
+        }
+    </script>
+    <script type="module" src="/components/vectordb/index.mjs">
+    </script>
+
+</body>
+
+</html>

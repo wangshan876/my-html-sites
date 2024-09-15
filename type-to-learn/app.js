@@ -1,10 +1,10 @@
-import TextToSpeech from "./components/textToSpeech.js";
-import { createChatModule } from './components/gpt/chatView.js';
-import { createInputComponent } from "./components/typingBox.js";
+import TextToSpeech from "../components/textToSpeech.js";
+import { createChatModule } from '../components/gpt/chatView.js';
+import { createInputComponent } from "../components/typingBox.js";
 import {japanese_sentences} from "./sentences.js";
-import { IndexedDBModule } from './components/autoSaveIndexedDB.js';
-import PopupMenu  from './components/popMenu.js';
-import { createCourseManager } from './components/courseManager.js';
+import { IndexedDBModule } from '../components/autoSaveIndexedDB.js';
+import PopupMenu  from '../components/popMenu.js';
+import { createCourseManager } from '../components/courseManager.js';
 
 
 const chatModule = createChatModule('chat-container');
@@ -120,7 +120,7 @@ function addEventListeners(dbModule,menu,lessonsManager){
         dbModule.handleSaveButtonClick("configs");
     };
     readConfigBtn.onclick = function() {
-        dbModule.initializeFormFromStore("configs").then(() => {
+        dbModule.initializeFormFromStoreByKey("configs").then(() => {
             console.log("表单初始化完成");
         });
     };
@@ -168,7 +168,7 @@ function getSentences(){
             const lis =  ul.getElementsByTagName('li');
             sentences = Array.from(lis).map(li => li.textContent);
         } else {
-            console.log('error')
+            console.error('getSentences error')
         }
     
 }
@@ -189,7 +189,7 @@ async function dataInit(){
     const lessonsManager = new PopupMenu('lessons-manager', { toggleButtonId: 'lessons-toggle-btn', position: 'left', useIndicator: false, enableEdgeOpen: false });
     
     // 从 IndexedDB 中初始化配置表单
-    await dbModule.initializeFormFromStore("configs");
+    await dbModule.initializeFormFromStoreByKey("configs");
     
     // 初始化句子列表
     getSentences();

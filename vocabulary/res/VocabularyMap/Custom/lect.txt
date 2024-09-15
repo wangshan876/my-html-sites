@@ -1,0 +1,3 @@
+lect
+	dialect
+	neglect

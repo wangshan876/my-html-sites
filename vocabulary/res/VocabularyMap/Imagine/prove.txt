@@ -1,0 +1,6 @@
+prove
+	disproof
+	disprove
+	provable
+	proof
+	reprove

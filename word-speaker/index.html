@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>PWA Starter</title>
+	<meta name="viewport"
+	  content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+	<meta name="description" content="This is a PWA Starter app" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-title" content="PWA Starter" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="icon" href="./assets/icons/icon_24.png" type="image/x-icon" />
+  
+	<link rel="manifest" href="./manifest.json" />
+	<link rel="manifest" href="./manifest.webmanifest"></head>
+  
+	<title>Document</title>
+	<link href="./libs/halfmoon/css/halfmoon-variables.min.css" rel="stylesheet" />
+
+	<style>
+	body,html,.container{
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+	body,html,.container,ul{
+		padding: 0;
+		margin: 0;
+	}
+	body{
+		display: flex;
+		justify-content: center;
+	}
+	li{
+		list-style: none;
+	}
+	.container {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: repeat(5, 1fr);
+		grid-column-gap: 0px;
+		grid-row-gap: 0px;
+		max-width: 800px;
+		position: relative;
+	}
+
+	.header { 
+		grid-area: 1 / 1 / 2 / 5; 
+		background-color: #000;
+		color: #c2c2c2;
+		text-align: center;
+	}
+	.buttons { 
+		grid-area: 1 / 5 / 2 / 6; 
+	    text-align: center;
+    	display: inherit;
+		background: #000;
+	}
+	.buttons  button{
+		color: #8f8f8f;
+		font-weight: bold;
+		border-width: 0;
+		background: rgb(0 0 0);
+	}
+	.buttons button:last-child{
+		border-bottom-width: 0;
+	}
+	.body { 
+		grid-area: 2 / 1 / 5 / 6; 
+		background: #ddd;
+		border-inline: 1px solid #000;
+	}
+	.funcArea { 
+		grid-area: 5 / 1 / 6 / 6; 
+		background: #ddd;
+    	border-inline: 1px solid #000;
+		display: flex;
+		justify-content:center;
+		flex-wrap: wrap;
+		border-top: 1px solid #000;
+	}
+	.funcArea .item{
+		margin: 20px;
+	}
+	.voices-list{
+		max-width: 800px;
+		height: 500px;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+	.voices-list li{
+			list-style: none;
+			padding: 15px;
+			cursor: pointer;
+			background: #ddd;
+			margin: 1px;
+			border-inline: 1px solid #000;
+			border-bottom: 1px solid #000;
+			box-sizing: border-box;
+	}
+	.item{
+		font-size: 1.5rem;
+	}
+	.item.range{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 1.5rem;
+	}
+	.item.range label{
+		word-break:keep-all;
+		margin-right: 5px;
+		padding-top: 2px;
+	}
+	input[type=range] {
+		-webkit-appearance: none;
+		width: 100%;
+		height: 2px;
+		background-color: #000;
+		border-radius: 5px;
+		outline: none;
+
+		}
+
+		input[type=range]::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 10px;
+		height: 10px;
+		background-color:red;
+		border-radius: 50%;
+		cursor: pointer;
+		}
+
+		#play.playing .start{
+			display: none;
+		}
+		#play.playing .stop{
+			display: block;
+		}
+		#play .stop{
+			display: none;
+		}
+		#play .start{
+			display: block;
+		}
+		#wordlist{
+			overflow-y: auto;
+			height: 100%;
+			text-align: center;
+			border: 1px solid #000;
+			filter: blur(5px);
+		}
+		#wordlist:hover{
+			filter: blur(0);
+		}
+		#wordlist li:hover .meaning{
+			display: inline;
+		}
+		#wordlist li .meaning{
+			display: none;
+		}
+		#wordlist li{
+			border-bottom: 1px solid #000;
+			padding: 5px 0;
+		}
+		#wordlist .selected{
+			background-color: #d3aeae;
+		}
+		#grouplist{
+			max-width: 800px;
+			overflow-y: auto;
+			overflow-x: hidden;
+			display: grid;
+			grid-template-rows: repeat(auto-fit, 1fr);
+			grid-template-columns: repeat(8, 1fr);
+			gap:3px;
+			background-color: #fff;
+			text-align: center;
+			z-index: 9999;
+
+		}
+		#grouplist li{
+			padding:5px;
+			background-color: #eaeaea;
+		}
+		#uploadvoices{
+			height: 2.5rem;
+		}
+		.custom-file .file-names{
+			display: none;
+		}
+		.voicesWrapper{
+			z-index: 9999;
+		}
+		#err{
+			padding: 10px 0;
+			word-wrap: break-word;
+			background: #eee;
+			left: 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<h3 id="word">...</h3>
+			<h7 id="mean"></h7>
+		</div>
+		<div class="buttons"> 
+			<button id="play"><span class="stop">暂停</span><span class="start">开始</span></button>
+			<button id="setVoice">声音</button>
+			<button id="setWordGroup">单词组</button>
+			<div class="voicesWrapper"></div>
+			<ul id="grouplist" style="display: none;position: absolute;"></ul>
+		</div>
+		<div class="body">
+			<ul  id="wordlist"></ul>
+		</div>
+		<div class="funcArea">
+			<div class="item range" >
+				<label for="wordRepeat">重复<span>1</span>次</label>
+				<input type="range" id="wordRepeat" name="wordRepeat" step="1" min="1" max="5" value="1">
+			</div>
+			<div class="item custom-checkbox" >
+				<input type="checkbox" id="speakLetter" name="speakLetter" value checked="checked">
+				<label for="speakLetter">朗读拼写</label>
+			</div>
+			<div class="item custom-checkbox" >
+				<input type="checkbox" id="speakMeaning" name="speakMeaning" value checked="checked">
+				<label for="speakMeaning">朗读释义</label>
+			</div>
+			<div class="item custom-checkbox" >
+				<input type="checkbox" id="speakWord" name="speakWord" value >
+				<label for="speakWord">朗读单词</label>
+			</div>
+			<div class="item custom-checkbox" >
+				<input type="checkbox" id="localfirst" name="localfirst" value >
+				<label for="localfirst">优先使用本地语音包</label>
+			</div>
+			<div class=" item custom-file">
+				<input type="file" id="uploadvoices" accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed">
+				<label for="uploadvoices">加载本地语音包[zip]</label>
+			</div>
+			
+			<button class="item" id="errbtn">错误信息</button>
+			<div id="err" style="display:none"></div>
+			<div id="speaker_controller" style="display: none;"></div>
+		</div>
+	</div>
+	<script src="./libs/Tone.js"></script>
+	<script src="./libs/halfmoon/js/halfmoon.min.js"></script>
+	<script src="./libs/jszip.min.js"></script>
+
+	<script src="./libs/popper.min.js"></script>
+	<script src="./app.js" type="module"></script>
+	<script>
+		// if ('serviceWorker' in navigator) {
+		//   navigator.serviceWorker.register(
+		// 	'./sw.js'
+		//   );
+		// }
+
+		
+	  </script>
+</body>
+</html>

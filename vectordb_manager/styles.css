@@ -1,0 +1,507 @@
+label,.label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #ffffff;
+    width: 130px;
+    font-size: small;
+    white-space: nowrap;
+    padding: 10px;
+    /* 标签文本颜色 */
+}
+
+select,
+input[type="text"],
+input[type="file"] {
+    font-size: smaller;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    /* 边框颜色 */
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #333;
+    /* 输入框背景色 */
+    color: #ffffff;
+    /* 输入框文本颜色 */
+    outline: none;
+}
+
+#output {
+    margin-top: 20px;
+    padding: 0;
+    overflow-y: auto;
+}
+
+#output li {
+    background-color: #444;
+    /* 列表项背景色 */
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    list-style: none;
+    color: #ffffff;
+    /* 列表项文本颜色 */
+}
+
+#output li:hover {
+    background-color: #555;
+    /* 列表项悬停背景色 */
+}
+
+#custom-regex {
+    display: none;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #222;
+    /* 页面背景色 */
+    color: #ffffff;
+    /* 页面文本颜色 */
+    overflow: hidden;
+}
+
+header {
+    background-color: #1a1a1a;
+    /* 顶部背景色 */
+    color: #ffffff;
+    /* 顶部文本颜色 */
+    padding: 15px;
+    text-align: center;
+}
+
+.container {
+    background-color: #333;
+    /* 容器背景色 */
+    display: flex;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    /* 占据剩余空间 */
+}
+
+.left-column {
+    width: 50%;
+    height: 100%;
+    /* 左列宽度 */
+    background-color: #444;
+    /* 左列背景色 */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    flex: 1;
+    overflow-y: hidden;
+}
+
+.right-column {
+    width: 50%;
+    height: 100%;
+    /* 右列宽度 */
+    background-color: #555;
+    /* 右列背景色 */
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    flex: 3;
+    overflow-y: auto;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.row .row {
+    flex: 1;
+}
+
+input,
+select {
+    max-width: 70%;
+}
+
+input+button {
+    margin-left: 10px;
+}
+
+.status {
+    padding: 0 0 20px 0;
+    text-align: right;
+    font-size: smaller;
+    margin: auto 0;
+}
+
+.status::before {
+    content: '服务状态：';
+    font-size: smaller;
+}
+
+.version {
+    position: relative;
+    padding-left: 20px;
+    margin-right: 20px;
+}
+
+.version::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.version.online::before {
+    content: '';
+    /* 伪元素需要 content 属性 */
+    position: absolute;
+    /* 绝对定位 */
+    left: 0;
+    /* 圆点位置 */
+    top: 50%;
+    /* 垂直居中 */
+    transform: translateY(-50%);
+    /* 进一步调整垂直居中 */
+    width: 10px;
+    /* 圆点的宽度 */
+    height: 10px;
+    /* 圆点的高度 */
+    border-radius: 50%;
+    /* 使其成为圆形 */
+    background-color: green;
+    /* 在线状态的颜色 */
+}
+
+.form {
+    padding-bottom: 20px;
+}
+
+.mission-panel {
+    text-align: left;
+    display: inline-flex;
+    align-items: center;
+}
+
+.mission-panel .msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    padding: 20px 0;
+    background-color: darkslategray;
+}
+
+.mission-panel .msg .text {
+    font-size: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #444444;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #9b9489;
+    color: #000;
+}
+
+td {
+    word-break: break-word;
+}
+
+tr:hover {
+    background-color: #e3d9c8;
+}
+
+tr .id {
+    font-size: 9px;
+}
+
+tr .document {
+    font-size: 12px;
+}
+
+tr .metadata {
+    font-size: 14px;
+}
+
+#collectionDetails {
+    overflow-y: hidden;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+
+    background-color: #9b9489;
+    color: #000;
+}
+
+button {
+    display: inline-block;
+    padding: 7px 14px;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgb(12, 81, 12);
+    border: none;
+    border-radius: 3px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    /* 悬停时上移 */
+    background-color: rgb(2, 155, 2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+button.small {
+    font-size: xx-small;
+    padding: 4px 8px;
+}
+
+button[name='del'] {
+    background-color: rgb(81, 12, 12);
+    color: #fff;
+}
+
+button[name='del']:hover {
+    background-color: rgb(178, 0, 0);
+}
+
+button[name='new'] {
+    background-color: rgb(12, 81, 12);
+    color: #fff;
+}
+
+button[name='new']:hover {
+    background-color: rgb(2, 155, 2);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 40px;
+}
+
+.right-column .header {
+    padding: 10px;
+    background-color: #84878a45;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.metadata-group {
+    margin-bottom: 10px;
+}
+
+.metadata:hover button {
+    display: block !important;
+}
+
+.left-border {
+    border-left: 3px solid #7a7a7a;
+}
+
+.new-meta-group {
+    padding: 20px 4px;
+}
+
+.new-meta-group input {
+    width: 37%;
+    margin: 0 2px;
+}
+
+#meta-template-select {
+    height: 80%;
+    overflow-y: auto;
+    list-style: none;
+}
+
+ul {
+    list-style: none;
+    /* 清除默认列表样式 */
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    /* 垂直排列 */
+    gap: 10px;
+    /* 列表项之间的间距 */
+}
+ul.flow{
+    /* display: block; */
+    /* list-style: none; 
+    padding: 10px;
+    margin: 0;
+    column-count: 3; 
+    column-gap: 5px;  */
+    height:auto !important;
+    list-style: none; 
+    padding: 10px;
+    margin: 0;
+    display: grid;
+    /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
+    grid-template-columns: repeat(3, 1fr); /* 设置为三列 */
+    grid-template-rows: min-content;
+    gap: 5px; 
+
+    font-size: 12px;
+    color: #000;
+    font-weight: 500;
+    position: relative;
+    padding-top: 50px;
+}
+
+li {
+    background-color: #1e1e1e;
+    /* 列表项背景色 */
+    border-radius: 5px;
+    /* 圆角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    /* 阴影效果 */
+    padding: 10px;
+    /* 内边距 */
+    transition: transform 0.3s, box-shadow 0.3s;
+    /* 动画效果 */
+    cursor: pointer;
+    /* 鼠标指针 */
+}
+ul.flow li,ul.flow button{
+    break-inside: avoid; /* 防止列表项在列中断开 */
+    margin-bottom: 10px; /* 列表项之间的间距 */
+    padding: 2px;
+    background-color: #a3a3a3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ul.flow button{
+    display: block;
+    position: absolute;
+    background-color: #520a0a;
+    top: 10px;
+    z-index: 9999;
+    width: 95%;
+    margin-left: 10px;
+}
+li:hover {
+    transform: translateY(-2px);
+    /* 悬停时上移 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    /* 悬停时加深阴影 */
+}
+ul.flow li:hover {
+    
+    background: aliceblue;
+}
+ul.flow li.selected:hover{
+    font-weight:normal;
+    transform: translateY(-5px);
+}
+li.selected {
+    background-color: #28672b !important;
+    /* 选中时的背景色 */
+    color: white;
+    /* 选中时的文本颜色 */
+    border: 2px solid #388E3C;
+    /* 选中时的边框 */
+}
+ul.flow li.selected::before {
+    display: none;
+}
+li.selected::before {
+    content: '✔';
+    /* 自定义列表项前的符号 */
+    color: #4CAF50;
+    /* 符号颜色 */
+    margin-right: 10px;
+    /* 符号与文本之间的间距 */
+}
+
+.progress-container {
+    width: 70px;
+    height: 12px;
+    background: rgba(200, 200, 200, 0.3);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    /* 高度与容器相同 */
+    background: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(0, 255, 0, 1));
+    /* 渐变背景 */
+    width: 0;
+    /* 初始宽度为0，后续通过 JavaScript 设置 */
+    transition: width 0.5s ease;
+    /* 动画效果 */
+}
+
+.progress-text {
+    position: absolute;
+    /* 绝对定位 */
+    top: 50%;
+    /* 垂直居中 */
+    left: 50%;
+    /* 水平居中 */
+    transform: translate(-50%, -50%);
+    /* 使其真正居中 */
+    font-size: 9px;
+    /* 字体大小 */
+    color: #fff;
+    /* 字体颜色 */
+    font-weight: bold;
+    /* 字体加粗 */
+}
+
+.warning{
+    border:2px solid #ff0000 !important;
+}
+.hovered{
+    background-color: #4e16168c;
+}
+.hovered-btn{
+    background-color: rgb(0, 162, 0)
+}
+.has-data{
+    display: flex !important;
+}
+.postgre-has-data{
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 9px;
+}
+.postgre-has-data:hover{
+    background-color: #4e16168c;
+}

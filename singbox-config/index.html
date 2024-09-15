@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON 转换器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>JSON 转换器</h1>
+    <a href="https://sing-box-subscribe-xi-pearl.vercel.app/config/https:/jgjs2-connect.com/api/v1/client/subscribe?token=e33e5c744064e43f325dc873fb9a27e3" target="_blank">获取 JSON 数据</a>
+    <br><br>
+    <textarea id="jsonInput" placeholder="在这里粘贴 JSON 数据..."></textarea>
+    <br>
+    <button id="convertButton">转换并下载</button>
+
+    <script>
+        const blocksreg = /剩余流量|距离下次重置|套餐到期|⚠️|⚡️/g
+
+        document.getElementById('convertButton').addEventListener('click', function() {
+            const jsonInput = document.getElementById('jsonInput').value;
+
+            try {
+                // 解析用户输入的 JSON 数据
+                let A = JSON.parse(jsonInput);
+
+                // 第一步：找到 server_port 大于 65535 的数据 B
+                let B = A.outbounds.filter(item => item.server_port > 65535);
+
+                // 第二步：取得这些满足条件的 tag 键的值 C
+                let C = B.map(item => item.tag);
+                // 第三步：删除 A.outbounds 中 tag 是 "Proxy"、"Others" 和 "auto" 的项
+                A.outbounds = A.outbounds.map(item => {
+                    if (["Proxy", "Others", "auto"].includes(item.tag)) {
+                        item.outbounds = item.outbounds.filter(outbound => !C.includes(outbound))
+                        item.outbounds = item.outbounds.filter(outbound => !outbound.match(blocksreg))
+                    }
+                    
+                    return item;;
+                });
+
+                // 第四步：删除 B
+                B.forEach(item => {
+                    A.outbounds = A.outbounds.filter(outbound => outbound.server_port !== item.server_port);
+                });
+
+                A.outbounds = A.outbounds.filter(outbound => !outbound.tag.match(blocksreg))
+
+                console.log(A)
+                // 输出结果并下载为文件
+                downloadJSON(A, 'result.json');
+            } catch (error) {
+                alert('解析 JSON 数据时出错: ' + error.message);
+            }
+        });
+
+        // 下载 JSON 数据为文件的函数
+        function downloadJSON(data, filename) {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url); // 释放内存
+        }
+    </script>
+
+</body>
+</html>

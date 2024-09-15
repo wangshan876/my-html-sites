@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Parser</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml/dist/js-yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+    <h1>File Parser</h1>
+    <select id="fileType">
+        <option value="csv">CSV</option>
+        <option value="yaml">YAML</option>
+    </select>
+    <input type="file" id="fileInput" accept=".csv,.yml,.yaml" />
+    <button id="parseButton">Parse File</button>
+    <pre id="output"></pre>
+
+    <script>
+        document.getElementById('parseButton').addEventListener('click', function() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select a file first.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const fileType = document.getElementById('fileType').value;
+                const fileContent = event.target.result; // 获取文件内容
+
+                if (fileType === 'csv') {
+                    // 解析 CSV 文件
+                    Papa.parse(fileContent, {
+                        header: true, // 将第一行作为表头
+                        dynamicTyping: true, // 自动转换数据类型
+                        complete: function(results) {
+                            // 显示解析结果
+                            document.getElementById('output').textContent = JSON.stringify(results.data, null, 2);
+                        },
+                        error: function(error) {
+                            console.error(error);
+                            alert('Error parsing CSV: ' + error.message);
+                        }
+                    });
+                } else if (fileType === 'yaml') {
+                    // 解析 YAML 文件
+                    try {
+                        const data = jsyaml.load(fileContent); // 解析 YAML
+                        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+                    } catch (e) {
+                        console.error(e);
+                        alert('Error parsing YAML: ' + e.message);
+                    }
+                }
+            };
+
+            reader.readAsText(file); // 以文本格式读取文件
+        });
+    </script>
+</body>
+</html>

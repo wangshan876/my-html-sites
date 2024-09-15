@@ -1,0 +1,10 @@
+as
+	assault
+	assemble
+	assert
+	assign
+	assimilate
+	associate
+	assorted
+	assume
+	assure

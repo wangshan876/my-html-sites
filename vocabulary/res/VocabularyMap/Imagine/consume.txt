@@ -1,0 +1,7 @@
+consume
+	consumable
+	consuming
+	consumption
+	consumer
+		consumerism
+	consumptive

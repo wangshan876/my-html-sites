@@ -1,0 +1,7 @@
+nominate
+	denominate
+		denominator
+		denomination
+	nominee
+	nomination
+	nominative

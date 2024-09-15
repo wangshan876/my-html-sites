@@ -1,0 +1,5 @@
+meter
+	barometer
+	diameter
+	perimeter
+	thermometer

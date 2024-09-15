@@ -1,0 +1,10 @@
+ary
+	anniversary
+	arbitrary
+	contemporary
+	infirmary
+	itinerary
+	mercenary
+	preliminary
+	sanitary
+	voluntary

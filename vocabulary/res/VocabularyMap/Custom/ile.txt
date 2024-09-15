@@ -1,0 +1,5 @@
+ile
+	automobile
+	fertile
+	juvenile
+	missile

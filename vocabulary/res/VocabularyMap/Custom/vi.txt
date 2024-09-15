@@ -1,0 +1,5 @@
+vi
+	obvious
+	previous
+	trivial
+	viable

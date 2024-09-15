@@ -14,14 +14,14 @@
 
     <div class="header">
         <div style="display: flex;">
-            <div class="api-providers">
+            <div class="api-providers row">
                 <label for="api-select">服务提供商:</label>
                 <select id="api-select">
                     <option value="ollama">ollama</option>
                     <option value="deepseek" selected>deepseek</option>
                 </select>
             </div>
-            <div id="ollama-models-select" style="display: none;">
+            <div id="ollama-models-select" class="row" style="display: none;">
                 <label for="model-select">ollama模型:</label>
                 <select id="model-select"></select>
             </div>

@@ -1,0 +1,4 @@
+lev
+	elevate
+	lever
+	levy

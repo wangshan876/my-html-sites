@@ -1,0 +1,7 @@
+hospital
+	hospitalize
+		hospitalization
+	hospitable
+		inhospitable
+	hospitality
+		inhospitality

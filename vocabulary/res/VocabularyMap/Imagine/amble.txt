@@ -1,0 +1,8 @@
+amble
+	preamble
+	ambulate
+		ambulatory
+		ambulant
+		ambulance
+		circumambulate
+		perambulate

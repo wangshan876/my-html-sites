@@ -1,0 +1,6 @@
+derive
+	derived
+	derivable
+	derivate
+		derivation
+		derivative

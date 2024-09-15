@@ -1,0 +1,3 @@
+[submodule "VocabularyMap"]
+	path = VocabularyMap
+	url = https://github.com/OctopusLian/VocabularyMap.git

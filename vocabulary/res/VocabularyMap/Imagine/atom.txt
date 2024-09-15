@@ -1,0 +1,6 @@
+atom
+	atomistic
+	atomize
+	atomy
+	atomic
+		atomicity

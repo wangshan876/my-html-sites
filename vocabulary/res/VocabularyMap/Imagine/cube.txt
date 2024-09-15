@@ -1,0 +1,5 @@
+cube
+	cubical
+	cubic
+	cuboid
+	cubism
