@@ -1,6 +1,8 @@
 // chatService.mjs
 //
 // import addHtmlToShadowDOM from "/components/gpt/addHtmlToShadowDOM.js";
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
 let doneEvent = new CustomEvent("ChatDone", {
   detail: { key: "done" },
 });
@@ -60,14 +62,14 @@ async function handleResponse(response, model, displayNodeId) {
     const { done, value } = await reader.read();
     if (done) break;
     const chunk = decoder.decode(value, { stream: true });
-    isHandling = handleDeepSeekChatChunk(chunk, displayNode, displayTextNode);
+    isHandling = handleChatChunk(chunk, displayNode, displayTextNode);
   }
 
   document.dispatchEvent(doneEvent);
   // addHtmlToShadowDOM(displayNode.textContent, displayNode);
 }
 
-function handleDeepSeekChatChunk(chunk, displayNode, displayTextNode) {
+function handleChatChunk(chunk, displayNode, displayTextNode) {
   let isHandling = true;
 
   for (const line of chunk.trim().split("data:")) {
@@ -93,15 +95,11 @@ function handleDeepSeekChatChunk(chunk, displayNode, displayTextNode) {
       }
     }
   }
-
+  displayTextNode.innerHTML = marked.parse(displayTextNode.innerHTML);
   return isHandling;
 }
 
 async function parseResponse(response, model) {
   const result = await response.json();
-  if (model === "deepseek-chat") {
-    return result.choices[0].message.content;
-  } else {
-    return result.message.content;
-  }
+  return result.choices[0].message.content;
 }
