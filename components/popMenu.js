@@ -6,13 +6,14 @@ class PopupMenu {
     this.useIndicator = options.useIndicator || false;
     this.enableEdgeOpen = options.enableEdgeOpen || false; // 新增参数，默认值为 false
     this.indicator = null;
-    this.size = options.size || { height: "100%", width: "600px" };
+    this.size = { height: "100%", width: "600px", ...options.size };
     this.toggleButtonId = options.toggleButtonId || null;
-    this.styles = options.styles || {
+    this.styles = {
       backgroundColor: "#333",
       color: "white",
       top: 0,
       left: 0,
+      ...options.styles,
     };
 
     this.addStyles();
