@@ -13,6 +13,7 @@ export function createChatModule(id, options = { callback: null }) {
   const apiKeyInput = container.querySelector("#api-key");
   const modelInput = container.querySelector("#model");
   const baseUrlInput = container.querySelector("#base-url");
+  const defaultPromptInput = container.querySelector("#default-prompt");
   const savebtn = container.querySelector("button");
 
   const dbModule = new IndexedDBModule(dbname, storename);
@@ -27,6 +28,7 @@ export function createChatModule(id, options = { callback: null }) {
     const apiKey = apiKeyInput.value;
     const model = modelInput.value;
     const baseUrl = baseUrlInput.value;
+    const defaultPrompt = defaultPromptInput.value;
 
     if (!apiKey || !model || !baseUrl) {
       console.log("请填写 API Key、Model和 Base URL。");
@@ -38,7 +40,7 @@ export function createChatModule(id, options = { callback: null }) {
         baseUrl,
         apiKey,
         model,
-        systemMessage,
+        systemMessage || defaultPrompt,
         userMessage,
         displayNodeId,
       );
@@ -131,7 +133,7 @@ function getHTML(styles = {}) {
     </div>
     <div class="row">
       <label for="default-prompt">Prompt:</label>
-      <textarea id="default-prompt" rows="3"></textarea>
+      <textarea id="default-prompt" rows="6"></textarea>
     </div>
     <button>保存</button>
   </div>
