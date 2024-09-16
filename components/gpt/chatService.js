@@ -1,6 +1,6 @@
 // chatService.mjs
 //
-import addHtmlToShadowDOM from "/components/gpt/addHtmlToShadowDOM.js";
+// import addHtmlToShadowDOM from "/components/gpt/addHtmlToShadowDOM.js";
 let doneEvent = new CustomEvent("ChatDone", {
   detail: { key: "done" },
 });
@@ -61,14 +61,10 @@ async function handleResponse(response, model, displayNodeId) {
     if (done) break;
     const chunk = decoder.decode(value, { stream: true });
     isHandling = handleDeepSeekChatChunk(chunk, displayNode, displayTextNode);
-    // isHandling =
-    //   model === "deepseek-chat"
-    //     ? handleDeepSeekChatChunk(chunk, displayNode, displayTextNode)
-    //     : handleOllamaChunk(chunk, displayNode);
   }
 
   document.dispatchEvent(doneEvent);
-  addHtmlToShadowDOM(displayNode.textContent, displayNode);
+  // addHtmlToShadowDOM(displayNode.textContent, displayNode);
 }
 
 function handleDeepSeekChatChunk(chunk, displayNode, displayTextNode) {
