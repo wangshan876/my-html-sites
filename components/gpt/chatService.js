@@ -15,7 +15,6 @@ export async function generateChatCompletion(
   responsetype = "display",
 ) {
   const headers = { "Content-Type": "application/json" };
-  let url;
 
   headers["Authorization"] = `Bearer ${apiKey}`;
   let url = baseUrl + "/chat/completions";
