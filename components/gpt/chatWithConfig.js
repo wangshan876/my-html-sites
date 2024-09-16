@@ -1,6 +1,6 @@
 // chatModule.js
-import { generateChatCompletion } from "./chatService.js";
-import { IndexedDBModule } from "../autoSaveIndexedDB.js";
+import { generateChatCompletion } from "/components/gpt/chatService.js";
+import { IndexedDBModule } from "/components/autoSaveIndexedDB.js";
 
 const dbname = "_components";
 const storename = "_chat_input_configs";

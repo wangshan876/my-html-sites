@@ -1,6 +1,6 @@
 // chatService.mjs
 //
-import addHtmlToShadowDOM from "./addHtmlToShadowDOM.js";
+import addHtmlToShadowDOM from "/components/gpt/addHtmlToShadowDOM.js";
 let doneEvent = new CustomEvent("ChatDone", {
   detail: { key: "done" },
 });
