@@ -32,9 +32,9 @@ class PopupMenu {
                 z-index: 9999;
                 width:${this.size.width};
                 height: ${this.size.height};
-                top:${styles.top};
-                background-color: ${styles.backgroundColor};
-                color:  ${styles.color};
+                top:${this.styles.top};
+                background-color: ${this.styles.backgroundColor};
+                color:  ${this.styles.color};
                 position: fixed;
                 left: -${this.size.width};
                 transition: left 0.3s;
