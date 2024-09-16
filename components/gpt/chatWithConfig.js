@@ -6,7 +6,7 @@ const dbname = "_components";
 const storename = "_chat_input_configs";
 const storenodeid = "_component_chat_config_box";
 
-export function createChatModule(id) {
+export function createChatModule(id, callback = null) {
   const container = document.getElementById(id);
   container.innerHTML = getHTML();
 
@@ -18,9 +18,10 @@ export function createChatModule(id) {
   const dbModule = new IndexedDBModule(dbname, storename);
   dbModule.initializeFormFromStoreByKey(storenodeid);
 
-  savebtn.addEventListener("click", (e) =>
-    dbModule.handleSaveButtonClick(storenodeid),
-  );
+  savebtn.addEventListener("click", (e) => {
+    dbModule.handleSaveButtonClick(storenodeid);
+    callback && callback();
+  });
 
   async function chat(systemMessage, userMessage, displayNodeId) {
     const apiKey = apiKeyInput.value;

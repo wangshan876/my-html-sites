@@ -39,10 +39,12 @@ class PopupMenu {
                 color:  ${this.styles.color};
                 position: fixed;
                 display:none;
-                transition: left 0.3s;
+                left: ${this.size.width == "auto" ? "-800px" : -this.size.width}
+                transition: left 1s ease-out;
             }
 
             .myapp-popup-menu.open {
+                transform: translateX(0);
                 left:  ${this.styles.left};
                 display:block;
             }
