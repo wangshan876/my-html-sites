@@ -8,6 +8,11 @@ class PopupMenu {
     this.indicator = null;
     this.size = options.size || { height: "100%", width: "600px" };
     this.toggleButtonId = options.toggleButtonId || null;
+    this.styles = options.styles || {
+      backgroundColor: "#333",
+      color: "white",
+      top: 0,
+    };
 
     this.addStyles();
 
@@ -27,10 +32,10 @@ class PopupMenu {
                 z-index: 9999;
                 width:${this.size.width};
                 height: ${this.size.height};
-                background-color: #333;
-                color: white;
+                top:${styles.top};
+                background-color: ${styles.backgroundColor};
+                color:  ${styles.color};
                 position: fixed;
-                top:0;
                 left: -${this.size.width};
                 transition: left 0.3s;
             }
