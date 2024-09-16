@@ -76,6 +76,7 @@ function handleChatChunk(chunk, displayNode, displayTextNode) {
     if (line) {
       if (line.match(/\[DONE\]/)) {
         isHandling = false;
+        displayTextNode.innerHTML = marked.parse(displayTextNode.innerHTML);
         break;
       } else {
         const chunkJson = JSON.parse(line);
@@ -95,7 +96,6 @@ function handleChatChunk(chunk, displayNode, displayTextNode) {
       }
     }
   }
-  displayTextNode.innerHTML = marked.parse(displayTextNode.innerHTML);
   return isHandling;
 }
 
