@@ -6,9 +6,9 @@ const dbname = "_components";
 const storename = "_chat_input_configs";
 const storenodeid = "_component_chat_config_box";
 
-export function createChatModule(id, callback = null) {
+export function createChatModule(id, options = { callback: null }) {
   const container = document.getElementById(id);
-  container.innerHTML = getHTML();
+  container.innerHTML = getHTML(options.styles);
 
   const apiKeyInput = container.querySelector("#api-key");
   const modelInput = container.querySelector("#model");
@@ -20,7 +20,7 @@ export function createChatModule(id, callback = null) {
 
   savebtn.addEventListener("click", (e) => {
     dbModule.handleSaveButtonClick(storenodeid);
-    callback && callback();
+    options.callback && options.callback();
   });
 
   async function chat(systemMessage, userMessage, displayNodeId) {
@@ -51,7 +51,7 @@ export function createChatModule(id, callback = null) {
   return { chat };
 }
 
-function getHTML() {
+function getHTML(styles = {}) {
   return `
   <style>
     #_component_chat_config_box {
@@ -59,10 +59,11 @@ function getHTML() {
       flex-direction: column;
       padding: 20px;
       border-radius: 10px;
-      background-color: #f5f5f5;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: ${styles.backgroundColor || "#f5f5f5"};
       max-width: 400px;
       margin: 20px auto;
+      border: ${styles.border || "0px"};
+      color: ${styles.color || "#333"};
     }
 
     #_component_chat_config_box .row {
@@ -72,11 +73,9 @@ function getHTML() {
     }
 
     #_component_chat_config_box label {
-      font-weight: bold;
       margin-right: 10px;
       width: 80px; /* 设置固定宽度 */
       text-align: left; /* 文字靠左对齐 */
-      color: #333;
     }
 
     #_component_chat_config_box input,
@@ -102,8 +101,8 @@ function getHTML() {
 
     #_component_chat_config_box button {
       align-self: flex-end; /* 按钮靠右对齐 */
-      padding: 10px 20px;
-      background-color: #007bff;
+      padding: 5px 20px;
+      background-color: #515050;
       color: white;
       border: none;
       border-radius: 5px;
@@ -113,7 +112,7 @@ function getHTML() {
     }
 
     #_component_chat_config_box button:hover {
-      background-color: #0056b3;
+      background-color: black;
     }
   </style>
 
