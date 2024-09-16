@@ -12,6 +12,7 @@ class PopupMenu {
       backgroundColor: "#333",
       color: "white",
       top: 0,
+      left: 0,
     };
 
     this.addStyles();
@@ -41,7 +42,7 @@ class PopupMenu {
             }
 
             .myapp-popup-menu.open {
-                left: 0;
+                left:  ${this.styles.left};
                 display:block;
             }
 
