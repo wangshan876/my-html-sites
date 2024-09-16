@@ -78,7 +78,8 @@ function getHTML() {
       color: #333;
     }
 
-    #_component_chat_config_box input {
+    #_component_chat_config_box input,
+    #_component_chat_config_box textarea {
       flex: 1;
       padding: 8px;
       border: 1px solid #ccc;
@@ -87,7 +88,13 @@ function getHTML() {
       transition: border-color 0.3s ease;
     }
 
-    #_component_chat_config_box input:focus {
+    #_component_chat_config_box textarea {
+      resize: vertical; /* 允许垂直调整大小 */
+      height: 60px; /* 3行的高度 */
+    }
+
+    #_component_chat_config_box input:focus,
+    #_component_chat_config_box textarea:focus {
       border-color: #007bff;
       outline: none;
     }
@@ -115,12 +122,16 @@ function getHTML() {
       <input id="api-key" type="password"></input>
     </div>
     <div class="row">
-      <label for="model">模型:</label>
+      <label for="model">Model:</label>
       <input id="model" type="text"></input>
     </div>
     <div class="row">
       <label for="base-url">Base URL:</label>
       <input id="base-url" type="text"></input>
+    </div>
+    <div class="row">
+      <label for="default-prompt">Prompt:</label>
+      <textarea id="default-prompt" rows="3"></textarea>
     </div>
     <button>保存</button>
   </div>
