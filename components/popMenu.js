@@ -4,17 +4,25 @@ class PopupMenu {
     this.position = options.position || "left";
     this.isOpen = false;
     this.useIndicator = options.useIndicator || false;
-    this.enableEdgeOpen = options.enableEdgeOpen || false; // 新增参数，默认值为 false
+    this.enableEdgeOpen = options.enableEdgeOpen || false;
     this.indicator = null;
     this.size = { height: "100%", width: "600px", ...options.size };
     this.toggleButtonId = options.toggleButtonId || null;
+
+    const _styles = options.styles;
     this.styles = {
-      backgroundColor: "#333",
-      color: "white",
-      top: 0,
-      left: 0,
-      ...options.styles,
+      backgroundColor: _styles?.backgroundColor || "#333",
+      color: _styles?.color || "white",
+      top: _styles?.top || 0,
+      left: _styles?.left || 0,
     };
+    // this.styles = {
+    //   backgroundColor: "#333",
+    //   color: "white",
+    //   top: "0",
+    //   left: "0",
+    //   ...options.styles,
+    // };
 
     this.addStyles();
 
@@ -39,7 +47,7 @@ class PopupMenu {
                 color:  ${this.styles.color};
                 position: fixed;
                 display:none;
-                left: ${this.size.width == "auto" ? "-800px" : -this.size.width}
+                left: ${this.size.width == "auto" ? "-800px" : -this.size.width};
                 transition: left 1s ease-out;
             }
 
