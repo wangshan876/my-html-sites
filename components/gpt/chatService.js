@@ -5,8 +5,9 @@ let doneEvent = new CustomEvent("ChatDone", {
   detail: { key: "done" },
 });
 export async function generateChatCompletion(
-  model,
+  baseUrl = "https://api.openai.com/v1",
   apiKey = "",
+  model = "gpt-4",
   system,
   messages,
   displayNodeId,
@@ -15,21 +16,9 @@ export async function generateChatCompletion(
 ) {
   const headers = { "Content-Type": "application/json" };
   let url;
-  switch (model) {
-    case "deepseek-chat":
-    case "deepseek-coder":
-      headers["Authorization"] = `Bearer ${apiKey}`;
-      url = "https://api.deepseek.com/chat/completions";
-      break;
-    case "ollama":
-      url = "http://localhost:11434/v1/chat/completions";
-      break;
-    case "gpt4all":
-      url = "http://localhost:4891/v1/chat/completions";
-      break;
-    default:
-      break;
-  }
+
+  headers["Authorization"] = `Bearer ${apiKey}`;
+  let url = baseUrl + "/chat/completions";
 
   const payload = createPayload(model, system, messages, stream);
   let response = await fetch(url, {
