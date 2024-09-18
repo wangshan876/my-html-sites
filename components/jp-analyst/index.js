@@ -129,10 +129,8 @@ const jp_styles = `
   `;
 
 const html = `
-    <div class="panel">
       <div id="sentence"></div>
       <ul id="detail"></ul>
-    </div>
   `;
 
 const wordType = {
