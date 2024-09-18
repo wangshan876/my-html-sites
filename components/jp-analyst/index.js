@@ -74,6 +74,7 @@ const jp_styles = `
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 100%;
+            height:100%;
             color: #eee;
         }
         .particle-1, .particle-2, .particle-3, .aux, .verb {
