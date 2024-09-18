@@ -1,6 +1,7 @@
-const kuroshiro_src = "./kuroshiro.min.js";
-const kuroshiro_analyze_src = "./kuroshiro-analyzer-kuromoji.min.js";
-const dictPath = "./dict";
+const kuroshiro_src = "/components/jp-analyst/kuroshiro.min.js";
+const kuroshiro_analyze_src =
+  "/components/jp-analyst/kuroshiro-analyzer-kuromoji.min.js";
+const dictPath = "/components/jp-analyst/jp-analyst/dict";
 const japaneseVerbForms = {
   辞書形: {
     info: "动词的原形，通常用于辞典中。",
