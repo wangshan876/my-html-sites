@@ -85,10 +85,12 @@ const jp_styles = `
             font-weight: bold; /* 加粗 */
             font-size: 1em; /* 字体大小 */
         }
-
+        rt{
+          font-size: 12px;
+          color: #aaa;
+          padding-bottom: 5px;
+        }
         .particle-1 rt, .particle-2 rt, .particle-3 rt, .aux rt, .verb rt {
-            color: #ffffff; /* 字体颜色为白色 */
-            padding-bottom: 5px;
             font-weight: normal;
         }
 
@@ -126,6 +128,10 @@ const jp_styles = `
 
         li:hover {
             background-color: #393737; /* 悬停时的背景颜色 */
+        }
+        #sentence{
+          padding-bottom: 8px;
+          border-bottom: 1px solid #100d0d;
         }
   `;
 
