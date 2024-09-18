@@ -200,8 +200,13 @@ class JPAnalyzer extends HTMLElement {
 
   // 处理属性变化
   async attributeChangedCallback(name, oldValue, newValue) {
+    if (!newValue) return;
     if (name === "data-text") {
-      if (!this.analyzer) await this.loadDict();
+      if (!this.analyzer) {
+        this.loadDict();
+        console.warn("字典还未加载完成");
+        return;
+      }
       const result = await this.analyzer.parse(newValue);
       // const result2 = await this.analyzer.convert(newValue);
       const _format = this.format(result);
