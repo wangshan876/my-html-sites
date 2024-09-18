@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="../jp-analyst/index.js"></script>
+    </head>
+
+    <body>
+        <input type="text" />
+        <button id="test">test</button>
+        <my-jp-analyzer></my-jp-analyzer>
+
+        <script>
+            const panel = document.querySelector("my-jp-analyzer");
+            const input = document.querySelector("input");
+            const button = document.querySelector("button");
+            button.addEventListener("click", (e) => {
+                console.log("test");
+                panel.setAttribute("data-text", input.value);
+            });
+        </script>
+    </body>
+</html>
