@@ -75,7 +75,7 @@ const jp_styles = `
             padding: 5px 10px;
             width: 100%;
             height:100%;
-            color: #eee;
+            color: #2ce01c;
         }
         .particle-1, .particle-2, .particle-3, .aux, .verb {
             color: #ffffff; /* 字体颜色为白色 */
