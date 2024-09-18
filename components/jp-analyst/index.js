@@ -72,7 +72,7 @@ const jp_styles = `
             background-color: #000;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 5px 10px;
             width: 100%;
             height:100%;
             color: #eee;
@@ -88,33 +88,33 @@ const jp_styles = `
         rt{
           font-size: 12px;
           color: #aaa;
-          padding-bottom: 5px;
+          padding-bottom: 1px;
         }
         .particle-1 rt, .particle-2 rt, .particle-3 rt, .aux rt, .verb rt {
             font-weight: normal;
         }
 
         .particle-1 {
-            background-color: #FFCC00; /* 格助詞 */
+            background-color: #585858; /* 格助詞 */
         }
 
         .particle-2 {
-            background-color: #FF6600; /* 係助詞 */
+            background-color: #7C3200; /* 係助詞 */
         }
 
         .particle-3 {
-            background-color: #0099FF; /* 接続助詞 */
+            background-color: #00426D; /* 接続助詞 */
         }
 
         .aux {
-            background-color: #66CC66; /* 助動詞 */
+            background-color: #005200; /* 助動詞 */
         }
 
         .verb {
-            background-color: #CC3399; /* 動詞 */
+            background-color: #4F0035; /* 動詞 */
         }
         ul {
-            list-style-type: disclosure-closed;
+            list-style-type: none;
             padding: 0;
         }
 
@@ -131,7 +131,7 @@ const jp_styles = `
         }
         #sentence{
           padding-bottom: 8px;
-          border-bottom: 1px solid #100d0d;
+          border-bottom: 1px solid #eee;
         }
   `;
 
