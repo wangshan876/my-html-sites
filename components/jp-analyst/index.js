@@ -1,7 +1,6 @@
-const kuroshiro_src = "/components/jp-analyst/kuroshiro.min.js";
-const kuroshiro_analyze_src =
-  "/components/jp-analyst/kuroshiro-analyzer-kuromoji.min.js";
-const dictPath = "/components/jp-analyst/dict";
+const kuroshiro_src = "./kuroshiro.min.js";
+const kuroshiro_analyze_src = "./kuroshiro-analyzer-kuromoji.min.js";
+const dictPath = "./dict";
 const japaneseVerbForms = {
   辞書形: {
     info: "动词的原形，通常用于辞典中。",
@@ -202,7 +201,7 @@ class JPAnalyzer extends HTMLElement {
   // 处理属性变化
   async attributeChangedCallback(name, oldValue, newValue) {
     if (name === "data-text") {
-      if (!this.analyzer) await loadDict();
+      if (!this.analyzer) await this.loadDict();
       const result = await this.analyzer.parse(newValue);
       // const result2 = await this.analyzer.convert(newValue);
       const _format = this.format(result);
