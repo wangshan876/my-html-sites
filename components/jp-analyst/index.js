@@ -197,7 +197,7 @@ export default class JPAnalyzer extends HTMLElement {
     const kuroshiro_analyzer_script = document.createElement("script");
     kuroshiro_analyzer_script.src = kuroshiro_analyze_src;
     kuroshiro_analyzer_script.onload = async (e) => {
-      await this.loadDict();
+      this.dictPath && (await this.loadDict());
     };
     shadow.append(kuroshiro_script, kuroshiro_analyzer_script);
   }
@@ -211,8 +211,8 @@ export default class JPAnalyzer extends HTMLElement {
   async attributeChangedCallback(name, oldValue, newValue) {
     if (!newValue) return;
     if (name === "data-text") {
-      if (!this.analyzer) {
-        this.loadDict();
+      if (!this.analyzer || !this.dictPath) {
+        // this.loadDict();
         console.warn("字典还未加载完成");
         return;
       }
