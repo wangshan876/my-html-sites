@@ -4,7 +4,11 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
-        <script src="../jp-analyst/index.js"></script>
+        <script type="module">
+            // 定义自定义元素
+            import JPAnalyzer from "../jp-analyst/index.js";
+            customElements.define("my-jp-analyzer", JPAnalyzer);
+        </script>
     </head>
 
     <body>

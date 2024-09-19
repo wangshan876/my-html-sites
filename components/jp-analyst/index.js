@@ -163,7 +163,7 @@ function getWordDetail(r) {
   return "";
 }
 
-class JPAnalyzer extends HTMLElement {
+export default class JPAnalyzer extends HTMLElement {
   static get observedAttributes() {
     return ["sentence", "words", "styles", "script-src"];
   }
@@ -275,6 +275,3 @@ class JPAnalyzer extends HTMLElement {
     return { data, details };
   }
 }
-
-// 定义自定义元素
-customElements.define("my-jp-analyzer", JPAnalyzer);
