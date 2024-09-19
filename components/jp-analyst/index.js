@@ -170,7 +170,7 @@ export default class JPAnalyzer extends HTMLElement {
   constructor() {
     super();
     this.kuroshiro = {};
-    this.dictPath = "/jp-dict/dict";
+    this.dictPath = "";
 
     // 创建一个 Shadow DOM
     const shadow = this.attachShadow({ mode: "open" });
@@ -203,7 +203,6 @@ export default class JPAnalyzer extends HTMLElement {
   }
   connectedCallback() {
     //元素被添加到文档的 DOM 中时的生命周期connectedCallback
-    // 在这里获取宿主元素的自定义属性
     const dictPath = this.getAttribute("data-text");
     if (dictPath) this.loadDict();
   }
