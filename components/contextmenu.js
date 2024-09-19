@@ -1,8 +1,10 @@
 export default class ContextMenu {
-  constructor(elementId, menus, callback) {
+  constructor(elementId, menus, callback, eventHandle = new Function()) {
     this.elementId = elementId;
     this.menus = menus;
     this.callback = callback;
+    this.eventHandle = eventHandle;
+    this.detail = {};
     this.init();
   }
 
@@ -15,6 +17,7 @@ export default class ContextMenu {
 
     element.addEventListener("contextmenu", (event) => {
       event.preventDefault();
+      this.detail = this.eventHandle(event);
       this.showMenu(event.clientX, event.clientY);
     });
 
@@ -51,7 +54,7 @@ export default class ContextMenu {
       itemElement.style.cursor = "pointer";
 
       itemElement.addEventListener("click", () => {
-        this.callback(menuItem.action);
+        this.callback(menuItem.action, this.detail);
         this.hideMenu();
       });
 
