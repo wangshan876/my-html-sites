@@ -175,15 +175,6 @@ export default class JPAnalyzer extends HTMLElement {
     // 创建一个 Shadow DOM
     const shadow = this.attachShadow({ mode: "open" });
 
-    //load scripts
-    const kuroshiro_script = document.createElement("script");
-    kuroshiro_script.src = kuroshiro_src;
-    kuroshiro_script.onload = (e) => {
-      const k = shadow.Kuroshiro || Kuroshiro;
-      this.util = k.default.Util;
-      this.analyzer = new k.default();
-    };
-
     const style = document.createElement("style");
     style.textContent = jp_styles;
 
@@ -193,19 +184,33 @@ export default class JPAnalyzer extends HTMLElement {
     // 将样式和按钮添加到 Shadow DOM
     shadow.appendChild(style);
     shadow.appendChild(panel);
-
-    shadow.append(kuroshiro_script);
   }
+  //元素被添加到文档的 DOM 中时的生命周期connectedCallback
   connectedCallback() {
-    //元素被添加到文档的 DOM 中时的生命周期connectedCallback
+    if (this.util && this.analyzer) return;
     const dictPath = this.getAttribute("dictPath");
     if (dictPath) {
-      const kuroshiro_analyzer_script = document.createElement("script");
-      kuroshiro_analyzer_script.src = kuroshiro_analyze_src;
-      kuroshiro_analyzer_script.onload = async (e) => {
-        this.loadDict();
-      };
-      this.shadowRoot.append(kuroshiro_analyzer_script);
+      //load scripts
+      let scripts = [kuroshiro_src, kuroshiro_analyze_src].filter(
+        (src) => !this.shadowRoot.querySelector[`script[src="${src}"]`],
+      );
+
+      const script_loads = scripts.map((src) => {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = () => resolve(src); // 加载成功
+          script.onerror = () =>
+            reject(new Error(`Failed to load script: ${src}`)); // 加载失败
+          this.shadowRoot.appendChild(script);
+        });
+      });
+
+      Promise.all(script_loads).then(() => {
+        const k = this.shadowRoot.Kuroshiro || Kuroshiro;
+        this.util = k.default.Util;
+        this.analyzer = new k.default();
+      });
     }
   }
   // 指定要观察的属性
