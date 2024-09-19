@@ -233,9 +233,9 @@ export default class JPAnalyzer extends HTMLElement {
       // const result2 = await this.analyzer.convert(newValue);
       const _format = this.format(result);
       this.shadowRoot.querySelector("#sentence").innerHTML = _format.data;
-      this.shadowRoot.querySelector("#detail").innerHTML = _format.details.map(
-        (d) => `<li>${d}</li>`,
-      );
+      this.shadowRoot.querySelector("#detail").innerHTML = _format.details
+        .filter((d) => d && d.length > 2)
+        .map((d) => `<li>${d}</li>`);
     } else if (name === "words") {
       console.log("Callback attribute changed from", oldValue, "to", newValue);
     } else if (name === "styles") {
