@@ -141,7 +141,7 @@ const jp_styles = `
 
 const html = `
       <div id="sentence"></div>
-      <ul id="detail"></ul>
+      <ul id="detail">字典加载中……</ul>
   `;
 
 const wordType = {
@@ -258,7 +258,9 @@ export default class JPAnalyzer extends HTMLElement {
           dictPath: dictPath || this.dictPath,
         }),
       )
-      .then((r) => console.log("KuromojiAnalyzer 字典加载完成！"))
+      .then((r) => {
+        this.shadowRoot.querySelector("#detail").innerHTML = "字典加载完成!";
+      })
       .catch((err) => console.log(err));
 
     if (!this.analyzer?.parse)
