@@ -206,10 +206,11 @@ export default class JPAnalyzer extends HTMLElement {
         });
       });
 
-      Promise.all(script_loads).then(() => {
+      Promise.all(script_loads).then(async () => {
         const k = this.shadowRoot.Kuroshiro || Kuroshiro;
         this.util = k.default.Util;
         this.analyzer = new k.default();
+        this.loadDict();
       });
     }
   }
