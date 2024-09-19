@@ -277,7 +277,7 @@ export default class JPAnalyzer extends HTMLElement {
         _detail && details.push(_detail);
         if (this.util.isKatakana(_base)) {
           //片假名 -》 英语
-          return annotation(r, this.util.kanaToRomaji(r.reading));
+          return annotation(r, this.util.kanaToRomaji(r.surface_form));
         } else if (this.util.isKanji(_base)) {
           //汉字 -》 平假名
           return annotation(r, this.util.kanaToHiragna(r.reading));
