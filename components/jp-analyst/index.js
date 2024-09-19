@@ -271,6 +271,7 @@ export default class JPAnalyzer extends HTMLElement {
     let details = [],
       data = "";
     data = parse_results
+      .filter((r) => r.pos_detail_1 !== "空白")
       .map((r) => {
         const _base = r.surface_form;
         const _form = r.pos;
