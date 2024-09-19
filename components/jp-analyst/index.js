@@ -203,7 +203,7 @@ export default class JPAnalyzer extends HTMLElement {
   }
   connectedCallback() {
     //元素被添加到文档的 DOM 中时的生命周期connectedCallback
-    const dictPath = this.getAttribute("data-text");
+    const dictPath = this.getAttribute("dictPath");
     if (dictPath) this.loadDict();
   }
   // 指定要观察的属性
