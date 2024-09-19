@@ -194,17 +194,19 @@ export default class JPAnalyzer extends HTMLElement {
     shadow.appendChild(style);
     shadow.appendChild(panel);
 
-    const kuroshiro_analyzer_script = document.createElement("script");
-    kuroshiro_analyzer_script.src = kuroshiro_analyze_src;
-    kuroshiro_analyzer_script.onload = async (e) => {
-      this.dictPath && (await this.loadDict());
-    };
-    shadow.append(kuroshiro_script, kuroshiro_analyzer_script);
+    shadow.append(kuroshiro_script);
   }
   connectedCallback() {
     //元素被添加到文档的 DOM 中时的生命周期connectedCallback
     const dictPath = this.getAttribute("dictPath");
-    if (dictPath) this.loadDict();
+    if (dictPath) {
+      const kuroshiro_analyzer_script = document.createElement("script");
+      kuroshiro_analyzer_script.src = kuroshiro_analyze_src;
+      this.shadowRoot.append(kuroshiro_script, kuroshiro_analyzer_script);
+      kuroshiro_analyzer_script.onload = async (e) => {
+        this.loadDict();
+      };
+    }
   }
   // 指定要观察的属性
   static get observedAttributes() {
