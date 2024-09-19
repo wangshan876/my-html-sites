@@ -1,9 +1,31 @@
+// CSS 样式
+const style = document.createElement("style");
+style.textContent = `
+  .context-menu {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 5px 0;
+    z-index: 1000; /* 确保菜单在其他元素之上 */
+  }
+  .context-menu div {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .context-menu div:hover {
+    background-color: #f0f0f0; /* 鼠标悬停效果 */
+  }
+`;
+document.head.appendChild(style);
+
 export default class ContextMenu {
-  constructor(elementId, menus, callback, eventHandle = new Function()) {
+  constructor(elementId, menus, callback, eventHandle = null) {
     this.elementId = elementId;
     this.menus = menus;
     this.callback = callback;
     this.eventHandle = eventHandle;
+    this.menuElement = null; // 初始化为 null
     this.init();
   }
 
@@ -16,45 +38,38 @@ export default class ContextMenu {
 
     element.addEventListener("contextmenu", (event) => {
       event.preventDefault();
-      const detail = this.eventHandle(event);
-      if (detail) {
-        this.showMenu({ x: event.clientX, y: event.clientY }, detail);
-        event.stopPropagation(); // 阻止事件冒泡
-      }
+      const detail = this.eventHandle ? this.eventHandle(event) : null;
+      this.showMenu({ x: event.clientX, y: event.clientY }, detail);
+      event.stopPropagation(); // 阻止事件冒泡
     });
 
     document.addEventListener("click", () => this.hideMenu());
   }
 
   showMenu(pos, detail) {
-    const menuElement = this.createMenuElement();
-    menuElement.style.position = "absolute";
-    menuElement.style.left = `${pos.x}px`;
-    menuElement.style.top = `${pos.y}px`;
-    menuElement.setAttribute("data-detail", detail);
-    document.body.appendChild(menuElement);
+    if (!this.menuElement) {
+      this.menuElement = this.createMenuElement();
+    }
+    this.menuElement.style.left = `${pos.x}px`;
+    this.menuElement.style.top = `${pos.y}px`;
+    this.menuElement.setAttribute("data-detail", detail);
+    document.body.appendChild(this.menuElement);
   }
 
   hideMenu() {
-    const menuElement = document.querySelector(".context-menu");
-    if (menuElement) {
-      menuElement.remove();
+    if (this.menuElement) {
+      this.menuElement.remove();
+      this.menuElement = null; // 清空引用
     }
   }
 
   createMenuElement() {
     const menuElement = document.createElement("div");
     menuElement.className = "context-menu";
-    menuElement.style.backgroundColor = "#fff";
-    menuElement.style.border = "1px solid #ccc";
-    menuElement.style.boxShadow = "2px 2px 10px rgba(0, 0, 0, 0.1)";
-    menuElement.style.padding = "5px 0";
 
     this.menus.forEach((menuItem) => {
       const itemElement = document.createElement("div");
       itemElement.textContent = menuItem.label;
-      itemElement.style.padding = "5px 10px";
-      itemElement.style.cursor = "pointer";
 
       itemElement.addEventListener("click", () => {
         const detail = menuElement.getAttribute("data-detail");
@@ -68,7 +83,6 @@ export default class ContextMenu {
 
       menuElement.appendChild(itemElement);
     });
-
     return menuElement;
   }
 }
