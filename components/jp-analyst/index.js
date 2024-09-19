@@ -2,7 +2,6 @@ const kuroshiro_src =
   "https://my-html-sites.pages.dev/components/jp-analyst/kuroshiro.min.js";
 const kuroshiro_analyze_src =
   "https://my-html-sites.pages.dev/components/jp-analyst/kuroshiro-analyzer-kuromoji.min.js";
-const dictPath = "/jp-dict/dict";
 const japaneseVerbForms = {
   辞書形: {
     info: "动词的原形，通常用于辞典中。",
@@ -171,6 +170,8 @@ export default class JPAnalyzer extends HTMLElement {
   constructor() {
     super();
     this.kuroshiro = {};
+    this.dictPath = "/jp-dict/dict";
+
     // 创建一个 Shadow DOM
     const shadow = this.attachShadow({ mode: "open" });
 
@@ -222,6 +223,9 @@ export default class JPAnalyzer extends HTMLElement {
       this.shadowRoot.querySelector("#detail").innerHTML = _format.details.map(
         (d) => `<li>${d}</li>`,
       );
+    } else if (name === "dictPath") {
+      this.dictPath = newValue;
+      this.loadDict();
     } else if (name === "words") {
       console.log("Callback attribute changed from", oldValue, "to", newValue);
     } else if (name === "styles") {
@@ -235,7 +239,7 @@ export default class JPAnalyzer extends HTMLElement {
     await this.analyzer
       .init(
         new ka({
-          dictPath: dictPath,
+          dictPath: this.dictPath,
         }),
       )
       .then((r) => console.log("KuromojiAnalyzer 字典加载完成！"))
