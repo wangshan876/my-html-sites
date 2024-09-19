@@ -1,6 +1,9 @@
 // CSS 样式
 const style = document.createElement("style");
 style.textContent = `
+  .dark-theme .context-menu{
+    filter: invert(100%) hue-rotate(180deg);
+  }
   .context-menu {
     position: absolute;
     background-color: #fff;
@@ -12,6 +15,7 @@ style.textContent = `
   .context-menu div {
     padding: 5px 10px;
     cursor: pointer;
+    mix-blend-mode: exclusion;
   }
   .context-menu div:hover {
     background-color: #f0f0f0; /* 鼠标悬停效果 */
@@ -39,8 +43,10 @@ export default class ContextMenu {
     element.addEventListener("contextmenu", (event) => {
       event.preventDefault();
       const detail = this.eventHandle ? this.eventHandle(event) : null;
-      this.showMenu({ x: event.clientX, y: event.clientY }, detail);
-      event.stopPropagation(); // 阻止事件冒泡
+      if (detail) {
+        this.showMenu({ x: event.clientX, y: event.clientY }, detail);
+        event.stopPropagation(); // 阻止事件冒泡
+      }
     });
 
     document.addEventListener("click", () => this.hideMenu());
