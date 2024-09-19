@@ -201,7 +201,12 @@ export default class JPAnalyzer extends HTMLElement {
     };
     shadow.append(kuroshiro_script, kuroshiro_analyzer_script);
   }
-
+  connectedCallback() {
+    //元素被添加到文档的 DOM 中时的生命周期connectedCallback
+    // 在这里获取宿主元素的自定义属性
+    const dictPath = this.getAttribute("data-text");
+    if (dictPath) this.loadDict();
+  }
   // 指定要观察的属性
   static get observedAttributes() {
     return ["data-text"];
@@ -223,9 +228,6 @@ export default class JPAnalyzer extends HTMLElement {
       this.shadowRoot.querySelector("#detail").innerHTML = _format.details.map(
         (d) => `<li>${d}</li>`,
       );
-    } else if (name === "dictPath") {
-      this.dictPath = newValue;
-      this.loadDict();
     } else if (name === "words") {
       console.log("Callback attribute changed from", oldValue, "to", newValue);
     } else if (name === "styles") {
