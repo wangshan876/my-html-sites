@@ -202,10 +202,10 @@ export default class JPAnalyzer extends HTMLElement {
     if (dictPath) {
       const kuroshiro_analyzer_script = document.createElement("script");
       kuroshiro_analyzer_script.src = kuroshiro_analyze_src;
-      this.shadowRoot.append(kuroshiro_script, kuroshiro_analyzer_script);
       kuroshiro_analyzer_script.onload = async (e) => {
         this.loadDict();
       };
+      this.shadowRoot.append( kuroshiro_analyzer_script);
     }
   }
   // 指定要观察的属性
@@ -222,7 +222,7 @@ export default class JPAnalyzer extends HTMLElement {
         console.warn("字典还未加载完成");
         return;
       }
-      const result = await this.analyzer.parse(newValue);
+      const result = await this.analyzer.?parse(newValue);
       // const result2 = await this.analyzer.convert(newValue);
       const _format = this.format(result);
       this.shadowRoot.querySelector("#sentence").innerHTML = _format.data;
