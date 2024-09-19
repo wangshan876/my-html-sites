@@ -235,7 +235,8 @@ export default class JPAnalyzer extends HTMLElement {
       this.shadowRoot.querySelector("#sentence").innerHTML = _format.data;
       this.shadowRoot.querySelector("#detail").innerHTML = _format.details
         .filter((d) => d && d.length > 2)
-        .map((d) => `<li>${d}</li>`);
+        .map((d) => `<li>${d}</li>`)
+        .join("");
     } else if (name === "words") {
       console.log("Callback attribute changed from", oldValue, "to", newValue);
     } else if (name === "styles") {
