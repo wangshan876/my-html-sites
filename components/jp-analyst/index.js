@@ -190,6 +190,7 @@ export default class JPAnalyzer extends HTMLElement {
     if (this.util && this.analyzer) return;
     const dictPath = this.getAttribute("dictPath");
     if (dictPath) {
+      this.dictPath = dictPath;
       //load scripts
       let scripts = [kuroshiro_src, kuroshiro_analyze_src].filter(
         (src) => !this.shadowRoot.querySelector[`script[src="${src}"]`],
