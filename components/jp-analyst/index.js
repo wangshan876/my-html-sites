@@ -66,7 +66,9 @@ const japaneseVerbForms = {
 };
 
 const jp_styles = `
-
+        * {
+            box-sizing: border-box;
+        }
         .panel {
             background-color: #000;
             border-radius: 10px;
@@ -75,13 +77,14 @@ const jp_styles = `
             width: 100%;
             height:100%;
             color: #2ce01c;
+            border: 6px solid #0404049e;
+            box-sizing: border-box;
         }
         .particle-1, .particle-2, .particle-3, .aux, .verb {
             color: #ffffff; /* 字体颜色为白色 */
-            margin: 0 4px; /* 边距 */
-            padding: 2px 4px; /* 内边距 */
-            border-radius: 4px; /* 圆角 */
-            font-weight: bold; /* 加粗 */
+            margin: 0 1px;
+            padding: 1px 2px;
+            border-radius: 2px;
             font-size: 1em; /* 字体大小 */
         }
         rt{
@@ -119,9 +122,10 @@ const jp_styles = `
 
         li {
             border-radius: 4px; /* 圆角 */
-            padding: 10px 15px; /* 内边距 */
-            margin: 10px 0; /* 列表项之间的间距 */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+            padding: 3px 2px;
+            font-style: italic;
+            color: #eee;
+            font-size: 13px;
             transition: background-color 0.3s; /* 背景颜色过渡效果 */
         }
 
@@ -131,6 +135,7 @@ const jp_styles = `
         #sentence{
           padding-bottom: 8px;
           border-bottom: 1px solid #eee;
+          text-wrap: balance;
         }
   `;
 
