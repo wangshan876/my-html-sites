@@ -155,11 +155,12 @@ function annotation(r, hiragna = null) {
 }
 
 function getWordDetail(r) {
+  if (r.pos == "記号") return "";
   const _t = wordType[r.pos] || wordType[r.pos_detail_1] || "";
   if (r.pos == "動詞") {
     return `<span class="${_t}">${r.basic_form} ➡️ ${r.surface_form} </span><span style="font-style: italic;">${r.conjugated_form} - ${r.conjugated_type} </span>`;
   }
-  return false;
+  return "";
 }
 
 class JPAnalyzer extends HTMLElement {
