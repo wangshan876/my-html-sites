@@ -4,7 +4,6 @@ export default class ContextMenu {
     this.menus = menus;
     this.callback = callback;
     this.eventHandle = eventHandle;
-    this.detail = {};
     this.init();
   }
 
@@ -17,18 +16,22 @@ export default class ContextMenu {
 
     element.addEventListener("contextmenu", (event) => {
       event.preventDefault();
-      this.detail = this.eventHandle(event);
-      this.showMenu(event.clientX, event.clientY);
+      const detail = this.eventHandle(event);
+      if (detail) {
+        this.showMenu({ x: event.clientX, y: event.clientY }, detail);
+        event.stopPropagation(); // 阻止事件冒泡
+      }
     });
 
     document.addEventListener("click", () => this.hideMenu());
   }
 
-  showMenu(x, y) {
+  showMenu(pos, detail) {
     const menuElement = this.createMenuElement();
     menuElement.style.position = "absolute";
-    menuElement.style.left = `${x}px`;
-    menuElement.style.top = `${y}px`;
+    menuElement.style.left = `${pos.x}px`;
+    menuElement.style.top = `${pos.y}px`;
+    menuElement.setAttribute("data-detail", detail);
     document.body.appendChild(menuElement);
   }
 
@@ -54,7 +57,8 @@ export default class ContextMenu {
       itemElement.style.cursor = "pointer";
 
       itemElement.addEventListener("click", () => {
-        this.callback(menuItem.action, this.detail);
+        const detail = menuElement.getAttribute("data-detail");
+        this.callback(menuItem.action, detail);
         this.hideMenu();
       });
 
