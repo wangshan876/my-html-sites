@@ -1,48 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ContextMenu 测试页面</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .context-menu {
-            position: absolute;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 5px 0;
-        }
-        .context-menu div {
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .context-menu div:hover {
-            background-color: #f0f0f0;
-        }
-    </style>
-</head>
-<body>
-    <h1>ContextMenu 测试页面</h1>
-    <div id="test-element" style="width: 200px; height: 200px; background-color: #e0e0e0;">
-        右键点击这里
-    </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ContextMenu 测试页面</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+            .context-menu {
+                position: absolute;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 5px 0;
+            }
+            .context-menu div {
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+            .context-menu div:hover {
+                background-color: #f0f0f0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>ContextMenu 测试页面</h1>
+        <div
+            id="test-element"
+            style="width: 200px; height: 200px; background-color: #e0e0e0"
+        >
+            右键点击这里
+        </div>
 
-    <script src="/components/contextmenu.js"></script>
-    <script>
-        const menus = [
-            { label: '选项1', action: 'option1' },
-            { label: '选项2', action: 'option2' },
-            { label: '选项3', action: 'option3' }
-        ];
+        <script type="module">
+            import "ContextMenu" from "/components/contextmenu.js"
+            const menus = [
+                { label: "选项1", action: "option1" },
+                { label: "选项2", action: "option2" },
+                { label: "选项3", action: "option3" },
+            ];
 
-        const callback = (action) => {
-            alert(`你选择了: ${action}`);
-        };
+            const callback = (action) => {
+                alert(`你选择了: ${action}`);
+            };
 
-        new ContextMenu('test-element', menus, callback);
-    </script>
-</body>
+            new ContextMenu("test-element", menus, callback);
+        </script>
+    </body>
 </html>
