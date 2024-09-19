@@ -210,7 +210,7 @@ export default class JPAnalyzer extends HTMLElement {
         const k = this.shadowRoot.Kuroshiro || Kuroshiro;
         this.util = k.default.Util;
         this.analyzer = new k.default();
-        this.loadDict();
+        this.loadDict(dictPath);
       });
     }
   }
@@ -243,12 +243,12 @@ export default class JPAnalyzer extends HTMLElement {
   }
 
   // 动态加载外部脚本
-  async loadDict(src) {
+  async loadDict(dictPath) {
     const ka = this.KuromojiAnalyzer || KuromojiAnalyzer;
     await this.analyzer
       .init(
         new ka({
-          dictPath: this.dictPath,
+          dictPath: dictPath || this.dictPath,
         }),
       )
       .then((r) => console.log("KuromojiAnalyzer 字典加载完成！"))
