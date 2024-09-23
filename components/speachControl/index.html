@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多状态按钮</title>
+    <style>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.toggle-container {
+    position: relative;
+}
+
+.toggle-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.toggle-button.active {
+    background-color: #28A745; /* 活动状态的颜色 */
+}
+
+.toggle-button.inactive {
+    background-color: #DC3545; /* 非活动状态的颜色 */
+}
+
+.toggle-button:focus {
+    outline: none;
+}
+
+.toggle-button:active {
+    transform: scale(0.85);
+}
+  </style>
+</head>
+<body>
+  <div class="toggle-container">
+    <button id="multiStateButton" class="toggle-button">状态1</button>
+</div>
+    <script >
+// 定义按钮的状态
+const buttonStates = [
+    { label: '状态1', flag: 'state1' },
+    { label: '状态2', flag: 'state2' },
+    { label: '状态3', flag: 'state3' }
+];
+
+// 获取按钮元素
+const button = document.getElementById('multiStateButton');
+let currentStateIndex = 0;
+
+// 设置初始状态
+button.value = buttonStates[currentStateIndex].flag;
+button.innerText = buttonStates[currentStateIndex].label;
+
+// 添加点击事件
+button.addEventListener('click', () => {
+    // 切换到下一个状态
+    currentStateIndex = (currentStateIndex + 1) % buttonStates.length;
+    
+    // 更新按钮的文本和值
+    button.innerText = buttonStates[currentStateIndex].label;
+    button.value = buttonStates[currentStateIndex].flag;
+
+    // 根据状态添加或移除类
+    button.className = `toggle-button ${buttonStates[currentStateIndex].flag}`;
+    
+    console.log(`当前状态: ${button.value}`);
+});
+
+
+    </script>
+</body>
+</html>

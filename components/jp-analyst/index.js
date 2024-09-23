@@ -115,6 +115,13 @@ const jp_styles = `
         .verb {
             background-color: #4F0035; /* 動詞 */
         }
+        .grammar{
+            background-color: #103244; 
+        }
+        .verb-orig{
+          border: 2px solid #717171;
+          box-sizing: border-box;
+        }
         ul {
             list-style-type: none;
             padding: 0;
@@ -238,10 +245,27 @@ export default class JPAnalyzer extends HTMLElement {
       // const result2 = await this.analyzer.convert(newValue);
       const _format = this.format(result);
       this.shadowRoot.querySelector("#sentence").innerHTML = _format.data;
-      this.shadowRoot.querySelector("#detail").innerHTML = _format.details
-        .filter((d) => d && d.length > 2)
-        .map((d) => `<li>${d}</li>`)
-        .join("");
+      const detailRoot = this.shadowRoot.querySelector("#detail")
+      detailRoot.innerHTML = ""
+      const verb_details = _format.details?.verbConjugations
+      const grammar_details = _format.details?.grammarPatterns
+      if (verb_details) {
+        detailRoot.innerHTML += verb_details
+          .map((r) => {
+            return `<li><span class="verb verb-orig">${r.verb}</span>➡️<span class="verb">${r.surf}</span> <span style="font-style: italic;">${r.form} - ${r.conjugatedType} </span></li>`
+          })
+          .join("");
+      }
+      if (grammar_details) {
+        detailRoot.innerHTML += grammar_details
+          .map((r) => {
+            const _h = r.base == r.pattern
+              ? `<span class="grammar">${r.base}</span>`
+              : `<span class="grammar">${r.base}</span>➡️<span class="grammar">${r.pattern}</span>`
+            return `<li>${_h} - ${r.meaning}</li>`
+          })
+          .join("");
+      }
     } else if (name === "words") {
       console.log("Callback attribute changed from", oldValue, "to", newValue);
     } else if (name === "styles") {
@@ -272,9 +296,201 @@ export default class JPAnalyzer extends HTMLElement {
   changeButtonText(newText) {
     // this.button.textContent = newText;
   }
+  summarizeKnowledgePoints(data) {
+    const summary = {
+      partsOfSpeech: {},
+      particleFunctions: [],
+      verbConjugations: [],
+      adjectiveConjugations: [],
+      auxiliaryVerbs: [],
+      sentenceStructure: [],
+      punctuation: [],
+      negations: [],
+      grammarPatterns: [] // 用于存储辞书形 + 助词的语法结构
+    };
+
+    // 定义辞书形 + 助词的组合及其含义
+    const grammarCombinations = {
+      "base": [ //基本形
+        { particle: "か", meaning: "是否做某事" },
+        { particle: "られる", meaning: "被动或可能" },
+        { particle: "てみる", meaning: "尝试做某事" },
+        { particle: "ために", meaning: "为了做某事" },
+        { particle: "こと", meaning: "做某事的意思" },
+        { particle: "ため", meaning: "为了做某事" },
+        { particle: "べき", meaning: "应该做某事" },
+        { particle: "よう", meaning: "打算做某事或想要做某事" },
+        { particle: "つもり", meaning: "打算做某事" },
+        { particle: "の", meaning: "名词化" },
+        { particle: "と", meaning: "引用" },
+        { particle: "に", meaning: "方向/位置" }
+      ],
+      "mizen": [ //未然形
+        { particle: "ない", meaning: "否定" },
+        { particle: "う", meaning: "意志形" },
+        { particle: "よう", meaning: "意志形" },
+        { particle: "せる", meaning: "使役" },
+        { particle: "させる", meaning: "使役" },
+        { particle: "れる", meaning: "使役" },
+        { particle: "られる", meaning: "使役" },
+        { particle: "まい", meaning: "意愿否定" },
+        { particle: "ぬ", meaning: "否定" }
+      ],
+      renyou: [ //連用形
+        { particle: "て", meaning: "连用形" },
+        { particle: "で", meaning: "连用形" },
+        { particle: "たり", meaning: "连用形" },
+        { particle: "た", meaning: "连用形" },
+        { particle: "つつ", meaning: "持续" },
+        { particle: "ながら", meaning: "同时" }
+      ],
+      shuushi: [ //終止形
+        { particle: "た", meaning: "终止形" },
+      ],
+      katai: [ //仮定形
+        { particle: "ば", meaning: "假定形" },
+      ]
+    };
+
+    data.forEach(item => {
+      // 统计词性
+      const pos = item.pos;
+      if (!summary.partsOfSpeech[pos]) {
+        summary.partsOfSpeech[pos] = [];
+      }
+      summary.partsOfSpeech[pos].push(item.surface_form);
+
+      // 统计助词功能
+      if (pos === "助詞") {
+        summary.particleFunctions.push({
+          particle: item.surface_form,
+          type: item.pos_detail_1
+        });
+      }
+
+      // 统计动词的形态变化
+      if (pos === "動詞") {
+        if (item.conjugated_form !== "基本形") {
+          summary.verbConjugations.push({
+            surf: item.surface_form,
+            verb: item.basic_form,
+            form: item.conjugated_form,
+            conjugatedType: item.conjugated_type
+          });
+        }
+        const nextItem = data[data.indexOf(item) + 1];
+
+        if (nextItem && (nextItem.pos === "助動詞" || nextItem.pos === "助詞")) {
+          const _verb_form = item.conjugated_form;
+          let pattern = item.surface_form + nextItem.surface_form;
+          let base = item.surface_form + nextItem.basic_form;
+          console.log(item)
+          switch (_verb_form) {
+            case "基本形":
+              const combination = grammarCombinations.base.find(comb => comb.particle === nextItem.surface_form);
+              if (combination) {
+                summary.grammarPatterns.push({ pattern, base, meaning: combination.meaning });
+              }
+              break;
+            case "未然形":
+            case "未然ウ接続":
+              const mizenCombination = grammarCombinations.mizen.find(comb => comb.particle === nextItem.basic_form);
+
+              console.log(mizenCombination)
+              if (mizenCombination) {
+                summary.grammarPatterns.push({ pattern, base, meaning: mizenCombination.meaning });
+              }
+              break;
+            case "連用形":
+            case "連用タ接続":
+              const renyouCombination = grammarCombinations.renyou.find(comb => comb.particle === nextItem.basic_form);
+              if (renyouCombination) {
+                summary.grammarPatterns.push({ pattern, base, meaning: renyouCombination.meaning });
+              }
+              break;
+            case "終止形":
+            case "終止タ接続":
+              const shuushiCombination = grammarCombinations.shuushi.find(comb => comb.particle === nextItem.basic_form);
+              if (shuushiCombination) {
+                summary.grammarPatterns.push({ pattern, base, meaning: shuushiCombination.meaning });
+              }
+              break;
+            case "仮定形":
+            case "仮定タ接続":
+              const kataiCombination = grammarCombinations.katai.find(comb => comb.particle === nextItem.basic_form);
+              if (kataiCombination) {
+                summary.grammarPatterns.push({ pattern, base, meaning: kataiCombination.meaning });
+              }
+              break;
+            default:
+              break;
+          }
+        }
+      }
+
+      // 统计形容词的形态变化
+      if (pos === "形容詞") {
+        summary.adjectiveConjugations.push({
+          adjective: item.basic_form,
+          form: item.conjugated_form,
+          conjugatedType: item.conjugated_type
+        });
+      }
+
+      // 统计助动词
+      if (pos === "助動詞") {
+        summary.auxiliaryVerbs.push({
+          auxiliary: item.surface_form,
+          basicForm: item.basic_form,
+          conjugatedType: item.conjugated_type
+        });
+      }
+
+      // 统计否定形式
+      if (pos === "助動詞" && item.basic_form === "ない") {
+        summary.negations.push(item.surface_form);
+      }
+
+      // // 检查动词与助动词的结合
+      // if (pos === "助動詞" && item.basic_form === "ない") {
+      //   const previousItem = data[data.indexOf(item) - 1];
+      //   if (previousItem && previousItem.pos === "動詞") {
+      //     summary.verbConjugations.push({
+      //       surf: previousItem.surface_form + item.surface_form,
+      //       verb: previousItem.surface_form + previousItem.basic_form,
+      //       form: previousItem.conjugated_form + "ない",
+      //       conjugatedType: "否定"
+      //     });
+      //   }
+      // }
+
+      // 检查形容词与助动词的结合
+      if (pos === "助動詞" && item.basic_form === "です") {
+        const previousItem = data[data.indexOf(item) - 1];
+        if (previousItem && previousItem.pos === "形容詞") {
+          summary.adjectiveConjugations.push({
+            adjective: previousItem.basic_form,
+            form: previousItem.conjugated_form + "です",
+            conjugatedType: "礼貌形"
+          });
+        }
+      }
+
+      // 统计标点符号
+      if (pos === "記号") {
+        summary.punctuation.push(item.surface_form);
+      }
+    });
+
+    return summary;
+  }
+
 
   format(parse_results) {
+    console.log(parse_results);
     if (!parse_results) return;
+    const knowledgeSummary = this.summarizeKnowledgePoints(parse_results);
+    console.log(knowledgeSummary);
     let details = [],
       data = "";
     data = parse_results
@@ -295,6 +511,6 @@ export default class JPAnalyzer extends HTMLElement {
         }
       })
       .join("");
-    return { data, details };
+    return { data, details: knowledgeSummary };
   }
 }
