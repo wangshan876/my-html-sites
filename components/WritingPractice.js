@@ -46,6 +46,7 @@ class DictationComponent extends HTMLElement {
 
             this.success_sound.play()
             setTimeout(() => {
+                textareaElement.value = ''
                 this.dispatchEvent(new CustomEvent('dictation-complete', {
                     detail: {
                         translation: translation,
