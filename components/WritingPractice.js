@@ -14,7 +14,33 @@ class DictationComponent extends HTMLElement {
             this.render();
         }
     }
+    compare(translation,original){
+        const textareaElement = this.shadowRoot.querySelector('textarea');
+        const feedbackElement = this.shadowRoot.querySelector('.feedback');
+        const userInput = textareaElement.value
+        const t1 = userInput.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
+        const t2 = original.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
 
+
+        if (t1 == t2) {
+            feedbackElement.textContent = 'Correct!';
+            feedbackElement.style.color = 'green';
+            textareaElement.disabled = true; // 禁用 textarea
+
+            setTimeout(() => {
+                this.dispatchEvent(new CustomEvent('dictation-complete', {
+                    detail: {
+                        translation: translation,
+                        original: original,
+                        userInput: userInput
+                    }
+                }));  
+            }, 400);
+        } else {
+            feedbackElement.textContent = 'Incorrect. Try again.';
+            feedbackElement.style.color = 'red';
+        }
+    }
     render() {
         const translation = this.getAttribute('translation') || '';
         const original = this.getAttribute('original') || '';
@@ -117,33 +143,13 @@ class DictationComponent extends HTMLElement {
         container.classList.add('visible'); 
       }, 500); 
         
-        textareaElement.addEventListener('blur', () => {
-            const userInput = textareaElement.value.trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
-            const _original = origin.trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
-            if (userInput.toLowerCase() === _original.toLowerCase()) {
-                feedbackElement.textContent = 'Correct!';
-                feedbackElement.style.color = 'green';
-                textareaElement.disabled = true; // 禁用 textarea
-
-                setTimeout(() => {
-                    this.dispatchEvent(new CustomEvent('dictation-complete', {
-                        detail: {
-                            translation: translation,
-                            original: original,
-                            userInput: userInput
-                        }
-                    }));  
-                }, 400);
-            } else {
-                feedbackElement.textContent = 'Incorrect. Try again.';
-                feedbackElement.style.color = 'red';
-            }
-        });
+        textareaElement.addEventListener('blur', () =>this.compare(translation,original));
 
         // 自动调整textarea高度
         textareaElement.addEventListener('input', () => {
             textareaElement.style.height = 'auto'; // 重置高度
             textareaElement.style.height = `${textareaElement.scrollHeight}px`; // 设置为内容高度
+            this.compare(translation,original)
         });
 
         // 朗读翻译
