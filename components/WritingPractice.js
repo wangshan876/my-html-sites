@@ -186,7 +186,7 @@ class DictationComponent extends HTMLElement {
 
         };
         speechSynthesis.onvoiceschanged = () => {
-            this.defaultVoice = getVoiceByLanguage(lang); 
+            this.defaultVoice = getVoiceByLanguage( this.getAttribute('lang') || 'en-US'); 
         };
         // 自动朗读
         if (autoSpeak) {
