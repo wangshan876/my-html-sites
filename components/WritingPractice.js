@@ -1,8 +1,18 @@
+function getVoiceByLanguage(language) {
+    const voices = speechSynthesis.getVoices();
+    const languageVoices = voices.filter(voice => voice.lang.startsWith(language));
+    const naturalVoice = languageVoices.find(voice => voice.name.toLowerCase().includes("natural"));
+    
+    // 如果找到了 "natural" 声音，返回,  否则随机选择一个声音
+    return naturalVoice || languageVoices[Math.floor(Math.random() * languageVoices.length)];
+}
+
 class DictationComponent extends HTMLElement {
     constructor() {
         super();
         this.success_sound = new Audio('https://my-html-sites.pages.dev/components/assets/sounds/success.wav');
         this.fail_sound = new Audio('https://my-html-sites.pages.dev/components/assets/sounds/fail.wav');
+        this.defaultVoice  = null;
         this.attachShadow({ mode: 'open' });
         this.render();
     }
@@ -16,7 +26,7 @@ class DictationComponent extends HTMLElement {
             this.render();
         }
     }
-    compare(translation,original,mutation){
+    compare(translation,original,mutation,caller="blur"){
         const textareaElement = this.shadowRoot.querySelector('textarea');
         const feedbackElement = this.shadowRoot.querySelector('.feedback');
         const userInput = textareaElement.value
@@ -41,12 +51,14 @@ class DictationComponent extends HTMLElement {
                 }));  
             }, 1500);
         } else {
-            
-            this.fail_sound.play()
+            if(caller=="blur"){
+                this.fail_sound.play()
+            }
             feedbackElement.textContent = 'Incorrect. Try again.';
             feedbackElement.style.color = 'red';
         }
     }
+
     render() {
         const translation = this.getAttribute('translation') || '';
         const original = this.getAttribute('original') || '';
@@ -155,31 +167,36 @@ class DictationComponent extends HTMLElement {
         translationElement.classList.add('visible'); 
       }, 500); 
         
-        textareaElement.addEventListener('blur', () =>this.compare(translation,original,mutation));
+        textareaElement.addEventListener('blur', () =>this.compare(translation,original,mutation,'blur'));
 
         // 自动调整textarea高度
         textareaElement.addEventListener('input', () => {
             textareaElement.style.height = 'auto'; // 重置高度
             textareaElement.style.height = `${textareaElement.scrollHeight}px`; // 设置为内容高度
-            this.compare(translation,original,mutation)
+            this.compare(translation,original,mutation,"input")
         });
 
         // 朗读翻译
-        const speak = (text, lang) => {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = lang;
-            window.speechSynthesis.speak(utterance);
-        };
+        const speak = (text) => {
+                // 例如，获取英语（美国）的声音
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.voice = this.defaultVoice;
+                utterance.lang = lang;
+                window.speechSynthesis.speak(utterance);
 
+        };
+        speechSynthesis.onvoiceschanged = () => {
+            this.defaultVoice = getVoiceByLanguage(lang); 
+        };
         // 自动朗读
         if (autoSpeak) {
-            speak(original, lang);
+            speak(original);
         }
 
         // 点击播放按钮时朗读
         if (speakButton) {
             speakButton.addEventListener('click', () => {
-                speak(original, lang);
+                speak(original);
             });
         }
     }
