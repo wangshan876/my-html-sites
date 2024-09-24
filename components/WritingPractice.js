@@ -18,12 +18,16 @@ class DictationComponent extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['translation', 'original', 'autoSpeak'];
+        return ['translation', 'original', 'autoSpeak','lang'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this.render();
+        if(name === 'lang'){
+            this.defaultVoice = getVoiceByLanguage(newValue);
+        }else {
+            if (oldValue !== newValue) {
+                this.render();
+            }
         }
     }
     compare(translation,original,mutation,caller="blur"){
