@@ -1,8 +1,8 @@
 class DictationComponent extends HTMLElement {
     constructor() {
         super();
-        this.success_sound = new Audio('/components/assets/sounds/success.wav');
-        this.fail_sound = new Audio('/components/assets/sounds/fail.wav');
+        this.success_sound = new Audio('./assets/sounds/success.wav');
+        this.fail_sound = new Audio('./assets/sounds/fail.wav');
         this.attachShadow({ mode: 'open' });
         this.render();
     }
@@ -16,15 +16,16 @@ class DictationComponent extends HTMLElement {
             this.render();
         }
     }
-    compare(translation,original){
+    compare(translation,original,mutation){
         const textareaElement = this.shadowRoot.querySelector('textarea');
         const feedbackElement = this.shadowRoot.querySelector('.feedback');
         const userInput = textareaElement.value
         const t1 = userInput.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
         const t2 = original.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
-
-
-        if (t1 == t2) {
+        const t3 = mutation
+                    ? mutation.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '')
+                    : t2
+        if (t1 == t2 || t1 == t3) {
             feedbackElement.textContent = 'Correct!';
             feedbackElement.style.color = 'green';
             textareaElement.disabled = true; // 禁用 textarea
@@ -38,7 +39,7 @@ class DictationComponent extends HTMLElement {
                         userInput: userInput
                     }
                 }));  
-            }, 400);
+            }, 1500);
         } else {
             
             this.fail_sound.play()
@@ -49,6 +50,7 @@ class DictationComponent extends HTMLElement {
     render() {
         const translation = this.getAttribute('translation') || '';
         const original = this.getAttribute('original') || '';
+        const mutation = this.getAttribute('mutation') || '';
         const autoSpeak = this.getAttribute('autoSpeak') === 'true';
         const lang = this.getAttribute('lang') || 'en-US';
 
@@ -153,13 +155,13 @@ class DictationComponent extends HTMLElement {
         translationElement.classList.add('visible'); 
       }, 500); 
         
-        textareaElement.addEventListener('blur', () =>this.compare(translation,original));
+        textareaElement.addEventListener('blur', () =>this.compare(translation,original,mutation));
 
         // 自动调整textarea高度
         textareaElement.addEventListener('input', () => {
             textareaElement.style.height = 'auto'; // 重置高度
             textareaElement.style.height = `${textareaElement.scrollHeight}px`; // 设置为内容高度
-            this.compare(translation,original)
+            this.compare(translation,original,mutation)
         });
 
         // 朗读翻译
