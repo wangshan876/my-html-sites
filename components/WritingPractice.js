@@ -36,7 +36,7 @@ class DictationComponent extends HTMLElement {
                     border: 1px solid #e0e0e0;
                     border-radius: var(--border-radius);
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    max-width: 400px;
+                    width:100%;
                     margin: 20px auto;
                     transition: transform 0.2s;
                 }
