@@ -1,8 +1,8 @@
 class DictationComponent extends HTMLElement {
     constructor() {
         super();
-        this.success_sound = new Audio('./assets/sounds/success.wav');
-        this.fail_sound = new Audio('./assets/sounds/fail.wav');
+        this.success_sound = new Audio('https://my-html-sites.pages.dev/components/assets/sounds/success.wav');
+        this.fail_sound = new Audio('https://my-html-sites.pages.dev/components/assets/sounds/fail.wav');
         this.attachShadow({ mode: 'open' });
         this.render();
     }
