@@ -1,6 +1,8 @@
 class DictationComponent extends HTMLElement {
     constructor() {
         super();
+        this.success_sound = new Audio('/components/assets/sounds/success.wav');
+        this.fail_sound = new Audio('/components/assets/sounds/fail.wav');
         this.attachShadow({ mode: 'open' });
         this.render();
     }
@@ -27,6 +29,7 @@ class DictationComponent extends HTMLElement {
             feedbackElement.style.color = 'green';
             textareaElement.disabled = true; // 禁用 textarea
 
+            this.success_sound.play()
             setTimeout(() => {
                 this.dispatchEvent(new CustomEvent('dictation-complete', {
                     detail: {
@@ -37,6 +40,8 @@ class DictationComponent extends HTMLElement {
                 }));  
             }, 400);
         } else {
+            
+            this.fail_sound.play()
             feedbackElement.textContent = 'Incorrect. Try again.';
             feedbackElement.style.color = 'red';
         }
@@ -63,33 +68,35 @@ class DictationComponent extends HTMLElement {
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                     width: 100%;
                     margin: 20px auto;
-                    filter: blur(5px) grayscale(1);
-                    transition: filter 0.3s ease; /* 过渡效果 */
                 }
                 .container:hover {
 
                 }
-                .container.visible {
-                    filter: none;
-                }
                 .translation {
                     font-size: 20px;
-                    font-weight: bold;
                     color: var(--primary-color);
                     margin-bottom: 15px;
                     text-align: center;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    filter: blur(5px) grayscale(1);
+                    transition: filter 0.3s ease; 
                 }
      
+                .translation.visible {
+                    filter: none;
+                }
                 .translation button {
                     margin-left: 5px;
                     background: none;
                     border: none;
                     cursor: pointer;
-                    font-style: italic;
-                    font-size: x-small;
+                    text-align: center;
+                    margin: auto 0;
+                    padding: 2px;
+                    width: 18px;
+                    height: 18px;
                 }
                 .translation button:hover {
                     filter: brightness(0.4);
@@ -102,16 +109,16 @@ class DictationComponent extends HTMLElement {
                 textarea {
                     padding: 12px;
                     font-size: 16px;
-                    border: 2px solid #00000012;
                     border-radius: var(--border-radius);
                     width: 100%;
                     resize: none;
                     overflow: hidden;
                     height: auto;
+                    outline: none;
+                    border:0px;
                 }
                 textarea:focus {
-                    border-color: var(--primary-color);
-                    outline: none;
+                    opacity:0.8;
                 }
                 .feedback {
                     margin-top: 10px;
@@ -123,7 +130,10 @@ class DictationComponent extends HTMLElement {
             <div class="container">
                 <div class="translation">
                     ${translation}
-                    ${autoSpeak ? `<button>🎙️</button>` : ''}
+                    ${autoSpeak ? `<button><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-volume-2">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+</svg></button>` : ''}
                 </div>
                 <div class="input-container">
                     <textarea placeholder="Type the original sentence here" rows="3"></textarea>
@@ -138,9 +148,9 @@ class DictationComponent extends HTMLElement {
         const speakButton = translationElement.querySelector('button');
         const container = this.shadowRoot.querySelector('.container');
 
-      container.classList.remove('visible'); 
+        translationElement.classList.remove('visible'); 
       setTimeout(() => {
-        container.classList.add('visible'); 
+        translationElement.classList.add('visible'); 
       }, 500); 
         
         textareaElement.addEventListener('blur', () =>this.compare(translation,original));
