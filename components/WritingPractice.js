@@ -38,10 +38,10 @@ class DictationComponent extends HTMLElement {
                     width: 100%;
                     margin: 20px auto;
                     filter: blur(5px) grayscale(1);
-                    transition: filter 0.5s ease; /* 过渡效果 */
+                    transition: filter 0.3s ease; /* 过渡效果 */
                 }
                 .container:hover {
-                    transform: scale(1.02);
+
                 }
                 .container.visible {
                     filter: none;
@@ -118,8 +118,9 @@ class DictationComponent extends HTMLElement {
       }, 500); 
         
         textareaElement.addEventListener('blur', () => {
-            const userInput = textareaElement.value.trim();
-            if (userInput.toLowerCase() === original.toLowerCase()) {
+            const userInput = textareaElement.value.trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
+            const _original = origin.trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
+            if (userInput.toLowerCase() === _original.toLowerCase()) {
                 feedbackElement.textContent = 'Correct!';
                 feedbackElement.style.color = 'green';
                 textareaElement.disabled = true; // 禁用 textarea
@@ -132,7 +133,7 @@ class DictationComponent extends HTMLElement {
                             userInput: userInput
                         }
                     }));  
-                }, 600);
+                }, 400);
             } else {
                 feedbackElement.textContent = 'Incorrect. Try again.';
                 feedbackElement.style.color = 'red';

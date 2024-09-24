@@ -11,11 +11,12 @@
     <h1>Dictation Component Test</h1>
 
     <dictation-component 
-        translation="Hello, how are you?" 
-        original="你好，你好吗？">
+        translation="会议5点种结束,应该快完了。" 
+        original="会議は5時までですから,もうすぐ終わるはずです。"
+        autoSpeak="true" lang="ja-JP">
+        
     </dictation-component>
 
-    <dictation-component translation="Hello" original="你好" autoSpeak="true" lang="zh-CN"></dictation-component>
 
     <script>
         document.querySelectorAll('dictation-component').forEach(component => {
