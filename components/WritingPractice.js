@@ -1,4 +1,3 @@
-// index.js
 class DictationComponent extends HTMLElement {
     constructor() {
         super();
@@ -7,7 +6,7 @@ class DictationComponent extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['translation', 'original', 'autoSpeak', 'lang'];
+        return ['translation', 'original', 'autoSpeak'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -20,7 +19,7 @@ class DictationComponent extends HTMLElement {
         const translation = this.getAttribute('translation') || '';
         const original = this.getAttribute('original') || '';
         const autoSpeak = this.getAttribute('autoSpeak') === 'true';
-        const lang = this.getAttribute('lang') || 'en-US'; // 默认语言为英语
+        const lang = this.getAttribute('lang') || 'en-US';
 
         this.shadowRoot.innerHTML = `
             <style>
@@ -36,12 +35,16 @@ class DictationComponent extends HTMLElement {
                     border: 1px solid #e0e0e0;
                     border-radius: var(--border-radius);
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    width:100%;
+                    width: 100%;
                     margin: 20px auto;
-                    transition: transform 0.2s;
+                    filter: blur(5px) grayscale(1);
+                    transition: filter 0.5s ease; /* 过渡效果 */
                 }
                 .container:hover {
                     transform: scale(1.02);
+                }
+                .container.visible {
+                    filter: none;
                 }
                 .translation {
                     font-size: 20px;
@@ -53,6 +56,7 @@ class DictationComponent extends HTMLElement {
                     align-items: center;
                     justify-content: center;
                 }
+     
                 .translation button {
                     margin-left: 5px;
                     background: none;
@@ -61,9 +65,8 @@ class DictationComponent extends HTMLElement {
                     font-style: italic;
                     font-size: x-small;
                 }
-                .translation button:hover{
+                .translation button:hover {
                     filter: brightness(0.4);
-                
                 }
                 .input-container {
                     display: flex;
@@ -107,20 +110,29 @@ class DictationComponent extends HTMLElement {
         const feedbackElement = this.shadowRoot.querySelector('.feedback');
         const translationElement = this.shadowRoot.querySelector('.translation');
         const speakButton = translationElement.querySelector('button');
+        const container = this.shadowRoot.querySelector('.container');
 
+      container.classList.remove('visible'); 
+      setTimeout(() => {
+        container.classList.add('visible'); 
+      }, 500); 
+        
         textareaElement.addEventListener('blur', () => {
             const userInput = textareaElement.value.trim();
             if (userInput.toLowerCase() === original.toLowerCase()) {
                 feedbackElement.textContent = 'Correct!';
                 feedbackElement.style.color = 'green';
-                this.dispatchEvent(new CustomEvent('dictation-complete', {
-                    detail: {
-                        translation: translation,
-                        original: original,
-                        userInput: userInput
-                    }
-                }));
                 textareaElement.disabled = true; // 禁用 textarea
+
+                setTimeout(() => {
+                    this.dispatchEvent(new CustomEvent('dictation-complete', {
+                        detail: {
+                            translation: translation,
+                            original: original,
+                            userInput: userInput
+                        }
+                    }));  
+                }, 600);
             } else {
                 feedbackElement.textContent = 'Incorrect. Try again.';
                 feedbackElement.style.color = 'red';
@@ -142,13 +154,13 @@ class DictationComponent extends HTMLElement {
 
         // 自动朗读
         if (autoSpeak) {
-            speak(translation, lang);
+            speak(original, lang);
         }
 
         // 点击播放按钮时朗读
         if (speakButton) {
             speakButton.addEventListener('click', () => {
-                speak(translation, lang);
+                speak(original, lang);
             });
         }
     }
