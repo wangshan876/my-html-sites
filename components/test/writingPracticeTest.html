@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dictation Component Test</title>
-    <script src="./index.js">
+    <script src="../WritingPractice.js">
     </script>
 </head>
 <body>
@@ -15,10 +15,7 @@
         original="你好，你好吗？">
     </dictation-component>
 
-    <dictation-component 
-        translation="What is your name?" 
-        original="你叫什么名字？">
-    </dictation-component>
+    <dictation-component translation="Hello" original="你好" autoSpeak="true" lang="zh-CN"></dictation-component>
 
     <script>
         document.querySelectorAll('dictation-component').forEach(component => {
