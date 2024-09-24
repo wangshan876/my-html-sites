@@ -384,7 +384,6 @@ export default class JPAnalyzer extends HTMLElement {
           const _verb_form = item.conjugated_form;
           let pattern = item.surface_form + nextItem.surface_form;
           let base = item.surface_form + nextItem.basic_form;
-          console.log(item)
           switch (_verb_form) {
             case "基本形":
               const combination = grammarCombinations.base.find(comb => comb.particle === nextItem.surface_form);
@@ -487,10 +486,8 @@ export default class JPAnalyzer extends HTMLElement {
 
 
   format(parse_results) {
-    console.log(parse_results);
     if (!parse_results) return;
     const knowledgeSummary = this.summarizeKnowledgePoints(parse_results);
-    console.log(knowledgeSummary);
     let details = [],
       data = "";
     data = parse_results

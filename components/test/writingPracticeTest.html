@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictation Component Test</title>
+    <script src="./index.js">
+    </script>
+</head>
+<body>
+    <h1>Dictation Component Test</h1>
+
+    <dictation-component 
+        translation="Hello, how are you?" 
+        original="你好，你好吗？">
+    </dictation-component>
+
+    <dictation-component 
+        translation="What is your name?" 
+        original="你叫什么名字？">
+    </dictation-component>
+
+    <script>
+        document.querySelectorAll('dictation-component').forEach(component => {
+            component.addEventListener('dictation-complete', (event) => {
+                console.log('Dictation Complete:', event.detail);
+            });
+        });
+    </script>
+</body>
+</html>
