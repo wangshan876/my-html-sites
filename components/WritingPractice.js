@@ -33,6 +33,7 @@ class DictationComponent extends HTMLElement {
     compare(translation,original,mutation,caller="blur"){
         const textareaElement = this.shadowRoot.querySelector('textarea');
         const feedbackElement = this.shadowRoot.querySelector('.feedback');
+        
         const userInput = textareaElement.value
         const t1 = userInput.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
         const t2 = original.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
@@ -54,7 +55,7 @@ class DictationComponent extends HTMLElement {
                         userInput: userInput
                     }
                 }));  
-            }, 1500);
+            }, 2000);
         } else {
             if(caller=="blur"){
                 this.fail_sound.play()
@@ -70,7 +71,6 @@ class DictationComponent extends HTMLElement {
         const mutation = this.getAttribute('mutation') || '';
         const autoSpeak = this.getAttribute('autoSpeak') === 'true';
         const lang = this.getAttribute('lang') || 'en-US';
-
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
@@ -98,7 +98,7 @@ class DictationComponent extends HTMLElement {
                     text-align: center;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
+                    /*justify-content: center;*/
                     filter: blur(5px) grayscale(1);
                     transition: filter 0.3s ease; 
                 }
@@ -145,18 +145,23 @@ class DictationComponent extends HTMLElement {
                     color: green;
                     text-align: center;
                 }
+                .footer{
+                    display:flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
             </style>
             <div class="container">
                 <div class="translation">
                     ${translation}
-                    ${autoSpeak ? `<button><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-volume-2">
+                    ${autoSpeak ? `<button class="speak"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-volume-2">
     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
     <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
 </svg></button>` : ''}
                 </div>
                 <div class="input-container">
                     <textarea placeholder="Type the original sentence here" rows="3"></textarea>
-                    <div class="feedback"> </div>
+                    <div class="footer"><div class="feedback"> </div><button class="skip">Skip</button></div>
                 </div>
             </div>
         `;
@@ -164,7 +169,7 @@ class DictationComponent extends HTMLElement {
         const textareaElement = this.shadowRoot.querySelector('textarea');
         const feedbackElement = this.shadowRoot.querySelector('.feedback');
         const translationElement = this.shadowRoot.querySelector('.translation');
-        const speakButton = translationElement.querySelector('button');
+        const speakButton = translationElement.querySelector('button.speak');
         const container = this.shadowRoot.querySelector('.container');
 
         translationElement.classList.remove('visible'); 
@@ -203,6 +208,10 @@ class DictationComponent extends HTMLElement {
                 speak(original);
             });
         }
+
+        this.shadowRoot.querySelector('.skip').addEventListener('click',e=>{
+            textareaElement.value = original
+        })
     }
 }
 
