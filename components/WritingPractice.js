@@ -161,7 +161,7 @@ class DictationComponent extends HTMLElement {
 </svg></button>` : ''}
                 </div>
                 <div class="input-container">
-                    <textarea placeholder="Type the original sentence here" rows="3"></textarea>
+                    <textarea placeholder="type ..." rows="3"></textarea>
                     <div class="functionArea"><div class="feedback"> </div><button class="skip">Skip</button></div>
                 </div>
             </div>
