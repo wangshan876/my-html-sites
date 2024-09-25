@@ -183,10 +183,8 @@ class DictationComponent extends HTMLElement {
 
         // 朗读翻译
         const speak = (text) => {
-                // 例如，获取英语（美国）的声音
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.voice = this.defaultVoice;
-                utterance.lang = lang;
                 window.speechSynthesis.speak(utterance);
 
         };
