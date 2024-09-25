@@ -2,7 +2,7 @@ function getVoiceByLanguage(language) {
     const voices = speechSynthesis.getVoices();
     const languageVoices = voices.filter(voice => voice.lang.startsWith(language));
     const naturalVoice = languageVoices.find(voice => voice.name.toLowerCase().includes("natural"));
-    
+
     // 如果找到了 "natural" 声音，返回,  否则随机选择一个声音
     return naturalVoice || languageVoices[Math.floor(Math.random() * languageVoices.length)];
 }
@@ -12,34 +12,34 @@ class DictationComponent extends HTMLElement {
         super();
         this.success_sound = new Audio('https://my-html-sites.pages.dev/components/assets/sounds/success.wav');
         this.fail_sound = new Audio('https://my-html-sites.pages.dev/components/assets/sounds/fail.wav');
-        this.defaultVoice  = null;
+        this.defaultVoice = null;
         this.attachShadow({ mode: 'open' });
         this.render();
     }
 
     static get observedAttributes() {
-        return ['translation', 'original', 'autoSpeak','lang'];
+        return ['translation', 'original', 'autoSpeak', 'lang'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if(name === 'lang'){
+        if (name === 'lang') {
             this.defaultVoice = getVoiceByLanguage(newValue);
-        }else {
+        } else {
             if (oldValue !== newValue) {
                 this.render();
             }
         }
     }
-    compare(translation,original,mutation,caller="blur"){
+    compare(translation, original, mutation, caller = "blur") {
         const textareaElement = this.shadowRoot.querySelector('textarea');
         const feedbackElement = this.shadowRoot.querySelector('.feedback');
-        
+
         const userInput = textareaElement.value
         const t1 = userInput.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
         const t2 = original.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
         const t3 = mutation
-                    ? mutation.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '')
-                    : t2
+            ? mutation.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '')
+            : t2
         if (t1 == t2 || t1 == t3) {
             feedbackElement.textContent = 'Correct!';
             feedbackElement.style.color = 'green';
@@ -48,16 +48,17 @@ class DictationComponent extends HTMLElement {
             this.success_sound.play()
             setTimeout(() => {
                 textareaElement.value = ''
+                textareaElement.disabled = false;
                 this.dispatchEvent(new CustomEvent('dictation-complete', {
                     detail: {
                         translation: translation,
                         original: original,
                         userInput: userInput
                     }
-                }));  
+                }));
             }, 2000);
         } else {
-            if(caller=="blur"){
+            if (caller == "blur") {
                 this.fail_sound.play()
             }
             feedbackElement.textContent = 'Incorrect. Try again.';
@@ -78,18 +79,18 @@ class DictationComponent extends HTMLElement {
                     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Yu Gothic", "Hiragino Sans", "Microsoft YaHei", sans-serif;
                     --primary-color: #4CAF50;
                     --border-radius: 8px;
+                    --background-color: #2c2c2c; /* 暗色背景 */
+                    --text-color: #e0e0e0; /* 暗色文本颜色 */
                 }
                 .container {
-                    background-color: #f9f9f9;
+                    background-color: var(--background-color);
                     padding: 20px;
-                    border: 1px solid #e0e0e0;
+                    border: 1px solid #444; /* 暗色边框 */
                     border-radius: var(--border-radius);
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 暗色阴影 */
                     width: 100%;
                     margin: 20px auto;
-                }
-                .container:hover {
-
+                    color: var(--text-color); /* 文本颜色 */
                 }
                 .translation {
                     font-size: 20px;
@@ -98,11 +99,9 @@ class DictationComponent extends HTMLElement {
                     text-align: center;
                     display: flex;
                     align-items: center;
-                    /*justify-content: center;*/
-                    filter: blur(5px) grayscale(1);
-                    transition: filter 0.3s ease; 
+                    filter: blur(1px) grayscale(1);
+                    transition: filter 0.1s ease; 
                 }
-     
                 .translation.visible {
                     filter: none;
                 }
@@ -116,6 +115,7 @@ class DictationComponent extends HTMLElement {
                     padding: 2px;
                     width: 18px;
                     height: 18px;
+                    color: var(--text-color); /* 按钮文本颜色 */
                 }
                 .translation button:hover {
                     filter: brightness(0.4);
@@ -134,20 +134,29 @@ class DictationComponent extends HTMLElement {
                     overflow: hidden;
                     height: auto;
                     outline: none;
-                    border:0px;
+                    border: 1px solid transparent; /* 将边框设置为透明 */
+                    background-color: rgba(0, 0, 0, 0.3); /* 暗色背景 */
+                    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+                    color: var(--text-color); /* 文本颜色 */
                 }
                 textarea:focus {
-                    opacity:0.8;
+                    border-color: var(--primary-color);
+                    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+                    background-color: rgba(0, 0, 0, 0.5); /* 聚焦时背景颜色稍微变亮 */
+                }
+                textarea::placeholder {
+                    color: rgba(255, 255, 255, 0.5); /* 暗色占位符颜色 */
+                    font-style: italic;
                 }
                 .feedback {
                     margin-top: 10px;
                     font-size: 14px;
-                    color: green;
+                    color: var(--primary-color); /* 反馈文本颜色 */
                     text-align: center;
                 }
-                .functionArea{
-                    width:100%;
-                    display:flex;
+                .functionArea {
+                    width: 100%;
+                    display: flex;
                     align-items: center;
                     justify-content: space-between;
                 }
@@ -168,35 +177,35 @@ class DictationComponent extends HTMLElement {
         `;
 
         const textareaElement = this.shadowRoot.querySelector('textarea');
-        const feedbackElement = this.shadowRoot.querySelector('.feedback');
         const translationElement = this.shadowRoot.querySelector('.translation');
         const speakButton = translationElement.querySelector('button.speak');
-        const container = this.shadowRoot.querySelector('.container');
 
-        translationElement.classList.remove('visible'); 
-      setTimeout(() => {
-        translationElement.classList.add('visible'); 
-      }, 500); 
-        
-        textareaElement.addEventListener('blur', () =>this.compare(translation,original,mutation,'blur'));
+        translationElement.classList.remove('visible');
+        setTimeout(() => {
+            translationElement.classList.add('visible');
+        }, 500);
+
+        textareaElement.addEventListener('blur', (e) => {
+            this.compare(translation, original, mutation, 'blur')
+        });
 
         // 自动调整textarea高度
         textareaElement.addEventListener('input', () => {
             textareaElement.style.height = 'auto'; // 重置高度
             textareaElement.style.height = `${textareaElement.scrollHeight}px`; // 设置为内容高度
-            this.compare(translation,original,mutation,"input")
+            this.compare(translation, original, mutation, "input")
         });
 
         // 朗读翻译
         const speak = (text) => {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.voice = this.defaultVoice;
-                window.speechSynthesis.speaking && window.speechSynthesis.cancel()
-                window.speechSynthesis.speak(utterance);
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.voice = this.defaultVoice;
+            window.speechSynthesis.speaking && window.speechSynthesis.cancel()
+            window.speechSynthesis.speak(utterance);
 
         };
         speechSynthesis.onvoiceschanged = () => {
-            this.defaultVoice = getVoiceByLanguage( this.getAttribute('lang') || 'en-US'); 
+            this.defaultVoice = getVoiceByLanguage(this.getAttribute('lang') || 'en-US');
         };
         // 自动朗读
         if (autoSpeak) {
@@ -210,9 +219,9 @@ class DictationComponent extends HTMLElement {
             });
         }
 
-        this.shadowRoot.querySelector('.skip').addEventListener('click',e=>{
+        this.shadowRoot.querySelector('.skip').addEventListener('click', e => {
             textareaElement.value = original
-            this.compare(original,original)
+            this.compare(original, original)
         })
     }
 }
