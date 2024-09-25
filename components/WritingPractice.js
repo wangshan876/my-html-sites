@@ -145,7 +145,8 @@ class DictationComponent extends HTMLElement {
                     color: green;
                     text-align: center;
                 }
-                .footer{
+                .functionArea{
+                    width:100%;
                     display:flex;
                     align-items: center;
                     justify-content: space-between;
@@ -161,7 +162,7 @@ class DictationComponent extends HTMLElement {
                 </div>
                 <div class="input-container">
                     <textarea placeholder="Type the original sentence here" rows="3"></textarea>
-                    <div class="footer"><div class="feedback"> </div><button class="skip">Skip</button></div>
+                    <div class="functionArea"><div class="feedback"> </div><button class="skip">Skip</button></div>
                 </div>
             </div>
         `;
@@ -211,6 +212,7 @@ class DictationComponent extends HTMLElement {
 
         this.shadowRoot.querySelector('.skip').addEventListener('click',e=>{
             textareaElement.value = original
+            this.compare(original,original)
         })
     }
 }
