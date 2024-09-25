@@ -30,17 +30,42 @@ class DictationComponent extends HTMLElement {
             }
         }
     }
-    async format(text){
-        let t = text
-        if(window.JPAnalyzer){
-            t = await window.JPAnalyzer.convert(t)
+    async format(text) {
+        let t = text;
+        if (window.JPAnalyzer) {
+            t = await window.JPAnalyzer.convert(t);
         }
         return t.toLowerCase()
-                .trim()
-                .replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '')
-                .replace(/\s+/g, '');
-
+            .trim()
+            .replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '')
+            .replace(/\s+/g, '')
+            .replace(/[０-９]/g, match => String.fromCharCode(match.charCodeAt(0) - 0xFEE0)) 
+            .replace(/[零一二三四五六七八九十百千万亿]+/g, match => {
+                const cn = { '零': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10, '百': 100, '千': 1000, '万': 10000, '亿': 100000000 };
+                let num = 0;
+                let temp = 0;
+                let section = 0;
+                let zero = false;
+                for (let i = 0; i < match.length; i++) {
+                    const char = match[i];
+                    const value = cn[char];
+                    if (value === 10000 || value === 100000000) {
+                        section += (temp === 0 && zero ? 0 : temp) * value;
+                        temp = 0;
+                        zero = false;
+                    } else if (value >= 10) {
+                        temp = (temp === 0 && zero ? 0 : temp) * value;
+                        zero = false;
+                    } else {
+                        temp += value;
+                        zero = false;
+                    }
+                }
+                num += section + temp;
+                return num.toString();
+            });
     }
+    
     async compare(translation, original, mutation, caller = "blur") {
         const textareaElement = this.shadowRoot.querySelector('textarea');
         const feedbackElement = this.shadowRoot.querySelector('.feedback');
