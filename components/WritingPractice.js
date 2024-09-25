@@ -233,17 +233,18 @@ class DictationComponent extends HTMLElement {
             textareaElement.value = original
             this.compare(original, original)
         })
+        
+        textareaElement.focus();
+        // // z自动聚焦
+        // this.shadowRoot.addEventListener('keydown', (event) => {
+        //     if (!document.activeElement.isEqualNode(textareaElement)) {
+        //         const keysToHandle = ['Enter', ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i))];
+        //         if (keysToHandle.includes(event.key)) {
+        //             textareaElement.focus();
 
-        // z自动聚焦
-        this.shadowRoot.addEventListener('keydown', (event) => {
-            if (!document.activeElement.isEqualNode(textareaElement)) {
-                const keysToHandle = ['Enter', ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i))];
-                if (keysToHandle.includes(event.key)) {
-                    textareaElement.focus();
-
-                }
-            }
-        });
+        //         }
+        //     }
+        // });
         
     }
 }
