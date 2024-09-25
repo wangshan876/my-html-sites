@@ -31,15 +31,8 @@ class DictationComponent extends HTMLElement {
         }
     }
     async format(text) {
-        let t = text;
-        if (window.JPAnalyzer) {
-            t = await window.JPAnalyzer.convert(t);
-        }
-        return t.toLowerCase()
-            .trim()
-            .replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '')
-            .replace(/\s+/g, '')
-            .replace(/[０-９]/g, match => String.fromCharCode(match.charCodeAt(0) - 0xFEE0)) 
+        let t = text
+            .replace(/[０-９]/g, match => String.fromCharCode(match.charCodeAt(0) - 0xFEE0))
             .replace(/[零一二三四五六七八九十百千万亿]+/g, match => {
                 const cn = { '零': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10, '百': 100, '千': 1000, '万': 10000, '亿': 100000000 };
                 let num = 0;
@@ -63,9 +56,16 @@ class DictationComponent extends HTMLElement {
                 }
                 num += section + temp;
                 return num.toString();
-            });
+            });;
+        if (window.JPAnalyzer) {
+            t = await window.JPAnalyzer.convert(t);
+        }
+        return t.toLowerCase()
+            .trim()
+            .replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '')
+            .replace(/\s+/g, '')
     }
-    
+
     async compare(translation, original, mutation, caller = "blur") {
         const textareaElement = this.shadowRoot.querySelector('textarea');
         const feedbackElement = this.shadowRoot.querySelector('.feedback');
@@ -259,17 +259,24 @@ class DictationComponent extends HTMLElement {
             });
         }
 
-        
+
         this.shadowRoot.querySelector('.skip').addEventListener('click', e => {
             textareaElement.value = original
-            this.compare(original, original,null,'skip')
+            this.compare(original, original, null, 'skip')
         })
         this.shadowRoot.querySelector('.alook').addEventListener('click', e => {
-            const original_value = textareaElement.value 
+            const original_value = textareaElement.value
             textareaElement.value = original
-            setTimeout(() => {
-                textareaElement.value = original_value
-            }, 2000);
+            textareaElement.disabled = true; 
+            const create_timeout = () => {
+                return () => {
+                    setTimeout(() => {
+                        textareaElement.value = original_value
+                        textareaElement.disabled = false; 
+                    }, 2000);
+                };
+            }
+            create_timeout()
         })
 
         textareaElement.focus();
@@ -283,7 +290,7 @@ class DictationComponent extends HTMLElement {
         //         }
         //     }
         // });
-        
+
     }
 }
 
