@@ -67,7 +67,7 @@ class DictationComponent extends HTMLElement {
                 }));
             }, 2000);
         } else {
-            if (caller == "blur") {
+            if (caller == "skip") {
                 this.fail_sound.play()
             }
             feedbackElement.textContent = 'Incorrect. Try again.';
@@ -180,7 +180,13 @@ class DictationComponent extends HTMLElement {
                 </div>
                 <div class="input-container">
                     <textarea placeholder="type ..." rows="3"></textarea>
-                    <div class="functionArea"><div class="feedback"> </div><button class="skip">Skip</button></div>
+                    <div class="functionArea">
+                        <div class="feedback"> </div>
+                        <div>
+                            <button class="skip">跳过</button>
+                            <button class="alook">看答案</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
@@ -231,9 +237,16 @@ class DictationComponent extends HTMLElement {
         
         this.shadowRoot.querySelector('.skip').addEventListener('click', e => {
             textareaElement.value = original
-            this.compare(original, original)
+            this.compare(original, original,null,'skip')
         })
-        
+        this.shadowRoot.querySelector('.alook').addEventListener('click', e => {
+            const original_value = textareaElement.value 
+            textareaElement.value = original
+            setTimeout(() => {
+                textareaElement.value = original_value
+            }, 2000);
+        })
+
         textareaElement.focus();
         // // z自动聚焦
         // this.shadowRoot.addEventListener('keydown', (event) => {
