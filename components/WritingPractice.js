@@ -185,6 +185,7 @@ class DictationComponent extends HTMLElement {
         const speak = (text) => {
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.voice = this.defaultVoice;
+                window.speechSynthesis.speaking && window.speechSynthesis.cancel()
                 window.speechSynthesis.speak(utterance);
 
         };
