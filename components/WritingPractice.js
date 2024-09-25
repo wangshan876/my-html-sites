@@ -30,16 +30,25 @@ class DictationComponent extends HTMLElement {
             }
         }
     }
-    compare(translation, original, mutation, caller = "blur") {
+    async format(text){
+        let t = text
+        if(window.JPAnalyzer){
+            t = await window.JPAnalyzer.convert(t)
+        }
+        return t.toLowerCase()
+                .trim()
+                .replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '')
+                .replace(/\s+/g, '');
+
+    }
+    async compare(translation, original, mutation, caller = "blur") {
         const textareaElement = this.shadowRoot.querySelector('textarea');
         const feedbackElement = this.shadowRoot.querySelector('.feedback');
+        let userInput = textareaElement.value
+        const t1 = await this.format(userInput);
+        const t2 = await this.format(original);
+        const t3 = mutation ? await this.format(mutation) : t2;
 
-        const userInput = textareaElement.value
-        const t1 = userInput.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
-        const t2 = original.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '');
-        const t3 = mutation
-            ? mutation.toLowerCase().trim().replace(/[\.,\!\?;\:()「」『』【】・、。！？]/g, '').replace(/\s+/g, '')
-            : t2
         if (t1 == t2 || t1 == t3) {
             feedbackElement.textContent = 'Correct!';
             feedbackElement.style.color = 'green';
