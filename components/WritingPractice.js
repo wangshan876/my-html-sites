@@ -274,21 +274,22 @@ class DictationComponent extends HTMLElement {
             textareaElement.value = original
             this.compare(original, original, null, 'skip')
         })
-        this.shadowRoot.querySelector('.alook').addEventListener('click', e => {
+        const alookbtn = this.shadowRoot.querySelector('.alook')
+        alookbtn.addEventListener('click', e => {
             
             const original_value = textareaElement.value
             textareaElement.value = original
             textareaElement.disabled = true;
             const oldfcolor = textareaElement.style.color
             textareaElement.style.color = 'green'
-            e.target.disabled = true
+            alookbtn.disabled = true
             const create_timeout = (() => {
                 return () => {
                     setTimeout(() => {
                         textareaElement.style.color = oldfcolor
                         textareaElement.value = original_value
                         textareaElement.disabled = false;
-                        e.target.disabled = false
+                        alookbtn.disabled = false
                     }, 2000);
                 };
             })()
