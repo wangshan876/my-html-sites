@@ -18,18 +18,20 @@ class DictationComponent extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['translation', 'original', 'autoSpeak', 'lang','current_index'];
+        return ['translation', 'original', 'autoSpeak', 'lang',len,'current_index'];
     }
     connectedCallback(){
-        this.len = this.getAttribute('len');
+        this.len = this.getAttribute('len') || 0;
         this.render();
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'lang') {
-            this.defaultVoice = getVoiceByLanguage(newValue);
-        } else if(name === 'current_index'){
+        if(name === 'current_index'){
             this.shadowRoot.querySelector('#completion').textContent = `${newValue} / ${this.len}`
+        } else if (name === 'lang') {
+            this.defaultVoice = getVoiceByLanguage(newValue);
+        } else if(name === 'len'){
+            this.len = newValue
         }else {
             if (oldValue !== newValue) {
                 this.render();
