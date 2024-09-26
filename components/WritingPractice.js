@@ -270,7 +270,7 @@ class DictationComponent extends HTMLElement {
             textareaElement.disabled = true;
             const oldfcolor = textareaElement.style.color
             textareaElement.style.color = 'green'
-            const create_timeout = () => {
+            const create_timeout = (() => {
                 return () => {
                     setTimeout(() => {
                         textareaElement.style.color = oldfcolor
@@ -278,7 +278,7 @@ class DictationComponent extends HTMLElement {
                         textareaElement.disabled = false;
                     }, 2000);
                 };
-            }
+            })()
             create_timeout()
         })
 
