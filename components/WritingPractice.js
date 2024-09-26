@@ -29,7 +29,7 @@ class DictationComponent extends HTMLElement {
         if (name === 'lang') {
             this.defaultVoice = getVoiceByLanguage(newValue);
         } else if(name === 'current_index'){
-            this.shadowRoot.querySelector('completion').textContent = `${newValue} / ${this.len}`
+            this.shadowRoot.querySelector('#completion').textContent = `${newValue} / ${this.len}`
         }else {
             if (oldValue !== newValue) {
                 this.render();
