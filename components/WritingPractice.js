@@ -13,18 +13,24 @@ class DictationComponent extends HTMLElement {
         this.success_sound = new Audio('https://my-html-sites.pages.dev/components/assets/sounds/success.wav');
         this.fail_sound = new Audio('https://my-html-sites.pages.dev/components/assets/sounds/fail.wav');
         this.defaultVoice = null;
+        this.len = 0;
         this.attachShadow({ mode: 'open' });
-        this.render();
     }
 
     static get observedAttributes() {
-        return ['translation', 'original', 'autoSpeak', 'lang'];
+        return ['translation', 'original', 'autoSpeak', 'lang','current_index'];
+    }
+    connectedCallback(){
+        this.len = this.getAttribute('len');
+        this.render();
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'lang') {
             this.defaultVoice = getVoiceByLanguage(newValue);
-        } else {
+        } else if(name === 'current_index'){
+            this.shadowRoot.querySelector('completion').textContent = `${newValue} / ${this.len}`
+        }else {
             if (oldValue !== newValue) {
                 this.render();
             }
@@ -80,7 +86,7 @@ class DictationComponent extends HTMLElement {
             textareaElement.disabled = true; // 禁用 textarea
 
             this.success_sound.play()
-            setTimeout(() => {
+             setTimeout(() => {
                 textareaElement.value = ''
                 textareaElement.disabled = false;
                 this.dispatchEvent(new CustomEvent('dictation-complete', {
@@ -90,6 +96,7 @@ class DictationComponent extends HTMLElement {
                         userInput: userInput
                     }
                 }));
+
             }, 2000);
         } else {
             if (caller == "skip") {
@@ -196,12 +203,15 @@ class DictationComponent extends HTMLElement {
                 }
             </style>
             <div class="container">
-                <div class="translation">
-                    ${translation}
-                    ${autoSpeak ? `<button class="speak"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-volume-2">
-    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-</svg></button>` : ''}
+                <div>
+                    <div class="translation">
+                        ${translation}
+                        ${autoSpeak ? `<button class="speak"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-volume-2">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+    </svg></button>` : ''}
+                    </div>
+                    <div id="completion"></div>
                 </div>
                 <div class="input-container">
                     <textarea placeholder="type ..." rows="3"></textarea>
