@@ -18,7 +18,7 @@ class DictationComponent extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['translation', 'original', 'autoSpeak', 'lang',len,'current_index'];
+        return ['translation', 'original', 'autoSpeak', 'lang','len','current_index'];
     }
     connectedCallback(){
         this.len = this.getAttribute('len') || 0;
