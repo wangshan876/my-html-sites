@@ -27,7 +27,7 @@ class DictationComponent extends HTMLElement {
 
     attributeChangedCallback(name, oldValue, newValue) {
         if(name === 'current_index'){
-            this.shadowRoot.querySelector('#completion').textContent = `${newValue} / ${this.len}`
+            this.querySelector('#completion').textContent = `${newValue} / ${this.len}`
         } else if (name === 'lang') {
             this.defaultVoice = getVoiceByLanguage(newValue);
         } else if(name === 'len'){
