@@ -158,10 +158,10 @@ class DictationComponent extends HTMLElement {
                     padding: 2px;
                     width: 18px;
                     height: 18px;
-                    color: var(--text-color); /* 按钮文本颜色 */
+                    color:fcff5a;
                 }
                 .translation button:hover {
-                    filter: brightness(0.4);
+                    filter: hue-rotate(90deg);
                 }
                 .input-container {
                     display: flex;
@@ -203,9 +203,13 @@ class DictationComponent extends HTMLElement {
                     align-items: center;
                     justify-content: space-between;
                 }
+                button{
+                    padding: 3px 16px;
+                }
+                
             </style>
             <div class="container">
-                <div>
+                <div style="display: flex;justify-content: space-between;">
                     <div class="translation">
                         ${translation}
                         ${autoSpeak ? `<button class="speak"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-volume-2">
