@@ -26,9 +26,7 @@ class DictationComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if(name === 'current_index'){
-            this.querySelector('#completion').textContent = `${newValue} / ${this.len}`
-        } else if (name === 'lang') {
+         if (name === 'lang') {
             this.defaultVoice = getVoiceByLanguage(newValue);
         } else if(name === 'len'){
             this.len = newValue
@@ -115,6 +113,8 @@ class DictationComponent extends HTMLElement {
         const mutation = this.getAttribute('mutation') || '';
         const autoSpeak = this.getAttribute('autoSpeak') === 'true';
         const lang = this.getAttribute('lang') || 'en-US';
+        const len = this.getAttribute('len') || '0';
+        const current_index = this.getAttribute('current_index') || '0';
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
@@ -213,7 +213,7 @@ class DictationComponent extends HTMLElement {
         <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
     </svg></button>` : ''}
                     </div>
-                    <div id="completion"></div>
+                    <div id="completion">${current_index} / ${len}</div>
                 </div>
                 <div class="input-container">
                     <textarea placeholder="type ..." rows="3"></textarea>
